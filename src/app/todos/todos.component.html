@@ -1,0 +1,25 @@
+<h1>{{title}}</h1>
+<div class = "card">
+  <div class = "card__content">
+    <div class = "card__content--id">ID</div>
+    <div class = "card__content--title">TITLE</div>
+    <div class = "card__content--body">BODY</div>
+    <div class = "card__content--category">CATEGORY</div>
+    <div class = "card__content--state">STATUS</div>
+  </div>
+</div>
+<div class = "card" *ngFor = "let todo of todos">
+  <div class = "card__content">
+    <div class = "card__content--id">{{todo.id}}</div>
+    <div class = "card__content--title">{{todo.title}}</div>
+    <div class = "card__content--body">{{todo.body}}</div>
+    <div class = "card__content--category">{{todo.category_id}}</div>
+    <div class = "card__content--state">{{todo.state}}</div>
+  </div>
+</div>
+<div>
+  <h2><a href = "/">Register Form</a></h2>
+</div>
+<div>
+  <h2><a href = "/">Back To Home</a></h2>
+</div>
