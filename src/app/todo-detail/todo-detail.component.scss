@@ -1,0 +1,30 @@
+.detail{
+  &__content{
+    margin: 10px;
+  }
+}
+
+.todo_Form{
+  margin-top: 40px;
+  &__content{
+    margin: 10px;
+    &--radio{
+      display: inline-block;
+    }
+  }
+}
+
+h2{
+  color: cornflowerblue;
+}
+
+.item{
+  display: inline-block;
+  width:   100px;
+  margin:  3px;
+}
+
+.item-right{
+  display: inline-block;
+  margin:  3px;
+}

@@ -1,12 +1,72 @@
-<div class = "card" *ngIf="todo">
-  <div class = "card__content">
-    <div class = "card__content--id">{{todo.id}}</div>
-    <div class = "card__content--title">{{todo.title}}</div>
-    <div class = "card__content--body">{{todo.body}}</div>
-    <div class = "card__content--category">{{todo.category_id}}</div>
-    <div class = "card__content--state">{{todo.state}}</div>
+<div class = "detail" *ngIf="todo">
+  <h2>Detail  No.{{todo.id}}</h2>
+  <div class = "detail__content">
+    <div class = "detail__content--title">
+      <div class="item">Title:</div>
+      <div class="item-right">{{todo.title}}</div>
+    </div>
+    <div class = "detail__content--body">
+      <div class="item">Body:</div>
+      <div class="item-right">{{todo.body}}</div>
+    </div>
+    <div class = "detail__content--category">
+      <div class="item">Category:</div>
+      <div class="item-right">{{category}}</div>
+    </div>
+    <div class = "detail__content--state">
+      <div class="item">State:</div>
+      <div class="item-right">{{state}}</div>
+    </div>
+  </div>
+  <div class = "todo_Form">
+    <h2>Edit Form</h2>
+    <div class = "todo_Form__content">
+      <div class="item">Title:</div>
+      <div class="item-right">
+        <input type = "text" name = "title" size="40" [(ngModel)] = "todo.title">
+      </div>
+    </div>
+    <div class = "todo_Form__content">
+      <div class="item">Body</div>
+      <div class="item-right">
+        <textarea name = "body" cols = "40" rows = "4" [(ngModel)] = "todo.body"></textarea>
+      </div>
+    </div>
+    <div class = "todo_Form__content">
+      <div class="item">Category:</div>
+      <div class="item-right">
+        <div class="todo_Form__content--radio" *ngFor="let category of categories" >
+          <input
+            type            = "radio"
+            [(ngModel)]     = "todo.category_id"
+            value           = "{{category.id}}"
+            name            = "category"
+            (ngModelChange) = "getThisCategory(todo.category_id)"
+          >{{category.name}}
+        </div>
+      </div>
+    </div>
+    <div class = "todo_Form__content">
+      <div class="item">Status:</div>
+      <div class="item-right">
+        <div class="todo_Form__content--radio" *ngFor="let state of states" >
+          <input
+            type            = "radio"
+            [(ngModel)]     = "todo.state"
+            value           = "{{state.id}}"
+            name            = "color"
+            (ngModelChange) = "getThisState(todo.state)"
+          >{{state.status}}
+        </div>
+      </div>
+    </div>
+    <div class = "todo_Form__content">
+      <input type = "submit" value = "update">
+    </div>
   </div>
 </div>
+
+
 <div>
   <h2><a href = "/todos">Back To Todo List</a></h2>
 </div>
