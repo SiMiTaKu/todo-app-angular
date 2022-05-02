@@ -34,7 +34,7 @@
     }
 
     &--title{
-      width: 20%;
+      width: 22%;
       padding: 5px;
       display: inline-block;
       text-align: center;
@@ -82,7 +82,8 @@
     display: inline-block;
 
     &--item {
-      margin-left: 5px;
+      display: inline-block;
+      margin-left: 10px;
     }
   }
 }

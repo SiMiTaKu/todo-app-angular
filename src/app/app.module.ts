@@ -5,16 +5,20 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TodosComponent } from './todos/todos.component';
 import { HomeComponent } from './home/home.component';
+import { TodoDetailComponent } from './todo-detail/todo-detail.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TodosComponent,
-    HomeComponent
+    HomeComponent,
+    TodoDetailComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

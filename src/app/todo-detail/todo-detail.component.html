@@ -1,0 +1,12 @@
+<div class = "card" *ngIf="todo">
+  <div class = "card__content">
+    <div class = "card__content--id">{{todo.id}}</div>
+    <div class = "card__content--title">{{todo.title}}</div>
+    <div class = "card__content--body">{{todo.body}}</div>
+    <div class = "card__content--category">{{todo.category_id}}</div>
+    <div class = "card__content--state">{{todo.state}}</div>
+  </div>
+</div>
+<div>
+  <h2><a href = "/todos">Back To Todo List</a></h2>
+</div>

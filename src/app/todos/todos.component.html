@@ -15,8 +15,27 @@
     <div class = "card__content--body">{{todo.body}}</div>
     <div class = "card__content--category">{{todo.category_id}}</div>
     <div class = "card__content--state">{{todo.state}}</div>
+
+    <div class = "card__footer">
+      <div class = "card__footer--item">
+        <a routerLink = "/todos/{{todo.id}}">
+          <input type="submit" value="Detail">
+        </a>
+      </div>
+      <div class = "card__footer--item">
+        <a routerLink = "/todos/{{todo.id}}">
+          <input type="submit" value="Edit">
+        </a>
+      </div>
+      <div class = "card__footer--item">
+        <a routerLink = "/todos/{{todo.id}}">
+          <input type="submit" value="Remove">
+        </a>
+      </div>
+    </div>
   </div>
 </div>
+
 <div>
   <h2><a href = "/">Register Form</a></h2>
 </div>
