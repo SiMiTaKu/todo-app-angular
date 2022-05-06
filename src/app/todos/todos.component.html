@@ -24,9 +24,7 @@
       </div>
 
       <div class = "card__footer--item">
-        <a routerLink = "/todos/{{todo.id}}">
-          <input type="submit" value="Remove">
-        </a>
+        <input type="submit" value="Remove" (click) = "remove(todo)">
       </div>
     </div>
   </div>

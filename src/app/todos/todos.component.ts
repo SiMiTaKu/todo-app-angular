@@ -30,19 +30,19 @@ export class TodosComponent implements OnInit {
     this.getTodos();
   }
 
-  getTodos(){
+  getTodos(): void {
     this.todoService.getTodos().subscribe(_ => this.todos = _);
   }
 
-  getCategories(){
+  getCategories(): void {
     this.categoryService.getCategories().subscribe(_ => this.categories = _);
   }
 
-  getTodoStates(){
+  getTodoStates(): void {
     this.todoService.getState().subscribe(_ => this.states = _);
   }
 
-  getColors(){
+  getColors(): void {
     this.categoryService.getColors().subscribe(_ => this.colors = _);
   }
 
@@ -59,5 +59,8 @@ export class TodosComponent implements OnInit {
     return this.states.filter(_ => _.id == stateCode).map(_ => _.status);
   }
 
-
+  remove(todo: Todo): void{
+    this.todos = this.todos.filter(_ => _ !== todo);
+    this.todoService.removeTodo(todo.id).subscribe();
+  }
 }

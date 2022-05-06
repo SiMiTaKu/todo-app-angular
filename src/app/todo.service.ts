@@ -52,6 +52,13 @@ export class TodoService {
     );
   }
 
+  removeTodo(id: number): Observable<Todo> {
+    const url = `${this.todosUrl}/${id}`;
+    return this.http.delete<Todo>(url, this.httpOptions).pipe(
+      catchError(this.handleError<Todo>(`removeTodo`))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
