@@ -1,0 +1,47 @@
+.card{
+  width:            100%;
+  text-align:       left;
+  font-size:        13px;
+  background-color: #c7c6c6;
+  padding:          3px;
+  margin-bottom:    6px;
+
+  &__content{
+    background-color: #e1e1e1;
+
+    &--name{
+      width:        27%;
+      padding:      5px;
+      display:      inline-block;
+      text-align:   center;
+      border-left:  solid 1px #5d5d5d;
+      border-right: solid 1px #5d5d5d;
+    }
+
+    &--slug{
+      width:        27%;
+      padding:      5px;
+      display:      inline-block;
+      text-align:   center;
+      border-right: solid 1px #5d5d5d;
+    }
+
+    &--color{
+      width:        26%;
+      padding:      5px;
+      display:      inline-block;
+      text-align:   center;
+      border-right: solid 1px #5d5d5d;
+    }
+  }
+
+  &__footer {
+    text-align: right;
+    display:    inline-block;
+
+    &--item {
+      display:     inline-block;
+      margin-left: 18px;
+    }
+  }
+}
