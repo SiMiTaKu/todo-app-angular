@@ -6,8 +6,11 @@ import { AppRoutingModule }    from './app-routing.module';
 import { TodosComponent }      from './todos/todos.component';
 import { HomeComponent }       from './home/home.component';
 import { TodoDetailComponent } from './todo-detail/todo-detail.component';
-
 import { FormsModule }         from "@angular/forms";
+
+import { HttpClientInMemoryWebApiModule } from "angular-in-memory-web-api";
+import { InMemoryDataService }            from './in-memory-data.service';
+import { HttpClientModule }               from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -20,8 +23,14 @@ import { FormsModule }         from "@angular/forms";
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, {dataEncapsulation: false}
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+

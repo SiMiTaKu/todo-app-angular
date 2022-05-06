@@ -6,7 +6,7 @@ import { ActivatedRoute }           from "@angular/router";
 import { Todo }                     from "../todo";
 import { Category }                 from "../category";
 import { Color }                    from "../color";
-import {TodoState}                  from "../todoState";
+import { TodoState }                from "../todoState";
 
 @Component({
   selector: 'app-todo-detail',
@@ -61,5 +61,16 @@ export class TodoDetailComponent implements OnInit {
 
   getThisState(stateCode: number){
     this.state = this.states.filter(_ => _.id == stateCode).map(_ => _.status);
+  }
+
+  save(): void {
+    if (this.todo) {
+      this.todoService.updateTodo(this.todo)
+        .subscribe(() => this.goBack());
+    }
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

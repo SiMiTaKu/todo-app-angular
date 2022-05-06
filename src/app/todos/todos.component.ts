@@ -18,13 +18,16 @@ export class TodosComponent implements OnInit {
   states: TodoState[]    = [];
   colors: Color[]        = [];
 
-  constructor(private todoService: TodoService, private categoryService: CategoryService) { }
+  constructor(
+    private todoService: TodoService,
+    private categoryService: CategoryService
+  ) { }
 
   ngOnInit(): void {
-    this.getTodos();
     this.getCategories();
     this.getTodoStates();
     this.getColors();
+    this.getTodos();
   }
 
   getTodos(){
@@ -55,4 +58,6 @@ export class TodosComponent implements OnInit {
   getThisState(stateCode: number){
     return this.states.filter(_ => _.id == stateCode).map(_ => _.status);
   }
+
+
 }

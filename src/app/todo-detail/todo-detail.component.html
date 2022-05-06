@@ -11,11 +11,11 @@
     </div>
     <div class = "detail__content--category">
       <div class="item">Category:</div>
-      <div class="item-right">{{category}}</div>
+      <div class="item-right">{{getThisCategory(todo.category_id)}}{{category}}</div>
     </div>
     <div class = "detail__content--state">
       <div class="item">State:</div>
-      <div class="item-right">{{state}}</div>
+      <div class="item-right">{{getThisState(todo.state)}}{{state}}</div>
     </div>
   </div>
   <div class = "todo_Form">
@@ -37,11 +37,10 @@
       <div class="item-right">
         <div class="todo_Form__content--radio" *ngFor="let category of categories" >
           <input
-            type            = "radio"
-            [(ngModel)]     = "todo.category_id"
-            value           = "{{category.id}}"
-            name            = "category"
-            (ngModelChange) = "getThisCategory(todo.category_id)"
+            type        = "radio"
+            [(ngModel)] = "todo.category_id"
+            value       = "{{category.id}}"
+            name        = "category"
           >{{category.name}}
         </div>
       </div>
@@ -51,22 +50,21 @@
       <div class="item-right">
         <div class="todo_Form__content--radio" *ngFor="let state of states" >
           <input
-            type            = "radio"
-            [(ngModel)]     = "todo.state"
-            value           = "{{state.id}}"
-            name            = "color"
-            (ngModelChange) = "getThisState(todo.state)"
+            type        = "radio"
+            [(ngModel)] = "todo.state"
+            value       = "{{state.id}}"
+            name        = "color"
           >{{state.status}}
         </div>
       </div>
     </div>
     <div class = "todo_Form__content">
-      <input type = "submit" value = "update">
+      <input type = "submit" (click) = "save()" value = "update">
     </div>
   </div>
 </div>
 
 
 <div>
-  <h2><a href = "/todos">Back To Todo List</a></h2>
+  <h2><a routerLink = "/todos">Back To Todo List</a></h2>
 </div>

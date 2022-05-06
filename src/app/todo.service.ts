@@ -1,29 +1,56 @@
-import { Injectable }     from '@angular/core';
-import { TODOS }          from "./mock-todo";
-import { Todo }           from "./todo";
-import { Observable, of } from "rxjs";
-import {TodoState} from "./todoState";
-import {TODOSTATE} from "./mock-todoState";
+import { Injectable }       from '@angular/core';
+import { Todo }             from "./todo";
+import { Observable, of }   from "rxjs";
+import { TodoState }        from "./todoState";
+import { TODOSTATE }        from "./mock-todoState";
+
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { catchError }              from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
+  private todosUrl = 'api/todos';
 
-  constructor() { }
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getTodos(): Observable<Todo[]> {
-    const  todos = of(TODOS);
-    return todos;
+    return this.http.get<Todo[]>(this.todosUrl)
+      .pipe(
+        catchError(this.handleError<Todo[]>('getTodos', []))
+      );
   }
 
   getTodo(id: number): Observable<Todo> {
-    const  todo = TODOS.find(t => t.id === id)!;
-    return of(todo);
+    const url = `${this.todosUrl}/${id}`;
+    return this.http.get<Todo>(url).pipe(
+      catchError(this.handleError<Todo>(`getTodo id=${id}`))
+    );
   }
 
   getState(): Observable<TodoState[]>{
     const  state = of(TODOSTATE);
     return state;
+  }
+
+  updateTodo(todo: Todo): Observable<any> {
+    return this.http.put(this.todosUrl, todo, this.httpOptions).pipe(
+      catchError(this.handleError<any>('updateHero'))
+    );
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      return of(result as T);
+    };
   }
 }

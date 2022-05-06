@@ -5,9 +5,10 @@ import { HomeComponent }        from "./home/home.component";
 import { TodoDetailComponent}   from "./todo-detail/todo-detail.component";
 
 const routes: Routes = [
-  { path: '',          component: HomeComponent },
-  { path: 'todos',     component: TodosComponent },
-  { path: 'todos/:id', component: TodoDetailComponent}
+  { path: ''          ,redirectTo: '/home', pathMatch: 'full'},
+  { path: 'home'      ,component : HomeComponent },
+  { path: 'todos'     ,component : TodosComponent },
+  { path: 'todos/:id' ,component : TodoDetailComponent}
 ];
 
 @NgModule({
