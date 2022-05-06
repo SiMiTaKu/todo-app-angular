@@ -1,0 +1,18 @@
+.detail{
+  &__content{
+    margin: 10px;
+  }
+}
+
+.item{
+  display:        inline-block;
+  width:          100px;
+  margin:         3px;
+  vertical-align: top;
+
+}
+
+.item-right{
+  display: inline-block;
+  margin:  3px;
+}

@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HttpClientInMemoryWebApiModule }  from "angular-in-memory-web-api";
 import { InMemoryDataService }             from './in-memory-data.service';
 import { HttpClientModule }                from "@angular/common/http";
+import { CategoryDetailComponent } from './category-detail/category-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HttpClientModule }                from "@angular/common/http";
     TodoDetailComponent,
     TodoRegisterComponent,
     CategoriesComponent,
+    CategoryDetailComponent,
   ],
   imports: [
     BrowserModule,

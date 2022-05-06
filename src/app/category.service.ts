@@ -33,6 +33,13 @@ export class CategoryService {
     return colors;
   }
 
+  getCategory(id: number): Observable<Category>{
+    const url = `${this.categoriesUrl}/${id}`;
+    return this.http.get<Category>(url).pipe(
+      catchError(this.handleError<Category>('getCategory id = ${id}'))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

@@ -13,10 +13,14 @@
       <div class = "card__content--color">{{getThisCategoryColor(category.color)}}</div>
       <div class = "card__footer">
         <div class = "card__footer--item">
-          <input type="submit" value="Edit">
+          <a routerLink = "/categories/{{category.id}}">
+            <input type="submit" value="Edit">
+          </a>
         </div>
         <div class = "card__footer--item">
-          <input type="submit" value="Remove">
+          <a routerLink = "/categories/{{category.id}}">
+            <input type="submit" value="Remove">
+          </a>
         </div>
       </div>
     </div>

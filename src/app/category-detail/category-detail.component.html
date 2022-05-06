@@ -1,0 +1,18 @@
+<div class = "detail" *ngIf="category">
+  <h2>Category No.{{category.id}}</h2>
+  <div class = "detail__content">
+    <div class = "detail__content--name">
+      <div class="item">Name：</div>
+      <div class="item-right">{{category.name}}</div>
+    </div>
+    <div class = "detail__content--slug">
+      <div class="item">Slug：</div>
+      <div class="item-right">{{category.slug}}</div>
+    </div>
+    <div class = "detail__content--color">
+      <div class="item">Color：</div>
+      <div class="item-right">{{getThisCategoryColor(category.color)}}</div>
+    </div>
+  </div>
+</div>
+<h2><a routerLink="/categories">Back to Category List</a></h2>
