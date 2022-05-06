@@ -1,0 +1,45 @@
+<form class = "todo_Form" *ngIf="todoRegisterForm"
+      [formGroup] = "todoRegisterForm" (submit)="add()">
+  <h2>Register Form</h2>
+  <div class = "todo_Form__content">
+    <div class="item" for = "new-title">Title：</div>
+    <div class="item-right">
+      <input type = "text" id = "new-title" name = "title" size="40" formControlName = "todoTitle" placeholder = "Title">
+      <div class = "warn" *ngIf="title && title.errors?.['required']">
+        ※Title is Requirement.
+      </div>
+    </div>
+  </div>
+  <div class = "todo_Form__content">
+    <div class="item" for = "new-body">Body：</div>
+    <div class="item-right">
+      <textarea name = "body" id = "new-body" cols = "40" rows = "4" formControlName = "todoBody" placeholder = "Body"></textarea>
+      <div class = "warn" *ngIf="body && body.errors?.['required']">
+        ※Body is Requirement.
+      </div>
+    </div>
+  </div>
+  <div class = "todo_Form__content">
+    <div class="item">Category：</div>
+    <div class="item-right">
+      <div class="todo_Form__content--radio" *ngFor="let category of categories" >
+        <input
+          type            = "radio"
+          value           = "{{category.id}}"
+          name            = "todoCategory"
+          formControlName = "todoCategory"
+        >{{category.name}}
+      </div>
+      <div class = "warn" *ngIf="category && category.errors?.['required']">
+        ※Category is Requirement.
+      </div>
+    </div>
+  </div>
+  <div class = "todo_Form__content">
+    <input [disabled]="todoRegisterForm.invalid" type = "submit" value = "update">
+  </div>
+</form>
+
+<div>
+  <h2><a routerLink = "/todos">Back To Todo List</a></h2>
+</div>

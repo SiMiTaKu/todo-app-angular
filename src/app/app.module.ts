@@ -1,16 +1,17 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent }        from './app.component';
-import { AppRoutingModule }    from './app-routing.module';
-import { TodosComponent }      from './todos/todos.component';
-import { HomeComponent }       from './home/home.component';
-import { TodoDetailComponent } from './todo-detail/todo-detail.component';
-import { FormsModule }         from "@angular/forms";
+import { AppComponent }          from './app.component';
+import { AppRoutingModule }      from './app-routing.module';
+import { TodosComponent }        from './todos/todos.component';
+import { HomeComponent }         from './home/home.component';
+import { TodoDetailComponent }   from './todo-detail/todo-detail.component';
+import { TodoRegisterComponent } from './todo-register/todo-register.component';
 
-import { HttpClientInMemoryWebApiModule } from "angular-in-memory-web-api";
-import { InMemoryDataService }            from './in-memory-data.service';
-import { HttpClientModule }               from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { HttpClientInMemoryWebApiModule }  from "angular-in-memory-web-api";
+import { InMemoryDataService }             from './in-memory-data.service';
+import { HttpClientModule }                from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { HttpClientModule }               from "@angular/common/http";
     TodosComponent,
     HomeComponent,
     TodoDetailComponent,
+    TodoRegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import { HttpClientModule }               from "@angular/common/http";
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, {dataEncapsulation: false}
-    )
+    ),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

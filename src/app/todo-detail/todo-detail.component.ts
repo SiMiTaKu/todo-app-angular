@@ -38,20 +38,20 @@ export class TodoDetailComponent implements OnInit {
     if(this.todo) this.getThisState(this.todo?.state)
   }
 
-  getCategories(){
+  getCategories(): void {
     this.categoryService.getCategories().subscribe(_ => this.categories = _);
   }
 
-  getTodo(){
+  getTodo(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.todoService.getTodo(id).subscribe(_ => this.todo = _);
   }
 
-  getColors(){
+  getColors(): void {
     this.categoryService.getColors().subscribe(_ => this.colors = _);
   }
 
-  getStates(){
+  getStates(): void {
     this.todoService.getState().subscribe(_ => this.states = _)
   }
 

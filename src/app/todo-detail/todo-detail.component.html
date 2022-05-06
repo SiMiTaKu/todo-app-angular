@@ -2,19 +2,19 @@
   <h2>Detail  No.{{todo.id}}</h2>
   <div class = "detail__content">
     <div class = "detail__content--title">
-      <div class="item">Title:</div>
+      <div class="item">Title：</div>
       <div class="item-right">{{todo.title}}</div>
     </div>
     <div class = "detail__content--body">
-      <div class="item">Body:</div>
+      <div class="item">Body：</div>
       <div class="item-right">{{todo.body}}</div>
     </div>
     <div class = "detail__content--category">
-      <div class="item">Category:</div>
+      <div class="item">Category：</div>
       <div class="item-right">{{getThisCategory(todo.category_id)}}{{category}}</div>
     </div>
     <div class = "detail__content--state">
-      <div class="item">State:</div>
+      <div class="item">State：</div>
       <div class="item-right">{{getThisState(todo.state)}}{{state}}</div>
     </div>
   </div>
@@ -23,13 +23,19 @@
     <div class = "todo_Form__content">
       <div class="item">Title:</div>
       <div class="item-right">
-        <input type = "text" name = "title" size="40" [(ngModel)] = "todo.title">
+        <input type = "text" name = "title" size="40" [(ngModel)] = "todo.title" placeholder = "Title">
+        <div class = "warn" *ngIf="!todo.title">
+          ※Title is Requirement.
+        </div>
       </div>
     </div>
     <div class = "todo_Form__content">
       <div class="item">Body</div>
       <div class="item-right">
-        <textarea name = "body" cols = "40" rows = "4" [(ngModel)] = "todo.body"></textarea>
+        <textarea name = "body" cols = "40" rows = "4" [(ngModel)] = "todo.body" placeholder = "Body"></textarea>
+        <div class = "warn" *ngIf="!todo.body">
+          ※Body is Requirement.
+        </div>
       </div>
     </div>
     <div class = "todo_Form__content">
@@ -59,12 +65,11 @@
       </div>
     </div>
     <div class = "todo_Form__content">
-      <input type = "submit" (click) = "save()" value = "update">
+    <input [disabled]="!todo.title || !todo.body" type = "submit" (click) = "save()" value = "update">
     </div>
   </div>
 </div>
 
-
 <div>
-  <h2><a routerLink = "/todos">Back To Todo List</a></h2>
+<h2><a routerLink = "/todos">Back To Todo List</a></h2>
 </div>

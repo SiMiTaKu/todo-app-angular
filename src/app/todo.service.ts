@@ -7,7 +7,6 @@ import { TODOSTATE }        from "./mock-todoState";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError }              from 'rxjs/operators';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -44,6 +43,12 @@ export class TodoService {
   updateTodo(todo: Todo): Observable<any> {
     return this.http.put(this.todosUrl, todo, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateHero'))
+    );
+  }
+
+  addTodo(todo: Todo): Observable<Todo>{
+    return this.http.post<Todo>(this.todosUrl, todo, this.httpOptions).pipe(
+      catchError(this.handleError<Todo>('addTodo'))
     );
   }
 
