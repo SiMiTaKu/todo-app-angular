@@ -19,9 +19,7 @@
           </a>
         </div>
         <div class = "card__footer--item">
-          <a routerLink = "/categories/{{category.id}}">
-            <input type="submit" value="Remove">
-          </a>
+          <input type="submit" value="Remove" (click) = "remove(category)">
         </div>
       </div>
     </div>

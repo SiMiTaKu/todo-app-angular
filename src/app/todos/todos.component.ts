@@ -5,6 +5,7 @@ import { Todo }              from "../todo";
 import { Category }          from "../category";
 import { TodoState }         from "../todoState";
 import { Color }             from "../color";
+import { Router }            from "@angular/router";
 
 @Component({
   selector: 'app-todos',
@@ -19,8 +20,9 @@ export class TodosComponent implements OnInit {
   colors: Color[]        = [];
 
   constructor(
-    private todoService: TodoService,
-    private categoryService: CategoryService
+    private todoService:     TodoService,
+    private categoryService: CategoryService,
+    private router:          Router
   ) { }
 
   ngOnInit(): void {
@@ -46,16 +48,16 @@ export class TodosComponent implements OnInit {
     this.categoryService.getColors().subscribe(_ => this.colors = _);
   }
 
-  getThisCategoryName(categoryId: number){
+  getThisCategoryName(categoryId: number): string[]{
     return this.categories.filter(_ => _.id == categoryId).map(_ => _.name);
   }
 
-  getThisCategoryColor(categoryId: number){
+  getThisCategoryColor(categoryId: number): string[]{
     const categoryColorId = this.categories.filter(_ => _.id == categoryId).map(_ => _.color).pop();
     return this.colors.filter(_ => _.id == categoryColorId).map(_ => _.name);
   }
 
-  getThisState(stateCode: number){
+  getThisState(stateCode: number): string[]{
     return this.states.filter(_ => _.id == stateCode).map(_ => _.status);
   }
 

@@ -35,9 +35,10 @@ export class CategoryDetailComponent implements OnInit {
     this.categoryService.getColors().subscribe(_ => this.colors = _);
   }
 
-  getThisCategoryColor(colorId: number){
+  getThisCategoryColor(colorId: number): string[]{
     return this.colors.filter(_ => _.id == colorId).map(_ => _.name);
   }
+
 
   save(): void{
     if(this.category){

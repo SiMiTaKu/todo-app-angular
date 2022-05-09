@@ -52,6 +52,13 @@ export class CategoryService {
     )
   }
 
+  removeCategory(id: number): Observable<Category> {
+    const url = `${this.categoriesUrl}/${id}`;
+    return this.http.delete <Category>(url, this.httpOptions).pipe(
+      catchError(this.handleError<Category>('deleteCategory'))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
