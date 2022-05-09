@@ -1,0 +1,41 @@
+<form class = "category_Form" *ngIf="categoryRegisterForm" [formGroup] = "categoryRegisterForm" (submit)="add()">
+  <h2>Category Register Form</h2>
+  <div class = "category_Form__content">
+    <div class="item" for = "new-slug">Name：</div>
+    <div class="item-right">
+      <input type = "text" id = "new-name" name = "name" size="40" formControlName = "categoryName" placeholder = "Name">
+      <div class = "warn" *ngIf="name && name.errors?.['required']">
+        ※Name is Requirement.
+      </div>
+    </div>
+  </div>
+  <div class = "category_Form__content">
+    <div class="item" for = "new-slug">Slug：</div>
+    <div class="item-right">
+      <input type = "text" id = "new-slug" name = "slug" size = "40" formControlName = "categorySlug" placeholder = "Slug">
+      <div class = "warn" *ngIf="slug && slug.errors?.['required']">
+        ※Slug is Requirement.
+      </div>
+    </div>
+  </div>
+  <div class = "category_Form__content">
+    <div class="item">Color：</div>
+    <div class="item-right">
+      <div class="category_Form__content--radio" *ngFor="let color of colors" >
+        <input
+          type            = "radio"
+          value           = "{{color.id}}"
+          name            = "categoryColor"
+          formControlName = "categoryColor"
+        >{{color.name}}
+      </div>
+      <div class = "warn" *ngIf="color && color.errors?.['required']">
+        ※Color is Requirement.
+      </div>
+    </div>
+  </div>
+  <div class = "category_Form__content">
+    <input [disabled]="categoryRegisterForm.invalid" type = "submit" value = "register">
+  </div>
+</form>
+<h2><a routerLink="/categories">Back To Category List</a></h2>

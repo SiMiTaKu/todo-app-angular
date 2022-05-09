@@ -1,6 +1,6 @@
 <form class = "todo_Form" *ngIf="todoRegisterForm"
       [formGroup] = "todoRegisterForm" (submit)="add()">
-  <h2>Register Form</h2>
+  <h2>Todo Register Form</h2>
   <div class = "todo_Form__content">
     <div class="item" for = "new-title">Title：</div>
     <div class="item-right">
@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class = "todo_Form__content">
-    <input [disabled]="todoRegisterForm.invalid" type = "submit" value = "update">
+    <input [disabled]="todoRegisterForm.invalid" type = "submit" value = "register">
   </div>
 </form>
 

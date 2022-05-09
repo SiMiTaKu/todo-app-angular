@@ -6,7 +6,6 @@ import { COLORS }        from "./mock-color";
 import { catchError }    from "rxjs/operators";
 
 import { HttpClient, HttpHeaders }    from "@angular/common/http";
-import {Todo} from "./todo";
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +44,12 @@ export class CategoryService {
     return this.http.put(this.categoriesUrl, category, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateCategory'))
     );
+  }
+
+  addCategory(category: Category): Observable<Category>{
+    return this.http.post<Category>(this.categoriesUrl, category, this.httpOptions).pipe(
+      catchError(this.handleError<Category>('addCategory'))
+    )
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
