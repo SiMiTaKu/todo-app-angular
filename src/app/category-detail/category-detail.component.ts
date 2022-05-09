@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Category}                 from "../category";
-import {CategoryService}          from "../category.service";
-import {ActivatedRoute}           from "@angular/router";
-import {Color}                    from "../color";
+import { Component, Input, OnInit } from '@angular/core';
+import { Category }                 from "../category";
+import { CategoryService }          from "../category.service";
+import { ActivatedRoute }           from "@angular/router";
+import { Color }                    from "../color";
+import { Router}                    from "@angular/router";
 
 @Component({
   selector:    'app-category-detail',
@@ -16,7 +17,8 @@ export class CategoryDetailComponent implements OnInit {
 
   constructor(
     private route:           ActivatedRoute,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private router:          Router
   ) { }
 
   ngOnInit(): void {
@@ -35,5 +37,17 @@ export class CategoryDetailComponent implements OnInit {
 
   getThisCategoryColor(colorId: number){
     return this.colors.filter(_ => _.id == colorId).map(_ => _.name);
+  }
+
+  save(): void{
+    if(this.category){
+      this.categoryService.updateCategory(this.category).subscribe(
+        () => this.goToCategoryList()
+      )
+    }
+  }
+
+  goToCategoryList(){
+    this.router.navigate(['/categories'])
   }
 }

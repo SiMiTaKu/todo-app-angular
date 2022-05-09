@@ -51,8 +51,8 @@ export class TodosComponent implements OnInit {
   }
 
   getThisCategoryColor(categoryId: number){
-    const categoryColorId = this.categories.filter(_ => _.id == categoryId).map(_ => _.id).pop()
-    return this.colors.filter(_ => _.id == categoryColorId).map(_ => _.name)
+    const categoryColorId = this.categories.filter(_ => _.id == categoryId).map(_ => _.color).pop();
+    return this.colors.filter(_ => _.id == categoryColorId).map(_ => _.name);
   }
 
   getThisState(stateCode: number){

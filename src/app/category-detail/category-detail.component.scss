@@ -4,12 +4,22 @@
   }
 }
 
+.category_Form{
+  margin-top: 40px;
+  &__content{
+    margin: 10px;
+    &--radio{
+      display: inline-block;
+      width: 30%;
+    }
+  }
+}
+
 .item{
   display:        inline-block;
   width:          100px;
   margin:         3px;
   vertical-align: top;
-
 }
 
 .item-right{

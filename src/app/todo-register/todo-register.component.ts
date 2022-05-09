@@ -6,8 +6,10 @@ import { Color }                  from "../color";
 import { TodoState }              from "../todoState";
 import { Todo }                   from "../todo";
 import { Location }               from "@angular/common";
+import { Router }                 from "@angular/router";
 
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+
 
 @Component({
   selector:    'app-todo-register',
@@ -26,7 +28,8 @@ export class TodoRegisterComponent implements OnInit {
     private todoService:     TodoService,
     private categoryService: CategoryService,
     private location:        Location,
-    private fb:              FormBuilder
+    private fb:              FormBuilder,
+    private router:          Router
   ) { }
 
   ngOnInit(): void {
@@ -72,14 +75,15 @@ export class TodoRegisterComponent implements OnInit {
         category_id: this.todoRegisterForm?.value.todoCategory,
         body:        this.todoRegisterForm?.value.todoBody,
         state:       this.todoRegisterForm?.value.todoState
-      } as Todo).subscribe(todo => {
-        this.todos.push(todo);
-      })
-      this.goBack();
+      } as Todo).subscribe(
+        todo  => this.todos.push(todo),
+        error => alert(error),
+        ()    => this.goToTodoList()
+    );
     }
   }
 
-  goBack(): void {
-    this.location.back();
+  goToTodoList(): void {
+    this.router.navigateByUrl('/todos');
   }
 }

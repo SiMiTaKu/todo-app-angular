@@ -14,5 +14,43 @@
       <div class="item-right">{{getThisCategoryColor(category.color)}}</div>
     </div>
   </div>
+
+  <div class = "category_Form">
+    <h2>Edit Form</h2>
+    <div class = "category_Form__content">
+      <div class="item">Name:</div>
+      <div class="item-right">
+        <input type = "text" name = "name" size = "40" [(ngModel)] = "category.name" placeholder = "Name">
+        <div class = "warn" *ngIf="!category.name">
+          ※Title is Requirement.
+        </div>
+      </div>
+    </div>
+    <div class = "category_Form__content">
+      <div class="item">Slug:</div>
+      <div class="item-right">
+        <input type ="text" name = "slug" size = "40" [(ngModel)] = "category.slug" placeholder = "Slug">
+        <div class = "warn" *ngIf="!category.slug">
+          ※Body is Requirement.
+        </div>
+      </div>
+    </div>
+    <div class = "category_Form__content">
+      <div class="item">Color:</div>
+      <div class="item-right">
+        <div class="category_Form__content--radio" *ngFor="let color of colors" >
+          <input
+            type        = "radio"
+            [(ngModel)] = "category.color"
+            value       = "{{color.id}}"
+            name        = "color"
+          >{{color.name}}
+        </div>
+      </div>
+    </div>
+    <div class = "category_Form__content">
+      <input [disabled]="!category.name || !category.slug" type = "submit" (click) = save() value = "update">
+    </div>
+  </div>
 </div>
 <h2><a routerLink="/categories">Back to Category List</a></h2>

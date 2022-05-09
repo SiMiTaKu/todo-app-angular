@@ -7,6 +7,7 @@ import { Todo }                     from "../todo";
 import { Category }                 from "../category";
 import { Color }                    from "../color";
 import { TodoState }                from "../todoState";
+import { Router }                   from "@angular/router";
 
 @Component({
   selector: 'app-todo-detail',
@@ -26,7 +27,8 @@ export class TodoDetailComponent implements OnInit {
     private route:           ActivatedRoute,
     private todoService:     TodoService,
     private categoryService: CategoryService,
-    private location:        Location
+    private location:        Location,
+    private router:          Router
   ) {}
 
   ngOnInit(): void {
@@ -66,11 +68,13 @@ export class TodoDetailComponent implements OnInit {
   save(): void {
     if (this.todo) {
       this.todoService.updateTodo(this.todo)
-        .subscribe(() => this.goBack());
+        .subscribe(
+          () => this.goToTodoList()
+        );
     }
   }
 
-  goBack(): void {
-    this.location.back();
+  goToTodoList(): void {
+    this.router.navigate(['/todos']);
   }
 }
