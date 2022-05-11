@@ -11,7 +11,9 @@ import { catchError }              from 'rxjs/operators';
   providedIn: 'root'
 })
 export class TodoService {
-  private todosUrl = 'api/todos';
+  API = {
+    todos : 'http://localhost:9000/api/todos',
+  }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,15 +23,16 @@ export class TodoService {
     private http: HttpClient
   ) { }
 
+
   getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.todosUrl)
+    return this.http.get<Todo[]>(this.API.todos)
       .pipe(
         catchError(this.handleError<Todo[]>('getTodos', []))
       );
   }
 
   getTodo(id: number): Observable<Todo> {
-    const url = `${this.todosUrl}/${id}`;
+    const url = `${this.API.todos}/${id}`;
     return this.http.get<Todo>(url).pipe(
       catchError(this.handleError<Todo>(`getTodo id=${id}`))
     );
@@ -41,19 +44,19 @@ export class TodoService {
   }
 
   updateTodo(todo: Todo): Observable<any> {
-    return this.http.put(this.todosUrl, todo, this.httpOptions).pipe(
+    return this.http.put(this.API.todos, todo, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateTodo'))
     );
   }
 
   addTodo(todo: Todo): Observable<Todo>{
-    return this.http.post<Todo>(this.todosUrl, todo, this.httpOptions).pipe(
+    return this.http.post<Todo>(this.API.todos, todo, this.httpOptions).pipe(
       catchError(this.handleError<Todo>('addTodo'))
     );
   }
 
   removeTodo(id: number): Observable<Todo> {
-    const url = `${this.todosUrl}/${id}`;
+    const url = `${this.API.todos}/${id}`;
     return this.http.delete<Todo>(url, this.httpOptions).pipe(
       catchError(this.handleError<Todo>(`removeTodo`))
     );

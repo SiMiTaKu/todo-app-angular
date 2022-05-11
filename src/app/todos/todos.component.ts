@@ -19,6 +19,7 @@ export class TodosComponent implements OnInit {
   states: TodoState[]    = [];
   colors: Color[]        = [];
 
+
   constructor(
     private todoService:     TodoService,
     private categoryService: CategoryService,
@@ -33,8 +34,16 @@ export class TodosComponent implements OnInit {
   }
 
   getTodos(): void {
-    this.todoService.getTodos().subscribe(_ => this.todos = _);
+    this.todoService.getTodos().subscribe(
+      _ => console.log(_),
+      error => console.log(error),
+      () => console.log(this.todos)
+    );
   }
+
+  // getTodos(): void {
+  //   this.todoService.getTodos().subscribe(_ => this.todos = _);
+  // }
 
   getCategories(): void {
     this.categoryService.getCategories().subscribe(_ => this.categories = _);
