@@ -11,7 +11,9 @@ import { HttpClient, HttpHeaders }    from "@angular/common/http";
   providedIn: 'root'
 })
 export class CategoryService {
-  private categoriesUrl = 'api/categories';
+  API = {
+    categoriesUrl: 'http://localhost:4200/api'
+  }
 
   constructor(
     private http: HttpClient,
@@ -22,7 +24,7 @@ export class CategoryService {
   };
 
   getCategories(): Observable<Category[]>{
-    return this.http.get<[]>(this.categoriesUrl)
+    return this.http.get<[]>(this.API.categoriesUrl + "/category/list")
       .pipe(
         catchError(this.handleError<Category[]>('getCategories', []))
       );
@@ -34,26 +36,26 @@ export class CategoryService {
   }
 
   getCategory(id: number): Observable<Category>{
-    const url = `${this.categoriesUrl}/${id}`;
+    const url = `${this.API.categoriesUrl}/${id}`;
     return this.http.get<Category>(url).pipe(
       catchError(this.handleError<Category>('getCategory id = ${id}'))
     );
   }
 
   updateCategory(category: Category): Observable<any> {
-    return this.http.put(this.categoriesUrl, category, this.httpOptions).pipe(
+    return this.http.put(this.API.categoriesUrl, category, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateCategory'))
     );
   }
 
   addCategory(category: Category): Observable<Category>{
-    return this.http.post<Category>(this.categoriesUrl, category, this.httpOptions).pipe(
+    return this.http.post<Category>(this.API.categoriesUrl, category, this.httpOptions).pipe(
       catchError(this.handleError<Category>('addCategory'))
     )
   }
 
   removeCategory(id: number): Observable<Category> {
-    const url = `${this.categoriesUrl}/${id}`;
+    const url = `${this.API.categoriesUrl}/${id}`;
     return this.http.delete <Category>(url, this.httpOptions).pipe(
       catchError(this.handleError<Category>('deleteCategory'))
     );

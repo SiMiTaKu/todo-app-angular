@@ -4,6 +4,4 @@ export interface Todo {
   title:       string;
   body:        string;
   state:       number;
-  //updatedAt:   LocalDateTime;  実装方法が現時点ではわからずコメントアウト
-  //createdAt:   LocalDateTime;　実装方法が現時点ではわからずコメントアウト
 }
