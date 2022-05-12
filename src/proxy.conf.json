@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://localhost:9000/api/todos",
-    "pathRewrite": { "" : ""}
+    "target": "http://localhost:9000",
+    "pathRewrite": { "^/api" : ""}
   }
 }

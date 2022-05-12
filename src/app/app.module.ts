@@ -10,8 +10,8 @@ import { TodoRegisterComponent } from './todo-register/todo-register.component';
 import { CategoriesComponent }   from './categories/categories.component';
 
 import { FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { HttpClientInMemoryWebApiModule }  from "angular-in-memory-web-api";
-import { InMemoryDataService }             from './in-memory-data.service';
+// import { HttpClientInMemoryWebApiModule }  from "angular-in-memory-web-api";
+// import { InMemoryDataService }             from './in-memory-data.service';
 import { HttpClientModule }                from "@angular/common/http";
 import { CategoryDetailComponent }         from './category-detail/category-detail.component';
 import { CategoryRegisterComponent }       from './category-register/category-register.component';
@@ -32,9 +32,9 @@ import { CategoryRegisterComponent }       from './category-register/category-re
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, {dataEncapsulation: false}
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, {dataEncapsulation: false}
+    // ),
     ReactiveFormsModule
   ],
   providers: [],

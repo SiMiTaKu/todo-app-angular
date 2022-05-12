@@ -1,7 +1,7 @@
 import {TodoState} from "./todoState";
 
 export const TODOSTATE: TodoState[] = [
-  {id: 1, status: "TODO"},
-  {id: 2, status: "RUN"},
-  {id: 3, status: "DONE"}
+  {id: 0, status: "TODO"},
+  {id: 1, status: "RUN"},
+  {id: 2, status: "DONE"}
 ];
