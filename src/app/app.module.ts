@@ -8,6 +8,7 @@ import { HomeComponent }         from './home/home.component';
 import { TodoDetailComponent }   from './todo-detail/todo-detail.component';
 import { TodoRegisterComponent } from './todo-register/todo-register.component';
 import { CategoriesComponent }   from './categories/categories.component';
+import { ErrorComponent }        from './error/error.component';
 
 import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 // import { HttpClientInMemoryWebApiModule }  from "angular-in-memory-web-api";
@@ -15,6 +16,7 @@ import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HttpClientModule }                from "@angular/common/http";
 import { CategoryDetailComponent }         from './category-detail/category-detail.component';
 import { CategoryRegisterComponent }       from './category-register/category-register.component';
+
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { CategoryRegisterComponent }       from './category-register/category-re
     CategoriesComponent,
     CategoryDetailComponent,
     CategoryRegisterComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,

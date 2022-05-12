@@ -7,6 +7,7 @@ import { TodoRegisterComponent }     from "./todo-register/todo-register.compone
 import { CategoriesComponent }       from "./categories/categories.component";
 import { CategoryDetailComponent }   from "./category-detail/category-detail.component";
 import { CategoryRegisterComponent } from "./category-register/category-register.component";
+import { ErrorComponent }            from "./error/error.component";
 
 const routes: Routes = [
   { path: ''                  , redirectTo: '/home', pathMatch: 'full'},
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'todo/register'     , component : TodoRegisterComponent },
   { path: 'categories'        , component : CategoriesComponent },
   { path: 'categories/:id'    , component : CategoryDetailComponent },
-  { path: 'category/register' , component: CategoryRegisterComponent }
+  { path: 'category/register' , component : CategoryRegisterComponent },
+  { path: '404'               , component : ErrorComponent}
 ];
 
 @NgModule({

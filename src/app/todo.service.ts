@@ -7,6 +7,8 @@ import { TODOSTATE }        from "./mock-todoState";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError }              from 'rxjs/operators';
 
+import { Router} from "@angular/router";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +22,8 @@ export class TodoService {
   };
 
   constructor(
-    private http: HttpClient
+    private http:   HttpClient,
+    private router: Router
   ) { }
 
 
@@ -63,7 +66,8 @@ export class TodoService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error);
+      console.error(`🚨 ${operation} filed: ${error.message} 🚨`);
+      this.router.navigate(['/404']);
       return of(result as T);
     };
   }
