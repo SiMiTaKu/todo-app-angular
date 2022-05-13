@@ -47,19 +47,19 @@ export class TodoService {
   }
 
   updateTodo(todo: Todo): Observable<any> {
-    return this.http.put(this.API.todos, todo, this.httpOptions).pipe(
+    return this.http.put(this.API.todos + "/todo/update", todo, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateTodo'))
     );
   }
 
   addTodo(todo: Todo): Observable<Todo>{
-    return this.http.post<Todo>(this.API.todos, todo, this.httpOptions).pipe(
+    return this.http.post<Todo>(this.API.todos + "/todo/add", todo, this.httpOptions).pipe(
       catchError(this.handleError<Todo>('addTodo'))
     );
   }
 
   removeTodo(id: number): Observable<Todo> {
-    const url = `${this.API.todos}/todo/${id}/"remove"`;
+    const url = `${this.API.todos}/todo/${id}/remove`;
     return this.http.delete<Todo>(url, this.httpOptions).pipe(
       catchError(this.handleError<Todo>(`removeTodo`))
     );
