@@ -1,11 +1,13 @@
-import { Injectable }    from '@angular/core';
-import { Category }      from "./category";
-import { Observable, of} from "rxjs";
-import { Color }         from "./color";
-import { COLORS }        from "./mock-color";
-import { catchError }    from "rxjs/operators";
-
+import { Injectable }                from '@angular/core';
+import { Router }                     from "@angular/router";
 import { HttpClient, HttpHeaders }    from "@angular/common/http";
+
+import { Observable, of } from "rxjs";
+import { catchError }     from "rxjs/operators";
+
+import { Category } from "./category";
+import { Color }    from "./color";
+import { COLORS }   from "./mock-color";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class CategoryService {
   }
 
   constructor(
-    private http: HttpClient,
+    private http   : HttpClient,
+    private router : Router
   ) { }
 
   httpOptions = {
@@ -36,7 +39,7 @@ export class CategoryService {
   }
 
   getCategory(id: number): Observable<Category>{
-    const url = `${this.API.categoriesUrl}/${id}`;
+    const url = `${this.API.categoriesUrl}/category/${id}`;
     return this.http.get<Category>(url).pipe(
       catchError(this.handleError<Category>('getCategory id = ${id}'))
     );
@@ -63,9 +66,8 @@ export class CategoryService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
-      console.error(error);
-
+      console.error(`🚨 ${operation} filed: ${error.message} 🚨`);
+      this.router.navigate(['/error']);
       return of(result as T);
     };
   }

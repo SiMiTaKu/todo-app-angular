@@ -1,13 +1,14 @@
-import { Injectable }       from '@angular/core';
-import { Todo }             from "./todo";
-import { Observable, of }   from "rxjs";
-import { TodoState }        from "./todoState";
-import { TODOSTATE }        from "./mock-todoState";
-
+import { Injectable }              from '@angular/core';
+import { Router }                  from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { catchError }              from 'rxjs/operators';
 
-import { Router} from "@angular/router";
+import { Observable, of } from "rxjs";
+import { catchError }     from 'rxjs/operators';
+
+import { Todo }      from "./todo";
+import { TodoState } from "./todoState";
+import { TODOSTATE } from "./mock-todoState";
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,13 +29,13 @@ export class TodoService {
 
 
   getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.API.todos+ "todo/list").pipe(
+    return this.http.get<Todo[]>(this.API.todos + "/todo/list").pipe(
       catchError(this.handleError<Todo[]>('getTodos', []))
     );
   }
 
   getTodo(id: number): Observable<Todo> {
-    const url = `${this.API.todos + "todo"}/${id}`;
+    const url = `${this.API.todos}/todo/${id}`;
     return this.http.get<Todo>(url).pipe(
       catchError(this.handleError<Todo>(`getTodo id=${id}`))
     );
@@ -58,7 +59,7 @@ export class TodoService {
   }
 
   removeTodo(id: number): Observable<Todo> {
-    const url = `${this.API.todos + "todo"}/${id}/"remove"`;
+    const url = `${this.API.todos}/todo/${id}/"remove"`;
     return this.http.delete<Todo>(url, this.httpOptions).pipe(
       catchError(this.handleError<Todo>(`removeTodo`))
     );
@@ -67,7 +68,7 @@ export class TodoService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(`🚨 ${operation} filed: ${error.message} 🚨`);
-      this.router.navigate(['/404']);
+      this.router.navigate(['/error']);
       return of(result as T);
     };
   }

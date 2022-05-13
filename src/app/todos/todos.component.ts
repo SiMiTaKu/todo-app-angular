@@ -5,12 +5,11 @@ import { Todo }              from "../todo";
 import { Category }          from "../category";
 import { TodoState }         from "../todoState";
 import { Color }             from "../color";
-import { Router }            from "@angular/router";
 
 @Component({
-  selector: 'app-todos',
+  selector:    'app-todos',
   templateUrl: './todos.component.html',
-  styleUrls: ['./todos.component.scss']
+  styleUrls:   ['./todos.component.scss']
 })
 export class TodosComponent implements OnInit {
   title                  = 'Todo List';
@@ -19,11 +18,9 @@ export class TodosComponent implements OnInit {
   states: TodoState[]    = [];
   colors: Color[]        = [];
 
-
   constructor(
     private todoService:     TodoService,
     private categoryService: CategoryService,
-    private router:          Router
   ) { }
 
   ngOnInit(): void {
@@ -34,10 +31,7 @@ export class TodosComponent implements OnInit {
   }
 
   getTodos(): void {
-    this.todoService.getTodos().subscribe(
-      _ => this.todos = _,
-      error => console.log(error),
-    );
+    this.todoService.getTodos().subscribe(_ => this.todos = _);
   }
 
   getCategories(): void {
