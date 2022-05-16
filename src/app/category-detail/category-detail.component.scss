@@ -2,7 +2,7 @@
   &__item{
     display: inline-block;
     &--title{
-      margin:    5px 100px 5px 20px;
+      margin:    5px 115px 5px 10px;
       color:     #9cd3ff;
       font-size: 30px;
     }
@@ -43,6 +43,8 @@
   &__content{
     display: inline-block;
     vertical-align: top;
+    min-width: 275px;
+    max-width: 400px;
     margin: 10px;
   }
 }
@@ -63,13 +65,17 @@ h2{
   vertical-align: top;
   width:          80px;
   margin:         3px;
-}
-.item-right{
-  display: inline-block;
-  margin:  3px;
-  &__radio{
-    width: 300px;
+  &-right{
+    display: inline-block;
+    margin:  3px;
+    &__radio{
+      width: 300px;
+    }
   }
+}
+.warn{
+  margin: 2px;
+  color: #ff6b6b;
 }
 input[type=radio] {
   display: none;
@@ -127,6 +133,7 @@ label {
   border: solid 2px #777;
   border-radius: 5px;
   font-family:"ヒラギノ丸ゴ Pro W4","ヒラギノ丸ゴ Pro","Hiragino Maru Gothic Pro";
+  transition: 1.0s;
   &:hover{
     background-color: #6ca9d9;
   }
@@ -134,4 +141,7 @@ label {
     background-color: #295373;
     border: solid 2px #fff;
   }
+}
+input:disabled{
+  background-color: #999;
 }

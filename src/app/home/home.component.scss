@@ -1,10 +1,13 @@
 h1{
-  color:            #9cd3ff;
+  color:      #9cd3ff;
+  margin-top: 50px;
 }
 
 //通常時のボタン
 .route{
-  margin:           10px 10px;
+  width:      350px;
+  height:     300px;
+  text-align: center;
   &__button{
     width:            200px;
     padding:          8px;
@@ -13,7 +16,7 @@ h1{
     border:           2px solid #555;
     color:            #fff;
     cursor:           pointer;
-    margin:    10px;
+    margin:           10px;
     font-size:        25px;
 
     //カーソルが上に来た時

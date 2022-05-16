@@ -32,7 +32,7 @@
       <div class = "category_Form__content">
         <div class="item">Name:</div>
         <div class="item-right">
-          <input type = "text" name = "name" size = "40" [(ngModel)] = "category.name" placeholder = "Name">
+          <input type = "text" name = "name" [(ngModel)] = "category.name" placeholder = "Name">
           <div class = "warn" *ngIf="!category.name">
             ※Title is Requirement.
           </div>
@@ -41,7 +41,7 @@
       <div class = "category_Form__content">
         <div class="item">Slug:</div>
         <div class="item-right">
-          <input type ="text" name = "slug" size = "40" [(ngModel)] = "category.slug" placeholder = "Slug">
+          <input type ="text" name = "slug" [(ngModel)] = "category.slug" placeholder = "Slug">
           <div class = "warn" *ngIf="!category.slug">
             ※Body is Requirement.
           </div>

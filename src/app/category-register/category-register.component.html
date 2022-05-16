@@ -1,5 +1,17 @@
+<div class = "menu">
+  <div class = "menu__item">
+    <div class = "menu__item--title">
+      Register Form
+    </div>
+  </div>
+  <div class="menu__item--button">
+    <a routerLink = "/categories/">
+      <input type = "submit" value = "←" class = "menu_button">
+    </a>
+  </div>
+</div>
+<h2>New Category</h2>
 <form class = "category_Form" *ngIf="categoryRegisterForm" [formGroup] = "categoryRegisterForm" (submit)="add()">
-  <h2>Category Register Form</h2>
   <div class = "category_Form__content">
     <div class="item" for = "new-slug">Name：</div>
     <div class="item-right">
@@ -27,7 +39,8 @@
           value           = "{{color.id}}"
           name            = "categoryColor"
           formControlName = "categoryColor"
-        >{{color.name}}
+          id              = "{{color.name}}"
+        ><label for = "{{color.name}}">{{color.name}}</label>
       </div>
       <div class = "warn" *ngIf="color && color.errors?.['required']">
         ※Color is Requirement.
@@ -35,7 +48,6 @@
     </div>
   </div>
   <div class = "category_Form__content">
-    <input [disabled]="categoryRegisterForm.invalid" type = "submit" value = "register">
+    <input [disabled]="categoryRegisterForm.invalid" type = "submit" value = "register" class="submit_button">
   </div>
 </form>
-<h2><a routerLink="/categories">Back To Category List</a></h2>

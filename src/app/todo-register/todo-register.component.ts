@@ -78,7 +78,7 @@ export class TodoRegisterComponent implements OnInit {
         todo  => this.todos.push(todo),
         error => alert(error),
         ()    => this.goToTodoList()
-    );
+      );
     }
   }
 
