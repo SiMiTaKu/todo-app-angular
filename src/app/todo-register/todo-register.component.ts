@@ -74,7 +74,6 @@ export class TodoRegisterComponent implements OnInit {
         title:       this.todoRegisterForm?.value.todoTitle,
         category_id: this.todoRegisterForm?.value.todoCategory,
         body:        this.todoRegisterForm?.value.todoBody,
-        state:       this.todoRegisterForm?.value.todoState
       } as Todo).subscribe(
         todo  => this.todos.push(todo),
         error => alert(error),
