@@ -1,34 +1,36 @@
 body {
   margin:  0;
   padding: 0;
+  font-family:"ヒラギノ丸ゴ Pro W4","ヒラギノ丸ゴ Pro","Hiragino Maru Gothic Pro"; //フォント指定
+  font-weight: 900;
+  text-shadow: 2px 2px 3px #555; //テキストに影をつける
+  //-webkit-text-stroke: 0.1px #aaaaaa; //テキストの縁取り
+  color: white;
 }
-
 .header {
-  height:           70px;
+  height:           5%;
   background-color: #24292F;
   width:            100%;
-
   &__content {
-    width:      1080px;
+    width:      80%;
     margin:     auto;
   }
   &__logo {
     color:       white;
     line-height: 70px;
-    font-size:   20px;
+    font-size:   25px; // 2vmax; //ディスプレイに合わせてフォントのサイズを変更 (vw 幅, vh 高さ, vmin vmax 高さ幅短い方、長い方)
     font-weight: bold;
   }
 }
-
 .main {
-  width:      980px;
-  margin:     100px auto;
-  padding:    100px;
+  width:      80%;
+  min-width:  355px;
+  margin:     5%;
+  padding:    5%;
   box-shadow: 0 0 4px gray;
   position:   relative;
+  background-color: azure;
 }
-
 .info {
   display: none;
 }
-

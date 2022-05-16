@@ -1,3 +1,9 @@
-<h1>{{title}}</h1>
-<h2><a routerLink = "/todos">{{todoList}}</a></h2>  <!--todo一覧画面へのリンクを貼る-->
-<h2><a routerLink = "/categories">{{categoryList}}</a></h2>
+<div class = "route">
+  <h1>{{title}}</h1>
+  <div>
+    <a routerLink = "/todos"><input type="submit" value="{{todoList}}" class="route__button"></a>
+  </div>
+  <div>
+    <a routerLink = "/categories"><input type="submit" value="{{categoryList}}" class="route__button"></a>
+  </div>
+</div>

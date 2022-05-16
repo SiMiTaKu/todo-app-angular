@@ -14,7 +14,7 @@ import { COLORS }   from "./mock-color";
 })
 export class CategoryService {
   API = {
-    categoriesUrl: 'http://localhost:4200/api'
+    categoriesUrl: 'http://localhost:9000/api'
   }
 
   constructor(
@@ -58,7 +58,7 @@ export class CategoryService {
   }
 
   removeCategory(id: number): Observable<Category> {
-    const url = `${this.API.categoriesUrl}/category/${id}/remove`;
+    const url = `${this.API.categoriesUrl}/category/${id}`;
     return this.http.delete <Category>(url, this.httpOptions).pipe(
       catchError(this.handleError<Category>('deleteCategory'))
     );

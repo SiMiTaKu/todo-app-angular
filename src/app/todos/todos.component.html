@@ -1,16 +1,22 @@
-<h1>{{title}}</h1>
-<div class = "card">
-  <div class = "card__content">
-    <div class = "card__content--id">ID</div>
-    <div class = "card__content--title">TITLE</div>
-    <div class = "card__content--body">BODY</div>
-    <div class = "card__content--category">CATEGORY</div>
-    <div class = "card__content--state">STATUS</div>
+<div class = "menu">
+  <div class = "menu__item">
+    <div class = "menu__item--title">
+      {{title}}
+    </div>
+  </div>
+  <div class = "menu__item--button">
+    <a routerLink = "/todo/register">
+      <input type = "submit" value = "＋" class = "menu_button">
+    </a>
+  </div>
+  <div class="menu__item--button">
+    <a routerLink = "/home">
+      <input type = "submit" value = "←" class = "menu_button">
+    </a>
   </div>
 </div>
 <div class = "card" *ngFor = "let todo of todos">
   <div class = "card__content" style="background-color: {{getThisCategoryColor(todo.category_id)}}">
-    <div class = "card__content--id">{{todo.id}}</div>
     <div class = "card__content--title">{{todo.title}}</div>
     <div class = "card__content--body">{{todo.body}}</div>
     <div class = "card__content--category">{{getThisCategoryName(todo.category_id)}}</div>
@@ -19,20 +25,14 @@
     <div class = "card__footer">
       <div class = "card__footer--item">
         <a routerLink = "/todos/{{todo.id}}">
-          <input type="submit" value="Detail / Edit">
+          <input type="submit" value="Detail / Edit" class="submit_button">
         </a>
       </div>
 
       <div class = "card__footer--item">
-        <input type="submit" value="Remove" (click) = "remove(todo)">
+        <input type="submit" value="Remove" (click) = "remove(todo)" class="submit_button">
       </div>
     </div>
   </div>
-</div>
-<div>
-  <h2><a routerLink = "/todo/register">Register Form</a></h2>
-</div>
-<div>
-  <h2><a routerLink = "/home">Back To Home</a></h2>
 </div>
 

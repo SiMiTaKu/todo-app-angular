@@ -15,7 +15,7 @@ import { TODOSTATE } from "./mock-todoState";
 })
 export class TodoService {
   API = {
-    todos : 'http://localhost:4200/api',
+    todos : 'http://localhost:9000/api',
   }
 
   httpOptions = {
@@ -59,7 +59,7 @@ export class TodoService {
   }
 
   removeTodo(id: number): Observable<Todo> {
-    const url = `${this.API.todos}/todo/${id}/remove`;
+    const url = `${this.API.todos}/todo/${id}`;
     return this.http.delete<Todo>(url, this.httpOptions).pipe(
       catchError(this.handleError<Todo>(`removeTodo`))
     );

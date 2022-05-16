@@ -1,93 +1,102 @@
-.card{
-  width:            100%;
-  text-align:       left;
-  font-size:        13px;
-  background-color: #c7c6c6;
-  padding:          3px;
-  margin-bottom:    6px;
-
-  &__content{
-    background-color: #e1e1e1;
-
-    &--body{
-      width:       31%;
-      padding:     5px;
-      display:     inline-block;
-      text-align:  center;
-      border-left: solid 1px #5d5d5d;
-    }
-
-    &--id{
-      width:       25px;
-      padding:     5px;
-      display:     inline-block;
-      text-align:  center;
-      border-left: solid 1px #5d5d5d;
-    }
-
-    &--category{
-      width:       10%;
-      padding:     5px;
-      display:     inline-block;
-      text-align:  center;
-      border-left: solid 1px #5d5d5d;
-    }
-
+.menu{
+  &__item{
+    display: inline-block;
     &--title{
-      width:       22%;
-      padding:     5px;
-      display:     inline-block;
-      text-align:  center;
-      border-left: solid 1px #5d5d5d;
+      font-size:        30px;
+      margin:           5px 100px 5px 20px;
+      color:            #9cd3ff;
     }
+    &--button{
+      display:          inline-block;
+      vertical-align:   top;
 
-    &--state{
-      width:        7%;
-      padding:      5px;
-      display:      inline-block;
-      text-align:   center;
-      border-left:  solid 1px #5d5d5d;
-      border-right: solid 1px #5d5d5d;
-    }
-
-    &--name{
-      width:        27%;
-      padding:      5px;
-      display:      inline-block;
-      text-align:   center;
-      border-left:  solid 1px #5d5d5d;
-      border-right: solid 1px #5d5d5d;
-    }
-
-    &--slug{
-      width:       27%;
-      padding:     5px;
-      display:     inline-block;
-      text-align:  center;
-      border-left: solid 1px #5d5d5d;
-    }
-
-    &--color{
-      width:        26%;
-      padding:      5px;
-      display:      inline-block;
-      text-align:   center;
-      border-left:  solid 1px #5d5d5d;
-      border-right: solid 1px #5d5d5d;
-    }
-  }
-
-  &__footer {
-    text-align: right;
-    display:    inline-block;
-
-    &--item {
-      display:     inline-block;
-      margin-left: 18px;
+      a {
+        text-decoration:  none;
+        color:            #fff;
+      }
     }
   }
 }
-
-h1{
-  color: #3e7fb4;
+.menu_button{
+  background-color: #555;
+  display:          inline-block;
+  width:            35px;
+  height:           35px;
+  border-radius:    20px;
+  margin:           10px 5px;
+  border:           solid 2px #aaa;
+  color:            #fff;
+  font-size:        15px;
+  &:hover{
+    background-color: #444;
+    cursor:           pointer;
+  }
+  &:focus{
+    background-color: #aaa;
+    border:           solid 2px #555;
+  }
+  a {
+    margin: 0;
+  }
+}
+.card{
+  width:            340px;
+  border:           4px solid #bbb;
+  text-align:       left;
+  margin:           6px;
+  display:          inline-block;
+  border-radius:    10px;
+  &__content{
+    border-radius:    6px;
+    &--title{
+      padding:     8px 5px 2px 5px;
+      font-size:   20px;
+      text-align:  center;
+    }
+    &--body{
+      margin:     2px;
+      padding:    5px 5px 2px 5px;
+      text-align: center;
+    }
+    &--category{
+      width:        48%;
+      text-align:   center;
+      margin:       2px;
+      display:      inline-block;
+    }
+    &--state{
+      width:       48%;
+      text-align:  center;
+      display:     inline-block;
+    }
+  }
+  &__footer {
+    padding:      10px;
+    &--item {
+      display:       inline-block;
+      width:         40%;
+      text-align:    center;
+      padding: 0px 15px;
+    }
+  }
+}
+//通常時のボタン
+.submit_button{
+  display:          inline-block;
+  width:            100%;
+  padding:          8px;
+  border-radius:    4px;
+  background-color: #fff;
+  color:            #000;
+  cursor:           pointer;
+}
+//カーソルが上に来た時
+.submit_button:hover {
+  background-color: #ccc;
+}
+//選択された時
+.submit_button:focus {
+  color: #fff;
+  background-color: #333;
+  border: 2px solid #fff;
 }

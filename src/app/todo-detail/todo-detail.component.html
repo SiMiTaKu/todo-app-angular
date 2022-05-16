@@ -1,6 +1,19 @@
+<div class = "menu">
+  <div class = "menu__item">
+    <div class = "menu__item--title">
+      Detail / Edit
+    </div>
+  </div>
+  <div class="menu__item--button">
+    <a routerLink = "/todos/">
+      <input type = "submit" value = "←" class = "menu_button">
+    </a>
+  </div>
+</div>
+
 <div class = "detail" *ngIf="todo">
-  <h2>Detail  No.{{todo.id}}</h2>
   <div class = "detail__content">
+    <h2>Detail  No.{{todo.id}}</h2>
     <div class = "detail__content--title">
       <div class="item">Title：</div>
       <div class="item-right">{{todo.title}}</div>
@@ -18,58 +31,63 @@
       <div class="item-right">{{getThisState(todo.state)}}{{state}}</div>
     </div>
   </div>
-  <div class = "todo_Form">
-    <h2>Edit Form</h2>
-    <div class = "todo_Form__content">
-      <div class="item">Title:</div>
-      <div class="item-right">
-        <input type = "text" name = "title" size="40" [(ngModel)] = "todo.title" placeholder = "Title">
-        <div class = "warn" *ngIf="!todo.title">
-          ※Title is Requirement.
+  <div class="detail__content">
+    <div class = "todo_Form">
+      <h2>Edit Form</h2>
+      <div class = "todo_Form__content">
+        <div class="item">Title:</div>
+        <div class="item-right">
+          <input type = "text" name = "title" size="40" [(ngModel)] = "todo.title" placeholder = "Title" class="input_title">
+          <div class = "warn" *ngIf="!todo.title">
+            ※Title is Requirement.
+          </div>
         </div>
       </div>
-    </div>
-    <div class = "todo_Form__content">
-      <div class="item">Body</div>
-      <div class="item-right">
-        <textarea name = "body" cols = "40" rows = "4" [(ngModel)] = "todo.body" placeholder = "Body"></textarea>
-        <div class = "warn" *ngIf="!todo.body">
-          ※Body is Requirement.
+      <div class = "todo_Form__content">
+        <div class="item">Body</div>
+        <div class="item-right">
+          <textarea name = "body" cols = "40" rows = "4" [(ngModel)] = "todo.body" placeholder = "Body"></textarea>
+          <div class = "warn" *ngIf="!todo.body">
+            ※Body is Requirement.
+          </div>
         </div>
       </div>
-    </div>
-    <div class = "todo_Form__content">
-      <div class="item">Category:</div>
-      <div class="item-right">
-        <div class="todo_Form__content--radio" *ngFor="let category of categories" >
-          <input
-            type        = "radio"
-            [(ngModel)] = "todo.category_id"
-            value       = "{{category.id}}"
-            name        = "category"
-          >{{category.name}}
+      <div class = "todo_Form__content">
+        <div class="item">Category:</div>
+        <div class="item-right">
+          <div class = "item-right__category">
+            <div class="todo_Form__content--category" *ngFor="let category of categories" >
+              <input
+                type        = "radio"
+                [(ngModel)] = "todo.category_id"
+                value       = "{{category.id}}"
+                name        = "category"
+                id          = "{{category.name}}"
+              ><label for="{{category.name}}">{{category.name}}</label>
+              <!-- id と for を同じにすることでラベルとラジオボタンを関連づけられる-->
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class = "todo_Form__content">
-      <div class="item">Status:</div>
-      <div class="item-right">
-        <div class="todo_Form__content--radio" *ngFor="let state of states" >
-          <input
-            type        = "radio"
-            [(ngModel)] = "todo.state"
-            value       = "{{state.id}}"
-            name        = "color"
-          >{{state.status}}
+      <div class = "todo_Form__content">
+        <div class="item">Status:</div>
+        <div class="item-right">
+          <div class = "item-right__state">
+            <div class="todo_Form__content--state" *ngFor="let state of states" >
+              <input
+                type        = "radio"
+                [(ngModel)] = "todo.state"
+                value       = "{{state.id}}"
+                name        = "color"
+                id          = "{{state.status}}"
+              ><label for = "{{state.status}}">{{state.status}}</label>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class = "todo_Form__content">
-    <input [disabled]="!todo.title || !todo.body" type = "submit" (click) = "save()" value = "update">
+      <div class = "todo_Form__content">
+        <input [disabled]="!todo.title || !todo.body" type = "submit" (click) = "save()" value = "update" class = "submit_button">
+      </div>
     </div>
   </div>
-</div>
-
-<div>
-<h2><a routerLink = "/todos">Back To Todo List</a></h2>
 </div>

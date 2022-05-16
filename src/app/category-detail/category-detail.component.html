@@ -1,6 +1,18 @@
+<div class = "menu">
+  <div class = "menu__item">
+    <div class = "menu__item--title">
+      Detail / Edit
+    </div>
+  </div>
+  <div class="menu__item--button">
+    <a routerLink = "/categories/">
+      <input type = "submit" value = "←" class = "menu_button">
+    </a>
+  </div>
+</div>
 <div class = "detail" *ngIf="category">
-  <h2>Category No.{{category.id}}</h2>
   <div class = "detail__content">
+    <h2>Category No.{{category.id}}</h2>
     <div class = "detail__content--name">
       <div class="item">Name：</div>
       <div class="item-right">{{category.name}}</div>
@@ -14,43 +26,46 @@
       <div class="item-right">{{getThisCategoryColor(category.color)}}</div>
     </div>
   </div>
-
-  <div class = "category_Form">
-    <h2>Edit Form</h2>
-    <div class = "category_Form__content">
-      <div class="item">Name:</div>
-      <div class="item-right">
-        <input type = "text" name = "name" size = "40" [(ngModel)] = "category.name" placeholder = "Name">
-        <div class = "warn" *ngIf="!category.name">
-          ※Title is Requirement.
+  <div class = "detail__content">
+    <div class = "category_Form">
+      <h2>Edit Form</h2>
+      <div class = "category_Form__content">
+        <div class="item">Name:</div>
+        <div class="item-right">
+          <input type = "text" name = "name" size = "40" [(ngModel)] = "category.name" placeholder = "Name">
+          <div class = "warn" *ngIf="!category.name">
+            ※Title is Requirement.
+          </div>
         </div>
       </div>
-    </div>
-    <div class = "category_Form__content">
-      <div class="item">Slug:</div>
-      <div class="item-right">
-        <input type ="text" name = "slug" size = "40" [(ngModel)] = "category.slug" placeholder = "Slug">
-        <div class = "warn" *ngIf="!category.slug">
-          ※Body is Requirement.
+      <div class = "category_Form__content">
+        <div class="item">Slug:</div>
+        <div class="item-right">
+          <input type ="text" name = "slug" size = "40" [(ngModel)] = "category.slug" placeholder = "Slug">
+          <div class = "warn" *ngIf="!category.slug">
+            ※Body is Requirement.
+          </div>
         </div>
       </div>
-    </div>
-    <div class = "category_Form__content">
-      <div class="item">Color:</div>
-      <div class="item-right">
-        <div class="category_Form__content--radio" *ngFor="let color of colors" >
-          <input
-            type        = "radio"
-            [(ngModel)] = "category.color"
-            value       = "{{color.id}}"
-            name        = "color"
-          >{{color.name}}
+      <div class = "category_Form__content">
+        <div class="item">Color:</div>
+        <div class="item-right">
+          <div class = "item-right__radio">
+            <div class="category_Form__content--radio" *ngFor="let color of colors" >
+              <input
+                type        = "radio"
+                [(ngModel)] = "category.color"
+                value       = "{{color.id}}"
+                name        = "color"
+                id          = "{{color.name}}"
+              ><label for = "{{color.name}}">{{color.name}}</label>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class = "category_Form__content">
-      <input [disabled]="!category.name || !category.slug" type = "submit" (click) = save() value = "update">
+      <div class = "category_Form__content">
+        <input [disabled]="!category.name || !category.slug" type = "submit" (click) = save() value = "update" class = "submit_button">
+      </div>
     </div>
   </div>
 </div>
-<h2><a routerLink="/categories">Back to Category List</a></h2>

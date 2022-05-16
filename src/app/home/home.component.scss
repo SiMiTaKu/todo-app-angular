@@ -1,0 +1,31 @@
+h1{
+  color:            #9cd3ff;
+}
+
+//通常時のボタン
+.route{
+  margin:           10px 10px;
+  &__button{
+    width:            200px;
+    padding:          8px;
+    border-radius:    4px;
+    background-color: #9cd3ff;
+    border:           2px solid #555;
+    color:            #fff;
+    cursor:           pointer;
+    margin:    10px;
+    font-size:        25px;
+
+    //カーソルが上に来た時
+    &:hover {
+      background-color: #6ca9d9;
+    }
+
+    //選択された時
+    &:focus {
+      color:            #fff;
+      background-color: #295373;
+      border:           2px solid #aaa;
+    }
+  }
+}
