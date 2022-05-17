@@ -1,0 +1,42 @@
+.menu{
+  &__item{
+    display: inline-block;
+    &--title{
+      font-size: 30px;
+      margin:    5px 33px 5px 8px;
+      color:     #9cd3ff;
+    }
+    &--button{
+      display:        inline-block;
+      vertical-align: top;
+      a {
+        text-decoration: none;
+        color:           #fff;
+      }
+    }
+  }
+}
+.menu_button{
+  background-color: #555;
+  display:          inline-block;
+  width:            35px;
+  height:           35px;
+  border-radius:    20px;
+  margin:           10px 5px;
+  border:           solid 2px #aaa;
+  color:            #fff;
+  font-size:        15px;
+  transition:       1.0s;
+  &:hover{
+    background-color: #222;
+    cursor:           pointer;
+  }
+  &:focus{
+    background-color: #aaa;
+    border:           solid 2px #555;
+    transition:       0.1s;
+  }
+  a {
+    margin: 0;
+  }
+}

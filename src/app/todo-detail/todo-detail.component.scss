@@ -26,13 +26,15 @@
   border:           solid 2px #aaa;
   color:            #fff;
   font-size:        15px;
+  transition:       1.0s;
   &:hover{
-    background-color: #444;
+    background-color: #222;
     cursor:           pointer;
   }
   &:focus{
     background-color: #aaa;
     border:           solid 2px #555;
+    transition:       0.1s;
   }
 
   a {
@@ -51,6 +53,30 @@
 .todo_Form{
   &__content{
     margin: 10px auto;
+    //決定ボタン
+    input[type=submit]{
+      width:            150px;
+      height:           40px;
+      margin:           10px;
+      color:            #fff;
+      background-color: #9cd3ff;
+      border:           solid 2px #777;
+      border-radius:    5px;
+      font-family:      "ヒラギノ丸ゴ Pro W4","ヒラギノ丸ゴ Pro","Hiragino Maru Gothic Pro";
+      cursor:           pointer;
+      transition:       1.0s;
+      &:hover{
+        background-color: #6ca9d9;
+      }
+      &:focus{
+        background-color: #295373;
+        border: solid 2px #fff;
+        transition: 0.1s;
+      }
+      &:disabled{
+        background-color: #999;
+      }
+    }
     &--category{
       display: inline-block;
       width: 150px;
@@ -147,26 +173,4 @@ label {
     transform: scale(0);
     background: #6ca9d9;
   }
-}
-//決定ボタン
-.submit_button{
-  width: 150px;
-  height: 40px;
-  margin: 10px;
-  color:  #fff;
-  background-color: #9cd3ff;
-  border: solid 2px #777;
-  border-radius: 5px;
-  font-family:"ヒラギノ丸ゴ Pro W4","ヒラギノ丸ゴ Pro","Hiragino Maru Gothic Pro";
-  transition: 1.0s;
-  &:hover{
-    background-color: #6ca9d9;
-  }
-  &:focus{
-    background-color: #295373;
-    border: solid 2px #fff;
-  }
-}
-input:disabled{
-  background-color: #999;
 }

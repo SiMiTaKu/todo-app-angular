@@ -2,17 +2,17 @@
   &__item{
     display: inline-block;
     &--title{
-      font-size:        33px;
-      margin:           5px 95px 5px 10px;
-      color:            #9cd3ff;
+      font-size: 33px;
+      margin:    5px 95px 5px 10px;
+      color:     #9cd3ff;
     }
     &--button{
-      display:          inline-block;
-      vertical-align:   top;
+      display:        inline-block;
+      vertical-align: top;
 
       a {
-        text-decoration:  none;
-        color:            #fff;
+        text-decoration: none;
+        color:           #fff;
       }
     }
   }
@@ -27,13 +27,15 @@
   border:           solid 2px #aaa;
   color:            #fff;
   font-size:        15px;
+  transition:       1.0s;
   &:hover{
-    background-color: #444;
+    background-color: #222;
     cursor:           pointer;
   }
   &:focus{
     background-color: #aaa;
     border:           solid 2px #555;
+    transition:       0.1s;
   }
   a {
     margin: 0;
@@ -59,24 +61,24 @@
       text-align: center;
     }
     &--category{
-      width:        48%;
-      text-align:   center;
-      margin:       2px;
-      display:      inline-block;
+      width:      48%;
+      text-align: center;
+      margin:     2px;
+      display:    inline-block;
     }
     &--state{
-      width:       48%;
-      text-align:  center;
-      display:     inline-block;
+      width:      48%;
+      text-align: center;
+      display:    inline-block;
     }
   }
   &__footer {
     padding:      10px;
     &--item {
-      display:       inline-block;
-      width:         40%;
-      text-align:    center;
-      padding: 0px 15px;
+      display:    inline-block;
+      width:      40%;
+      text-align: center;
+      padding:    0px 15px;
     }
   }
 }
@@ -89,14 +91,17 @@
   background-color: #fff;
   color:            #000;
   cursor:           pointer;
-}
-//カーソルが上に来た時
-.submit_button:hover {
-  background-color: #ccc;
-}
-//選択された時
-.submit_button:focus {
-  color: #fff;
-  background-color: #333;
-  border: 2px solid #fff;
+  transition:       1.0s;
+
+  //カーソルが上に来た時
+  &:hover {
+    background-color: #bbb;
+  }
+  //選択された時
+  &:focus {
+    color:            #fff;
+    background-color: #333;
+    border:           2px solid #fff;
+    transition:       0.1s;
+  }
 }
