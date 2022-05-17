@@ -43,11 +43,11 @@
 }
 .detail{
   &__content{
-    display: inline-block;
+    display:        inline-block;
     vertical-align: top;
-    min-width: 275px;
-    max-width: 410px;
-    margin: 0 20px 20px;
+    min-width:      275px;
+    max-width:      410px;
+    margin:         0 20px 20px;
   }
 }
 .todo_Form{
@@ -79,11 +79,11 @@
     }
     &--category{
       display: inline-block;
-      width: 150px;
+      width:   150px;
     }
     &--state{
       display: inline-block;
-      width: 100px;
+      width:   100px;
     }
   }
 }
@@ -98,14 +98,14 @@ h2{
   &-right{
     display: inline-block;
     &__category{
-      width: 300px;
+      width:         300px;
       margin-bottom: 5px;
       //ラジオボタン
       input[type=radio] {
         display: none;
         &:checked + label:before {
           border-color: #444;
-          animation: ripple 0.2s linear forwards;
+          animation:    ripple 0.2s linear forwards;
         }
         &:checked + label:after {
           transform: scale(1);
@@ -118,7 +118,7 @@ h2{
         display: none;
         &:checked + label:before {
           border-color: #555;
-          animation: ripple 0.2s linear forwards;
+          animation:    ripple 0.2s linear forwards;
         }
         &:checked + label:after {
           transform: scale(1);

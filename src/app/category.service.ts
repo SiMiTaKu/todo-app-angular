@@ -14,7 +14,7 @@ import { COLORS }   from "./mock-color";
 })
 export class CategoryService {
   API = {
-    categoriesUrl: 'http://localhost:9000/api'
+    categoriesUrl: 'http://localhost:9000/api/category'
   }
 
   constructor(
@@ -27,7 +27,7 @@ export class CategoryService {
   };
 
   getCategories(): Observable<Category[]>{
-    return this.http.get<[]>(this.API.categoriesUrl + "/category/list")
+    return this.http.get<[]>(this.API.categoriesUrl + "/list")
       .pipe(
         catchError(this.handleError<Category[]>('getCategories', []))
       );
@@ -39,7 +39,7 @@ export class CategoryService {
   }
 
   getCategory(id: number): Observable<Category>{
-    const url = `${this.API.categoriesUrl}/category/${id}`;
+    const url = `${this.API.categoriesUrl}/${id}`;
     return this.http.get<Category>(url).pipe(
       catchError(this.handleError<Category>('getCategory id = ${id}'))
     );
@@ -52,13 +52,13 @@ export class CategoryService {
   }
 
   addCategory(category: Category): Observable<Category>{
-    return this.http.post<Category>(this.API.categoriesUrl, category, this.httpOptions).pipe(
+    return this.http.post<Category>(this.API.categoriesUrl + '/add', category, this.httpOptions).pipe(
       catchError(this.handleError<Category>('addCategory'))
     )
   }
 
   removeCategory(id: number): Observable<Category> {
-    const url = `${this.API.categoriesUrl}/category/${id}`;
+    const url = `${this.API.categoriesUrl}/${id}`;
     return this.http.delete <Category>(url, this.httpOptions).pipe(
       catchError(this.handleError<Category>('deleteCategory'))
     );

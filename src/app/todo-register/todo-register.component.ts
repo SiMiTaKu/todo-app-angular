@@ -48,7 +48,6 @@ export class TodoRegisterComponent implements OnInit {
   get title    () { return this.todoRegisterForm?.get('todoTitle');}
   get body     () { return this.todoRegisterForm?.get('todoBody');}
   get category () { return this.todoRegisterForm?.get('todoCategory');}
-  get state    () { return this.todoRegisterForm?.get('todoState');}
 
   getTodos(): void {
     this.todoService.getTodos().subscribe(_ => this.todos = _);
@@ -72,7 +71,7 @@ export class TodoRegisterComponent implements OnInit {
     }else{
       this.todoService.addTodo({
         title:       this.todoRegisterForm?.value.todoTitle,
-        category_id: this.todoRegisterForm?.value.todoCategory,
+        category_id: Number(this.todoRegisterForm?.value.todoCategory), //Formから返るのはstringのためNumberを指定してあげると解決
         body:        this.todoRegisterForm?.value.todoBody,
       } as Todo).subscribe(
         todo  => this.todos.push(todo),

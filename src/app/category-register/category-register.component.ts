@@ -7,9 +7,9 @@ import { Router }            from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
-  selector: 'app-category-register',
+  selector:    'app-category-register',
   templateUrl: './category-register.component.html',
-  styleUrls: ['./category-register.component.scss']
+  styleUrls:   ['./category-register.component.scss']
 })
 export class CategoryRegisterComponent implements OnInit {
   categories: Category[] = [];
@@ -52,7 +52,7 @@ export class CategoryRegisterComponent implements OnInit {
       this.categoryService.addCategory({
         name:  this.categoryRegisterForm?.value.categoryName,
         slug:  this.categoryRegisterForm?.value.categorySlug,
-        color: this.categoryRegisterForm?.value.categoryColor,
+        color: Number(this.categoryRegisterForm?.value.categoryColor),
       } as Category).subscribe(
         category  => this.categories.push(category),
         error     => alert(error),

@@ -15,7 +15,7 @@ import { TODOSTATE } from "./mock-todoState";
 })
 export class TodoService {
   API = {
-    todos : 'http://localhost:9000/api',
+    todosUrl : 'http://localhost:9000/api/todo',
   }
 
   httpOptions = {
@@ -29,13 +29,13 @@ export class TodoService {
 
 
   getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.API.todos + "/todo/list").pipe(
+    return this.http.get<Todo[]>(this.API.todosUrl + "/list").pipe(
       catchError(this.handleError<Todo[]>('getTodos', []))
     );
   }
 
   getTodo(id: number): Observable<Todo> {
-    const url = `${this.API.todos}/todo/${id}`;
+    const url = `${this.API.todosUrl}/${id}`;
     return this.http.get<Todo>(url).pipe(
       catchError(this.handleError<Todo>(`getTodo id=${id}`))
     );
@@ -47,19 +47,19 @@ export class TodoService {
   }
 
   updateTodo(todo: Todo): Observable<any> {
-    return this.http.put(this.API.todos + "/todo/update", todo, this.httpOptions).pipe(
+    return this.http.put(this.API.todosUrl + "/update", todo, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateTodo'))
     );
   }
 
   addTodo(todo: Todo): Observable<Todo>{
-    return this.http.post<Todo>(this.API.todos + "/todo/add", todo, this.httpOptions).pipe(
+    return this.http.post<Todo>(this.API.todosUrl + "/add", todo, this.httpOptions).pipe(
       catchError(this.handleError<Todo>('addTodo'))
     );
   }
 
   removeTodo(id: number): Observable<Todo> {
-    const url = `${this.API.todos}/todo/${id}`;
+    const url = `${this.API.todosUrl}/${id}`;
     return this.http.delete<Todo>(url, this.httpOptions).pipe(
       catchError(this.handleError<Todo>(`removeTodo`))
     );
