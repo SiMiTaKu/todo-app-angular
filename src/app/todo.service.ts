@@ -47,7 +47,8 @@ export class TodoService {
   }
 
   updateTodo(todo: Todo): Observable<any> {
-    return this.http.put(this.API.todosUrl + "/update", todo, this.httpOptions).pipe(
+    const url = `${this.API.todosUrl}/${todo.id}`
+    return this.http.put(url, todo, this.httpOptions).pipe(
       catchError(this.handleError<any>('updateTodo'))
     );
   }
