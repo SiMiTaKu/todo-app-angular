@@ -42,7 +42,12 @@ export class CategoryDetailComponent implements OnInit {
 
   save(): void{
     if(this.category){
-      this.categoryService.updateCategory(this.category).subscribe(
+      this.categoryService.updateCategory({
+        id:    this.category.id,
+        name:  this.category.name,
+        slug:  this.category.slug,
+        color: Number(this.category.color)
+      }).subscribe(
         () => this.goToCategoryList()
       )
     }

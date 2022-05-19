@@ -68,10 +68,10 @@ export class TodoDetailComponent implements OnInit {
   save(): void {
     if (this.todo) {
       this.todoService.updateTodo({
-        id:          Number(this.todo?.id), //Number指定忘れないこと。Stringがデフォ
+        id:          this.todo?.id,
         category_id: Number(this.todo?.category_id),
-        title:       this.todo?.body,
-        body:        this.todo?.title,
+        title:       this.todo?.title,
+        body:        this.todo?.body,
         state:       Number(this.todo?.state),
       }).subscribe(
         () => this.goToTodoList()
