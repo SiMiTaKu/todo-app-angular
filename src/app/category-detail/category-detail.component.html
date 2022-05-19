@@ -1,3 +1,6 @@
+<div *ngIf = "category && !name && !slug && !color">
+  {{setCategoryData()}}
+</div>
 <div class = "menu">
   <div class = "menu__item">
     <div class = "menu__item--title">
@@ -15,35 +18,48 @@
     <h2>Category No.{{category.id}}</h2>
     <div class = "detail__content--name">
       <div class="item">Name：</div>
-      <div class="item-right">{{category.name}}</div>
+      <div class="item-right" *ngIf="name">{{name.value}}</div>
     </div>
     <div class = "detail__content--slug">
       <div class="item">Slug：</div>
-      <div class="item-right">{{category.slug}}</div>
+      <div class="item-right" *ngIf="slug">{{slug.value}}</div>
     </div>
     <div class = "detail__content--color">
       <div class="item">Color：</div>
-      <div class="item-right">{{getThisCategoryColor(category.color)}}</div>
+      <div class="item-right" *ngIf="color">{{getThisCategoryColor(this.color.value)}}</div>
     </div>
   </div>
   <div class = "detail__content">
-    <div class = "category_Form">
+    <form class = "category_Form" *ngIf = "categoryEditForm && colors" [formGroup]="categoryEditForm" (submit)="save()">
       <h2>Edit Form</h2>
       <div class = "category_Form__content">
         <div class="item">Name:</div>
         <div class="item-right">
-          <input type = "text" name = "name" [(ngModel)] = "category.name" placeholder = "Name">
-          <div class = "warn" *ngIf="!category.name">
-            ※Title is Requirement.
+          <input
+            type            = "text"
+            name            = "name"
+            placeholder     = "Name"
+            formControlName = "categoryName"
+          >
+          <div class="warn" *ngIf="name && name.errors?.['required']">
+            ※Name is Requirement.
           </div>
         </div>
       </div>
       <div class = "category_Form__content">
         <div class="item">Slug:</div>
         <div class="item-right">
-          <input type ="text" name = "slug" [(ngModel)] = "category.slug" placeholder = "Slug">
-          <div class = "warn" *ngIf="!category.slug">
-            ※Body is Requirement.
+          <input
+            type ="text"
+            name = "slug"
+            placeholder = "Slug"
+            formControlName = "categorySlug"
+          >
+          <div class="warn" *ngIf="slug && slug.errors?.['required']">
+            ※Slug is Requirement.
+          </div>
+          <div class="warn" *ngIf="slug && slug.errors?.['alpha']">
+            ※Please use alpha only.
           </div>
         </div>
       </div>
@@ -53,19 +69,23 @@
           <div class = "item-right__radio">
             <div class="category_Form__content--radio" *ngFor="let color of colors" >
               <input
-                type        = "radio"
-                [(ngModel)] = "category.color"
-                value       = "{{color.id}}"
-                name        = "color"
-                id          = "{{color.name}}"
-              ><label for = "{{color.name}}">{{color.name}}</label>
+                type            = "radio"
+                value           = "{{color.id}}"
+                name            = "categoryColor"
+                id              = "{{color.name}}"
+                formControlName = "categoryColor" >
+              <!--　nameとformControlNameは同じでなければならない。-->
+              <label for = "{{color.name}}">{{color.name}}</label>
+            </div>
+            <div class = "warn" *ngIf="color && color.errors?.['required']">
+              ※Color is Requirement.
             </div>
           </div>
         </div>
       </div>
       <div class = "category_Form__content">
-        <input [disabled]="!category.name || !category.slug" type = "submit" (click) = save() value = "update" class = "submit_button">
+        <input [disabled]="categoryEditForm.invalid" type = "submit" value = "update" class = "submit_button">
       </div>
-    </div>
+    </form>
   </div>
 </div>

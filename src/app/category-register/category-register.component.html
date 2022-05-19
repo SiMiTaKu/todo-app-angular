@@ -15,7 +15,7 @@
   <div class = "category_Form__content">
     <div class="item" for = "new-slug">Name：</div>
     <div class="item-right">
-      <input type = "text" id = "new-name" name = "name" size="40" formControlName = "categoryName" placeholder = "Name">
+      <input type = "text" id = "new-name" name = "name" formControlName = "categoryName" placeholder = "Name">
       <div class = "warn" *ngIf="name && name.errors?.['required']">
         ※Name is Requirement.
       </div>
@@ -24,9 +24,12 @@
   <div class = "category_Form__content">
     <div class="item" for = "new-slug">Slug：</div>
     <div class="item-right">
-      <input type = "text" id = "new-slug" name = "slug" size = "40" formControlName = "categorySlug" placeholder = "Slug">
+      <input type = "text" id = "new-slug" name = "slug" formControlName = "categorySlug" placeholder = "Slug">
       <div class = "warn" *ngIf="slug && slug.errors?.['required']">
         ※Slug is Requirement.
+      </div>
+      <div class = "warn" *ngIf="slug && slug.errors?.['alpha']">
+        ※Please use alpha only.
       </div>
     </div>
   </div>

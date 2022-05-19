@@ -1,30 +1,49 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import { Category }                 from "../category";
 import { CategoryService }          from "../category.service";
 import { ActivatedRoute }           from "@angular/router";
 import { Color }                    from "../color";
 import { Router}                    from "@angular/router";
 
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+
+function alpha(c: FormControl) {
+  let REGPATTERN = /^[a-zA-Z]+$/;
+  if(REGPATTERN.test(c.value)){
+    return null;
+  } else {
+    return { alpha : { valid : false }};
+  }
+}
+
 @Component({
   selector:    'app-category-detail',
   templateUrl: './category-detail.component.html',
   styleUrls:   ['./category-detail.component.scss']
 })
+
 export class CategoryDetailComponent implements OnInit {
   @Input() category?: Category;
 
+  categoryEditForm?: FormGroup;
   colors: Color[] = [];
 
   constructor(
     private route:           ActivatedRoute,
     private categoryService: CategoryService,
-    private router:          Router
+    private fb:              FormBuilder,
+    private router:          Router,
+    private changeDetector:  ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
     this.getCategory();
     this.getColors();
   }
+
+  get name  (){ return this.categoryEditForm?.get('categoryName')}
+  get slug  (){ return this.categoryEditForm?.get('categorySlug')}
+  get color (){ return this.categoryEditForm?.get('categoryColor')}
 
   getCategory(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -39,14 +58,13 @@ export class CategoryDetailComponent implements OnInit {
     return this.colors.filter(_ => _.id == colorId).map(_ => _.name);
   }
 
-
   save(): void{
     if(this.category){
       this.categoryService.updateCategory({
         id:    this.category.id,
-        name:  this.category.name,
-        slug:  this.category.slug,
-        color: Number(this.category.color)
+        name:  this.categoryEditForm?.value.categoryName,
+        slug:  this.categoryEditForm?.value.categorySlug,
+        color: Number(this.categoryEditForm?.value.categoryColor),
       }).subscribe(
         () => this.goToCategoryList()
       )
@@ -55,5 +73,17 @@ export class CategoryDetailComponent implements OnInit {
 
   goToCategoryList(){
     this.router.navigate(['/categories'])
+  }
+
+  setCategoryData(){
+    this.categoryEditForm = this.fb.group({
+      categoryName:  [this.category?.name,  Validators.required],
+      categorySlug:  [this.category?.slug,  [Validators.required, alpha]],
+      categoryColor: [this.category?.color,  Validators.required],
+    });
+  }
+
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }
