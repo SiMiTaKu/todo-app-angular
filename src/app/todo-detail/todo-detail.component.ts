@@ -75,10 +75,10 @@ export class TodoDetailComponent implements OnInit {
     if (this.todo) {
       this.todoService.updateTodo({
         id:          this.todo?.id,
-        category_id: Number(this.todo?.category_id),
-        title:       this.todo?.title,
-        body:        this.todo?.body,
-        state:       Number(this.todo?.state),
+        title:       this.todoEditForm?.value.todoTitle,
+        body:        this.todoEditForm?.value.todoBody,
+        category_id: Number(this.todoEditForm?.value.todoCategory),
+        state:       Number(this.todoEditForm?.value.todoState),
       }).subscribe(
         () => this.goToTodoList()
       );
