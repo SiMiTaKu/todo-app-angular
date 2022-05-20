@@ -1,3 +1,6 @@
+<div *ngIf="todo && !title && !body && !category && !state">
+  {{setTodoData()}}
+</div>
 <div class = "menu">
   <div class = "menu__item">
     <div class = "menu__item--title">
@@ -16,39 +19,48 @@
     <h2>Detail  No.{{todo.id}}</h2>
     <div class = "detail__content--title">
       <div class="item">Title：</div>
-      <div class="item-right">{{todo.title}}</div>
+      <div class="item-right" *ngIf="title">{{title.value}}</div>
     </div>
     <div class = "detail__content--body">
       <div class="item">Body：</div>
-      <div class="item-right">{{todo.body}}</div>
+      <div class="item-right" *ngIf="body">{{body.value}}</div>
     </div>
     <div class = "detail__content--category">
       <div class="item">Category：</div>
-      <div class="item-right">{{getThisCategory(todo.category_id)}}{{category}}</div>
+      <div class="item-right" *ngIf="category">{{getThisCategory(category.value)}}</div>
     </div>
     <div class = "detail__content--state">
       <div class="item">State：</div>
-      <div class="item-right">{{getThisState(todo.state)}}{{state}}</div>
+      <div class="item-right" *ngIf="state">{{getThisState(state.value)}}</div>
     </div>
   </div>
   <div class="detail__content">
-    <div class = "todo_Form">
+    <form class = "todo_Form" *ngIf="todoEditForm" [formGroup]="todoEditForm" (submit)="save()">
       <h2>Edit Form</h2>
       <div class = "todo_Form__content">
         <div class="item">Title:</div>
         <div class="item-right">
-          <input type = "text" name = "title" size="40" [(ngModel)] = "todo.title" placeholder = "Title" class="input_title">
-          <div class = "warn" *ngIf="!todo.title">
-            ※Title is Requirement.
+          <input
+            type            = "text"
+            name            = "title"
+            placeholder     = "Title"
+            class           = "input_title"
+            formControlName = "todoTitle">
+          <div class="warn" *ngIf="title && title.errors?.['required']">
+            ※Title is requirement.
           </div>
         </div>
       </div>
       <div class = "todo_Form__content">
         <div class="item">Body</div>
         <div class="item-right">
-          <textarea name = "body" cols = "40" rows = "4" [(ngModel)] = "todo.body" placeholder = "Body"></textarea>
-          <div class = "warn" *ngIf="!todo.body">
-            ※Body is Requirement.
+          <textarea
+            name = "body"
+            placeholder = "Body"
+            formControlName = "todoBody">
+          </textarea>
+          <div class="warn" *ngIf="body && body.errors?.['required']">
+            ※Body is requirement.
           </div>
         </div>
       </div>
@@ -59,12 +71,15 @@
             <div class="todo_Form__content--category" *ngFor="let category of categories" >
               <input
                 type        = "radio"
-                [(ngModel)] = "todo.category_id"
                 value       = "{{category.id}}"
-                name        = "category"
+                name        = "todoCategory"
                 id          = "{{category.name}}"
+                formControlName = "todoCategory"
               ><label for="{{category.name}}">{{category.name}}</label>
               <!-- id と for を同じにすることでラベルとラジオボタンを関連づけられる-->
+            </div>
+            <div class="warn" *ngIf="category && category.errors?.['required']">
+              ※Category is requirement.
             </div>
           </div>
         </div>
@@ -75,19 +90,22 @@
           <div class = "item-right__state">
             <div class="todo_Form__content--state" *ngFor="let state of states" >
               <input
-                type        = "radio"
-                [(ngModel)] = "todo.state"
-                value       = "{{state.id}}"
-                name        = "color"
-                id          = "{{state.status}}"
+                type            = "radio"
+                value           = "{{state.id}}"
+                name            = "todoState"
+                id              = "{{state.status}}"
+                formControlName = "todoState"
               ><label for = "{{state.status}}">{{state.status}}</label>
+            </div>
+            <div class="warn" *ngIf="state && state.errors?.['required']">
+              ※Status is requirement.
             </div>
           </div>
         </div>
       </div>
       <div class = "todo_Form__content">
-        <input [disabled]="!todo.title || !todo.body" type = "submit" (click) = "save()" value = "update" class = "submit_button">
+        <input [disabled]="todoEditForm.invalid" type = "submit" (click) = "save()" value = "update" class = "submit_button">
       </div>
-    </div>
+    </form>
   </div>
 </div>

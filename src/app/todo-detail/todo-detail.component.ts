@@ -1,13 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { CategoryService }          from "../category.service";
-import { TodoService }              from "../todo.service";
-import { Location }                 from "@angular/common";
-import { ActivatedRoute }           from "@angular/router";
 import { Todo }                     from "../todo";
-import { Category }                 from "../category";
-import { Color }                    from "../color";
+import { TodoService }              from "../todo.service";
 import { TodoState }                from "../todoState";
+import { Category }                 from "../category";
+import { CategoryService }          from "../category.service";
+import { Color }                    from "../color";
 import { Router }                   from "@angular/router";
+import { ActivatedRoute }           from "@angular/router";
+import { Location }                 from "@angular/common";
+
+import {FormBuilder, FormGroup, Validators}          from "@angular/forms";
+import {Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
 
 @Component({
   selector: 'app-todo-detail',
@@ -16,19 +18,20 @@ import { Router }                   from "@angular/router";
 })
 export class TodoDetailComponent implements OnInit {
   @Input() todo?: Todo;
+  todoEditForm?: FormGroup;
 
   categories: Category[]  = [];
   colors:     Color[]     = [];
   states:     TodoState[] = [];
-  category?:  string[];
-  state?:     string[];
 
   constructor(
     private route:           ActivatedRoute,
     private todoService:     TodoService,
     private categoryService: CategoryService,
     private location:        Location,
-    private router:          Router
+    private router:          Router,
+    private fb:              FormBuilder,
+    private changeDetector:  ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -36,9 +39,12 @@ export class TodoDetailComponent implements OnInit {
     this.getCategories()
     this.getColors()
     this.getStates()
-    if(this.todo) this.getThisCategory(this.todo?.category_id)
-    if(this.todo) this.getThisState(this.todo?.state)
   }
+
+  get title   (){ return this.todoEditForm?.get('todoTitle')}
+  get body    (){ return this.todoEditForm?.get('todoBody')}
+  get category(){ return this.todoEditForm?.get('todoCategory')}
+  get state   (){ return this.todoEditForm?.get('todoState')}
 
   getCategories(): void {
     this.categoryService.getCategories().subscribe(_ => this.categories = _);
@@ -57,12 +63,12 @@ export class TodoDetailComponent implements OnInit {
     this.todoService.getState().subscribe(_ => this.states = _)
   }
 
-  getThisCategory(categoryId: number){
-    this.category = this.categories.filter(_ => _.id == categoryId).map(_ => _.name)
+  getThisCategory(categoryId: number): string[] {
+    return this.categories.filter(_ => _.id == categoryId).map(_ => _.name);
   }
 
-  getThisState(stateCode: number){
-    this.state = this.states.filter(_ => _.id == stateCode).map(_ => _.status);
+  getThisState(stateCode: number): string[] {
+    return this.states.filter(_ => _.id == stateCode).map(_ => _.status);
   }
 
   save(): void {
@@ -77,6 +83,19 @@ export class TodoDetailComponent implements OnInit {
         () => this.goToTodoList()
       );
     }
+  }
+
+  setTodoData(): void{
+    this.todoEditForm = this.fb.group({
+      todoTitle:    [this.todo?.title,       Validators.required],
+      todoBody:     [this.todo?.body,        Validators.required],
+      todoCategory: [this.todo?.category_id, Validators.required],
+      todoState:    [this.todo?.state,       Validators.required]
+    });
+  }
+
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 
   goToTodoList(): void {

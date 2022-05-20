@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class = "detail__content">
-    <form class = "category_Form" *ngIf = "categoryEditForm && colors" [formGroup]="categoryEditForm" (submit)="save()">
+    <form class = "category_Form" *ngIf = "categoryEditForm" [formGroup]="categoryEditForm" (submit)="save()">
       <h2>Edit Form</h2>
       <div class = "category_Form__content">
         <div class="item">Name:</div>
