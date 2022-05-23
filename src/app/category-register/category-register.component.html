@@ -28,7 +28,7 @@
       <div class = "warn" *ngIf="slug && slug.errors?.['required']">
         ※Slug is Requirement.
       </div>
-      <div class = "warn" *ngIf="slug && slug.errors?.['alpha']">
+      <div class = "warn" *ngIf="slug && slug.errors?.['pattern']">
         ※Please use alpha only.
       </div>
     </div>

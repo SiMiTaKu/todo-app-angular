@@ -4,16 +4,7 @@ import { Color }             from "../color";
 import { CategoryService }   from "../category.service";
 import { Router }            from "@angular/router";
 
-import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
-
-function alpha(c: FormControl) {
-  let REGPATTERN = /^[a-zA-Z]+$/;
-  if(REGPATTERN.test(c.value)){
-    return null;
-  } else {
-    return { alpha : { valid : false }};
-  }
-}
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector:    'app-category-register',
@@ -37,7 +28,7 @@ export class CategoryRegisterComponent implements OnInit {
     this.getColors();
     this.categoryRegisterForm = this.fb.group({
       categoryName:  ['',  Validators.required],
-      categorySlug:  ['',  [Validators.required, alpha]],
+      categorySlug:  ['',  [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
       categoryColor: ['',  Validators.required],
     });
   }

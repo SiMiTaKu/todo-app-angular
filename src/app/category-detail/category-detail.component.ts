@@ -5,16 +5,7 @@ import { ActivatedRoute }           from "@angular/router";
 import { Color }                    from "../color";
 import { Router}                    from "@angular/router";
 
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-
-function alpha(c: FormControl) {
-  let REGPATTERN = /^[a-zA-Z]+$/;
-  if(REGPATTERN.test(c.value)){
-    return null;
-  } else {
-    return { alpha : { valid : false }};
-  }
-}
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector:    'app-category-detail',
@@ -78,7 +69,7 @@ export class CategoryDetailComponent implements OnInit {
   setCategoryData(){
     this.categoryEditForm = this.fb.group({
       categoryName:  [this.category?.name,  Validators.required],
-      categorySlug:  [this.category?.slug,  [Validators.required, alpha]],
+      categorySlug:  [this.category?.slug,  [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
       categoryColor: [this.category?.color,  Validators.required],
     });
   }
