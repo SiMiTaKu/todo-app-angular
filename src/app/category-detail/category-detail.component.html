@@ -17,38 +17,38 @@
   <div class = "detail__content">
     <h2>Category No.{{category.id}}</h2>
     <div class = "detail__content--name">
-      <div class="item">Name：</div>
-      <div class="item-right" *ngIf="name">{{name.value}}</div>
+      <div class="left">Name</div>
+      <div class="right" *ngIf="name">{{name.value}}</div>
     </div>
     <div class = "detail__content--slug">
-      <div class="item">Slug：</div>
-      <div class="item-right" *ngIf="slug">{{slug.value}}</div>
+      <div class="left">Slug</div>
+      <div class="right" *ngIf="slug">{{slug.value}}</div>
     </div>
     <div class = "detail__content--color">
-      <div class="item">Color：</div>
-      <div class="item-right" *ngIf="color">{{getThisCategoryColor(this.color.value)}}</div>
+      <div class="left">Color</div>
+      <div class="right" *ngIf="color">{{getThisCategoryColor(this.color.value)}}</div>
     </div>
   </div>
   <div class = "detail__content">
-    <form class = "category_Form" *ngIf = "categoryEditForm" [formGroup]="categoryEditForm" (submit)="save()">
+    <form *ngIf = "categoryEditForm" [formGroup]="categoryEditForm" (submit)="save()">
       <h2>Edit Form</h2>
-      <div class = "category_Form__content">
-        <div class="item">Name:</div>
-        <div class="item-right">
+      <div class = "content">
+        <div class="content__left">Name</div>
+        <div class="content__right">
           <input
             type            = "text"
             name            = "name"
             placeholder     = "Name"
             formControlName = "categoryName"
           >
-          <div class="warn" *ngIf="name && name.errors?.['required']">
+          <div class="warn" *ngIf = "name && name.errors?.['required']">
             ※Name is Requirement.
           </div>
         </div>
       </div>
-      <div class = "category_Form__content">
-        <div class="item">Slug:</div>
-        <div class="item-right">
+      <div class = "content">
+        <div class = "content__left">Slug</div>
+        <div class = "content__right">
           <input
             type            = "text"
             name            = "slug"
@@ -63,11 +63,11 @@
           </div>
         </div>
       </div>
-      <div class = "category_Form__content">
-        <div class="item">Color:</div>
-        <div class="item-right">
-          <div class = "item-right__radio">
-            <div class="category_Form__content--radio" *ngFor="let color of colors" >
+      <div class = "content">
+        <div class="content__left">Color</div>
+        <div class="content__right">
+          <div class = "radio-form">
+            <div class = "radio-form__button" *ngFor="let color of colors" >
               <input
                 type            = "radio"
                 value           = "{{color.id}}"
@@ -83,7 +83,7 @@
           </div>
         </div>
       </div>
-      <div class = "category_Form__content">
+      <div class = "content">
         <input [disabled]="categoryEditForm.invalid" type = "submit" value = "update" class = "submit_button">
       </div>
     </form>

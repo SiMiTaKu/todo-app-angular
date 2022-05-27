@@ -11,44 +11,55 @@
   </div>
 </div>
 <h2>New Todo</h2>
-<form class = "todo_Form" *ngIf="todoRegisterForm"
+<form class *ngIf="todoRegisterForm"
       [formGroup] = "todoRegisterForm" (submit)="add()">
-  <div class = "todo_Form__content">
-    <div class="item" for = "new-title">Title：</div>
-    <div class="item-right">
-      <input type = "text" id = "new-title" name = "title" formControlName = "todoTitle" placeholder = "Title">
+  <div class = "content">
+    <div class="content__left" for = "new-title">Title</div>
+    <div class="content__right">
+      <input
+        type            = "text"
+        id              = "new-title"
+        name            = "title"
+        formControlName = "todoTitle"
+        placeholder     = "Title">
       <div class = "warn" *ngIf="title && title.errors?.['required']">
         ※Title is Requirement.
       </div>
     </div>
   </div>
-  <div class = "todo_Form__content">
-    <div class="item" for = "new-body">Body：</div>
-    <div class="item-right">
-      <textarea name = "body" id = "new-body" formControlName = "todoBody" placeholder = "Body"></textarea>
+  <div class = "content">
+    <div class = "content__left" for = "new-body">Body</div>
+    <div class = "content__right">
+      <textarea
+        name            = "body"
+        id              = "new-body"
+        formControlName = "todoBody"
+        placeholder     = "Body"></textarea>
       <div class = "warn" *ngIf="body && body.errors?.['required']">
         ※Body is Requirement.
       </div>
     </div>
   </div>
-  <div class = "todo_Form__content">
-    <div class="item">Category：</div>
-    <div class="item-right">
-      <div class="todo_Form__content--radio" *ngFor="let category of categories" >
-        <input
-          type            = "radio"
-          value           = "{{category.id}}"
-          name            = "todoCategory"
-          formControlName = "todoCategory"
-          id              = "{{category.name}}"
-        ><label for = "{{category.name}}">{{category.name}}</label>
+  <div class = "content">
+    <div class = "content__left">Category</div>
+    <div class = "content__right">
+      <div class ="radio-form">
+        <div class = "radio-form__button" *ngFor="let category of categories" >
+          <input
+            type            = "radio"
+            value           = "{{category.id}}"
+            name            = "todoCategory"
+            formControlName = "todoCategory"
+            id              = "{{category.name}}"
+          ><label for = "{{category.name}}">{{category.name}}</label>
+        </div>
       </div>
       <div class = "warn" *ngIf="category && category.errors?.['required']">
         ※Category is Requirement.
       </div>
     </div>
   </div>
-  <div class = "todo_Form__content">
+  <div class = "content">
     <input [disabled]="todoRegisterForm.invalid" type = "submit" value = "register" class="submit_button">
   </div>
 </form>

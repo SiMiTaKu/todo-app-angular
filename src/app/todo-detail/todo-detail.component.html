@@ -18,42 +18,41 @@
   <div class = "detail__content">
     <h2>Detail  No.{{todo.id}}</h2>
     <div class = "detail__content--title">
-      <div class="item">Title：</div>
-      <div class="item-right" *ngIf="title">{{title.value}}</div>
+      <div class="left">Title</div>
+      <div class="right" *ngIf="title">{{title.value}}</div>
     </div>
     <div class = "detail__content--body">
-      <div class="item">Body：</div>
-      <div class="item-right" *ngIf="body">{{body.value}}</div>
+      <div class="left">Body</div>
+      <div class="right" *ngIf="body">{{body.value}}</div>
     </div>
     <div class = "detail__content--category">
-      <div class="item">Category：</div>
-      <div class="item-right" *ngIf="category">{{getThisCategory(category.value)}}</div>
+      <div class="left">Category</div>
+      <div class="right" *ngIf="category">{{getThisCategory(category.value)}}</div>
     </div>
     <div class = "detail__content--state">
-      <div class="item">State：</div>
-      <div class="item-right" *ngIf="state">{{getThisState(state.value)}}</div>
+      <div class="left">State</div>
+      <div class="right" *ngIf="state">{{getThisState(state.value)}}</div>
     </div>
   </div>
   <div class="detail__content">
-    <form class = "todo_Form" *ngIf="todoEditForm" [formGroup]="todoEditForm" (submit)="save()">
+    <form *ngIf="todoEditForm" [formGroup]="todoEditForm" (submit)="save()">
       <h2>Edit Form</h2>
-      <div class = "todo_Form__content">
-        <div class="item">Title:</div>
-        <div class="item-right">
+      <div class = "content">
+        <div class="content__left">Title</div>
+        <div class="content__right">
           <input
             type            = "text"
             name            = "title"
             placeholder     = "Title"
-            class           = "input_title"
             formControlName = "todoTitle">
           <div class="warn" *ngIf="title && title.errors?.['required']">
             ※Title is requirement.
           </div>
         </div>
       </div>
-      <div class = "todo_Form__content">
-        <div class="item">Body</div>
-        <div class="item-right">
+      <div class = "content">
+        <div class="content__left">Body</div>
+        <div class="content__right">
           <textarea
             name = "body"
             placeholder = "Body"
@@ -64,16 +63,16 @@
           </div>
         </div>
       </div>
-      <div class = "todo_Form__content">
-        <div class="item">Category:</div>
-        <div class="item-right">
-          <div class = "item-right__category">
-            <div class="todo_Form__content--category" *ngFor="let category of categories" >
+      <div class = "content">
+        <div class = "content__left">Category</div>
+        <div class = "content__right">
+          <div class = "radio-form">
+            <div class = "radio-form__button" *ngFor="let category of categories" >
               <input
-                type        = "radio"
-                value       = "{{category.id}}"
-                name        = "todoCategory"
-                id          = "{{category.name}}"
+                type  = "radio"
+                value = "{{category.id}}"
+                name  = "todoCategory"
+                id    = "{{category.name}}"
                 formControlName = "todoCategory"
               ><label for="{{category.name}}">{{category.name}}</label>
               <!-- id と for を同じにすることでラベルとラジオボタンを関連づけられる-->
@@ -84,11 +83,11 @@
           </div>
         </div>
       </div>
-      <div class = "todo_Form__content">
-        <div class="item">Status:</div>
-        <div class="item-right">
-          <div class = "item-right__state">
-            <div class="todo_Form__content--state" *ngFor="let state of states" >
+      <div class = "content">
+        <div class="content__left">Status</div>
+        <div class="content__right">
+          <div class = "radio-form">
+            <div class="radio-form__button" *ngFor="let state of states" >
               <input
                 type            = "radio"
                 value           = "{{state.id}}"
@@ -103,8 +102,8 @@
           </div>
         </div>
       </div>
-      <div class = "todo_Form__content">
-        <input [disabled]="todoEditForm.invalid" type = "submit" (click) = "save()" value = "update" class = "submit_button">
+      <div class = "content">
+        <input [disabled]="todoEditForm.invalid" type = "submit" value = "update" class = "submit_button">
       </div>
     </form>
   </div>
