@@ -23,7 +23,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.categoryService.getCategories().subscribe(_ => this.categories = _, error => console.log(error), () => this.categories.map(category => this.setDateTime(category)));
+    this.categoryService.getCategories().subscribe(_ => this.categories = _);
   }
 
   getColors(): void {
@@ -49,12 +49,9 @@ export class CategoriesComponent implements OnInit {
     matchIds.map(id => this.todoService.removeTodo(id).subscribe());
   }
 
-  setDateTime(category: Category): void {
-    category.updated_at = (new Intl.DateTimeFormat('ja-Jp-u-ca-japanese', {
+  setDateTime(dateTime: Date): string {
+    return new Intl.DateTimeFormat('ja-Jp-u-ca-japanese', {
       month: "long", day: "numeric", hour: "numeric", minute: "numeric"
-    }).format(new Date(category.updated_at)));
-    category.created_at = (new Intl.DateTimeFormat('ja-Jp-u-ca-japanese', {
-      month: "long", day: "numeric", hour: "numeric", minute: "numeric"
-    }).format(new Date(category.created_at)));
+    }).format(new Date(dateTime));
   }
 }

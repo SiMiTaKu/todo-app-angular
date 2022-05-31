@@ -28,7 +28,7 @@ export class TodosComponent implements OnInit {
   }
 
   getTodos(): void {
-    this.todoService.getTodos().subscribe(_ => this.todos = _, error => console.log(error), () => this.todos.map(todo => this.setDateTime(todo)));
+    this.todoService.getTodos().subscribe(_ => this.todos = _);
   }
 
   getCategories(): void {
@@ -61,12 +61,9 @@ export class TodosComponent implements OnInit {
     this.todoService.removeTodo(todo.id).subscribe();
   }
 
-  setDateTime(todo: Todo): void {
-    todo.updated_at = (new Intl.DateTimeFormat('ja-Jp-u-ca-japanese', {
+  setDateTime(dateTime: Date): string {
+    return new Intl.DateTimeFormat('ja-Jp-u-ca-japanese', {
       month: "long", day: "numeric", hour: "numeric", minute: "numeric"
-    }).format(new Date(todo.updated_at)));
-    todo.created_at = (new Intl.DateTimeFormat('ja-Jp-u-ca-japanese', {
-      month: "long", day: "numeric", hour: "numeric", minute: "numeric"
-    }).format(new Date(todo.created_at)));
+    }).format(new Date(dateTime))
   }
 }
