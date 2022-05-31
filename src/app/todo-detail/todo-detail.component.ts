@@ -1,38 +1,29 @@
-import { Todo }                     from "../todo";
-import { TodoService }              from "../todo.service";
-import { TodoState }                from "../todoState";
-import { Category }                 from "../category";
-import { CategoryService }          from "../category.service";
-import { Color }                    from "../color";
-import { Router }                   from "@angular/router";
-import { ActivatedRoute }           from "@angular/router";
-import { Location }                 from "@angular/common";
+import {Todo}            from "../todo";
+import {TodoService}     from "../todo.service";
+import {TodoState}       from "../todoState";
+import {Category}        from "../category";
+import {CategoryService} from "../category.service";
+import {Color}           from "../color";
+import {Router}          from "@angular/router";
+import {ActivatedRoute}  from "@angular/router";
+import {Location}        from "@angular/common";
 
 import {FormBuilder, FormGroup, Validators}          from "@angular/forms";
 import {Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
 
 @Component({
-  selector: 'app-todo-detail',
-  templateUrl: './todo-detail.component.html',
-  styleUrls: ['./todo-detail.component.scss']
+  selector: 'app-todo-detail', templateUrl: './todo-detail.component.html', styleUrls: ['./todo-detail.component.scss']
 })
 export class TodoDetailComponent implements OnInit {
   @Input() todo?: Todo;
   todoEditForm?: FormGroup;
 
-  categories: Category[]  = [];
-  colors:     Color[]     = [];
-  states:     TodoState[] = [];
+  categories: Category[] = [];
+  colors: Color[] = [];
+  states: TodoState[] = [];
 
-  constructor(
-    private route:           ActivatedRoute,
-    private todoService:     TodoService,
-    private categoryService: CategoryService,
-    private location:        Location,
-    private router:          Router,
-    private fb:              FormBuilder,
-    private changeDetector:  ChangeDetectorRef,
-  ) {}
+  constructor(private route: ActivatedRoute, private todoService: TodoService, private categoryService: CategoryService, private location: Location, private router: Router, private fb: FormBuilder, private changeDetector: ChangeDetectorRef,) {
+  }
 
   ngOnInit(): void {
     this.getTodo()
@@ -41,10 +32,21 @@ export class TodoDetailComponent implements OnInit {
     this.getStates()
   }
 
-  get title   (){ return this.todoEditForm?.get('todoTitle')}
-  get body    (){ return this.todoEditForm?.get('todoBody')}
-  get category(){ return this.todoEditForm?.get('todoCategory')}
-  get state   (){ return this.todoEditForm?.get('todoState')}
+  get title() {
+    return this.todoEditForm?.get('todoTitle')
+  }
+
+  get body() {
+    return this.todoEditForm?.get('todoBody')
+  }
+
+  get category() {
+    return this.todoEditForm?.get('todoCategory')
+  }
+
+  get state() {
+    return this.todoEditForm?.get('todoState')
+  }
 
   getCategories(): void {
     this.categoryService.getCategories().subscribe(_ => this.categories = _);
@@ -79,18 +81,18 @@ export class TodoDetailComponent implements OnInit {
         body:        this.todoEditForm?.value.todoBody,
         category_id: Number(this.todoEditForm?.value.todoCategory),
         state:       Number(this.todoEditForm?.value.todoState),
-      }).subscribe(
-        () => this.goToTodoList()
-      );
+        updated_at:  this.todo?.updated_at,
+        created_at:  this.todo?.created_at
+      }).subscribe(() => this.goToTodoList());
     }
   }
 
-  setTodoData(): void{
+  setTodoData(): void {
     this.todoEditForm = this.fb.group({
-      todoTitle:    [this.todo?.title,       Validators.required],
-      todoBody:     [this.todo?.body,        Validators.required],
+      todoTitle:    [this.todo?.title, Validators.required],
+      todoBody:     [this.todo?.body, Validators.required],
       todoCategory: [this.todo?.category_id, Validators.required],
-      todoState:    [this.todo?.state,       Validators.required]
+      todoState:    [this.todo?.state, Validators.required]
     });
   }
 

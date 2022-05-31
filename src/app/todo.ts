@@ -4,4 +4,6 @@ export interface Todo {
   title:       string;
   body:        string;
   state:       number;
+  updated_at:  string;
+  created_at:  string;
 }

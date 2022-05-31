@@ -44,3 +44,6 @@ Thumbs.db
 project
 target
 build.sbt
+.metals/metals.log
+.metals/metals.mv.db
+.vscode/settings.json
