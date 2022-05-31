@@ -54,4 +54,17 @@ export class CategoriesComponent implements OnInit {
       month: "long", day: "numeric", hour: "numeric", minute: "numeric"
     }).format(new Date(dateTime));
   }
+
+  //id順にソート
+  sortById(): void{
+    this.categories.sort(
+      (categoryA, categoryB) => categoryA.id - categoryB.id
+    )
+  }
+  //新しい順にソート
+  sortByDate(): void{
+    this.categories.sort(
+      (categoryA, categoryB) => new Date(categoryB.updated_at).getTime() - new Date(categoryA.updated_at).getTime()
+    )
+  }
 }

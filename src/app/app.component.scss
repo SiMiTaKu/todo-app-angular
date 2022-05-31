@@ -280,3 +280,31 @@ h1 {
   color:      #9cd3ff;
   margin-top: 50px;
 }
+
+//ソート-----------------
+.sort{
+  &__button{
+    display:          inline-block;
+    width:            82px;
+    margin:           2px;
+    border-radius:    4px;
+    border-color:     #797777;
+    background-color: #b6e2ff;
+    color:            #4f4f4f;
+    cursor:           pointer;
+    transition:       1.0s;
+
+    //カーソルが上に来た時
+    &:hover {
+      background-color: #508ab0;
+    }
+
+    //選択された時
+    &:focus {
+      color:            #fff;
+      background-color: #004370;
+      border:           2px solid #fff;
+      transition:       0.1s;
+    }
+  }
+}

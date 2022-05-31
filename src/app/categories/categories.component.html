@@ -15,6 +15,10 @@
     </a>
   </div>
 </div>
+<div class = "sort">
+  <input class = "sort__button" type="submit" (click) = "sortById()"       value = "Id">
+  <input class = "sort__button" type="submit" (click) = "sortByDate()"     value = "Date">
+</div>
 <div class="card" *ngFor="let category of categories">
   <div class="card__content" style="background-color: {{getThisCategoryColor(category.color)}}">
     <div class="card__content--name">{{category.name}}</div>

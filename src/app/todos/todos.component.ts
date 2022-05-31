@@ -66,4 +66,29 @@ export class TodosComponent implements OnInit {
       month: "long", day: "numeric", hour: "numeric", minute: "numeric"
     }).format(new Date(dateTime))
   }
+
+  //id順にソート
+  sortById(): void{
+    this.todos.sort(
+      (todoA, todoB) => todoA.id - todoB.id
+    )
+  }
+  //新しい順にソート
+  sortByDate(): void{
+    this.todos.sort(
+      (todoA, todoB) => new Date(todoB.updated_at).getTime() - new Date(todoA.updated_at).getTime()
+    )
+  }
+  //終わってない順にソート
+  sortByState(): void{
+    this.todos.sort(
+      (todoA, todoB) => todoA.state - todoB.state
+    )
+  }
+  //カテゴリのid順にソート
+  sortByCategory(): void{
+    this.todos.sort(
+      (todoA, todoB) => todoA.category_id - todoB.category_id
+    )
+  }
 }
