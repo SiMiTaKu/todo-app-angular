@@ -84,6 +84,10 @@ export class TodoDetailComponent implements OnInit {
     return this.states.filter(_ => _.id == stateCode).map(_ => _.status);
   }
 
+  getThisImportance(code: number): string[] {
+    return this.importanceSeq.filter(_ => _.code == code).map(_ => _.name);
+  }
+
   save(): void {
     if (this.todo) {
       this.todoService.updateTodo({

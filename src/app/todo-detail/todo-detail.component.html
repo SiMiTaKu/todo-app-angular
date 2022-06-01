@@ -33,6 +33,10 @@
       <div class="left">State</div>
       <div class="right" *ngIf="state">{{getThisState(state.value)}}</div>
     </div>
+    <div class = "detail__content--state">
+      <div class="left">State</div>
+      <div class="right" *ngIf="importance">{{getThisImportance(importance.value)}}</div>
+    </div>
   </div>
   <div class="detail__content">
     <form *ngIf="todoEditForm" [formGroup]="todoEditForm" (submit)="save()">

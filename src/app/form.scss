@@ -1,10 +1,10 @@
 form{
   .content{
-    margin: 10px auto;
+    margin: 15px auto;
 
     &__left{
       display:        inline-block;
-      width:          100px;
+      width:          110px;
       margin:         3px;
       vertical-align: top;
       font-size:      19px;
@@ -13,6 +13,7 @@ form{
 
     &__right{
       display: inline-block;
+      margin-top: 5px;
     }
 
     //決定ボタン
@@ -55,25 +56,25 @@ h2{
 
 .left{
   display:        inline-block;
-  width:          100px;
+  width:          110px;
   margin:         3px;
-  vertical-align: center;
   font-size:      19px;
   color:          #90d0f0;
 }
 .right{
-  display: inline-block;
+  width:         290px;
+  display:       inline-block;
   margin-bottom: 10px;
 }
 
 input[type=text]{
-  width: 292px;
+  width: 282px;
   border: solid 2px #555;
   border-radius: 5px;
   font-family:"ヒラギノ丸ゴ Pro W4","ヒラギノ丸ゴ Pro","Hiragino Maru Gothic Pro";
 }
 textarea{
-  width: 292px;
+  width: 282px;
   border: solid 2px #555;
   border-radius: 5px;
   font-family:"ヒラギノ丸ゴ Pro W4","ヒラギノ丸ゴ Pro","Hiragino Maru Gothic Pro";
@@ -82,7 +83,7 @@ label {
   display: inline-block;
   position: relative;
   min-height: 20px;
-  padding: 0 30px;
+  padding: 0px 5px 0px 22px;
   margin-bottom: 0;
   cursor: pointer;
   &:before, &:after {
@@ -111,9 +112,10 @@ label {
 }
 
 .radio-form{
-  width: 300px;
+  width: 290px;
   &__button{
     display: inline-block;
+    width: 145px;
   }
 }
 input[type=radio] {
