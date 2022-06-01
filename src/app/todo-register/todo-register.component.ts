@@ -9,6 +9,7 @@ import { Location }               from "@angular/common";
 import { Router }                 from "@angular/router";
 
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {TodoImportance}                       from "../todoImportance";
 
 
 @Component({
@@ -17,11 +18,11 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
   styleUrls:   ['./todo-register.component.scss']
 })
 export class TodoRegisterComponent implements OnInit {
-  todos:      Todo[]      = [];
-  categories: Category[]  = [];
-  colors:     Color[]     = [];
-  states:     TodoState[] = [];
-
+  todos:       Todo[]              = [];
+  categories:  Category[]          = [];
+  colors:      Color[]             = [];
+  states:      TodoState[]         = [];
+  importanceSeq: TodoImportance[]  = [];
   todoRegisterForm?: FormGroup;
 
   constructor(
@@ -37,17 +38,20 @@ export class TodoRegisterComponent implements OnInit {
     this.getCategories();
     this.getColors();
     this.getStates();
+    this.getImportance();
     this.todoRegisterForm = this.fb.group({
-      todoTitle:    ['',  Validators.required],
-      todoBody :    ['',  Validators.required],
-      todoCategory: ['',  Validators.required],
-      todoState:    ['1', Validators.required]
+      todoTitle:      ['',  Validators.required],
+      todoBody :      ['',  Validators.required],
+      todoCategory:   ['',  Validators.required],
+      todoState:      ['1', Validators.required],
+      todoImportance: ['',  Validators.required]
     });
   }
 
-  get title    () { return this.todoRegisterForm?.get('todoTitle');}
-  get body     () { return this.todoRegisterForm?.get('todoBody');}
-  get category () { return this.todoRegisterForm?.get('todoCategory');}
+  get title     () { return this.todoRegisterForm?.get('todoTitle');}
+  get body      () { return this.todoRegisterForm?.get('todoBody');}
+  get category  () { return this.todoRegisterForm?.get('todoCategory');}
+  get importance() { return this.todoRegisterForm?.get('todoImportance');}
 
   getTodos(): void {
     this.todoService.getTodos().subscribe(_ => this.todos = _);
@@ -55,6 +59,10 @@ export class TodoRegisterComponent implements OnInit {
 
   getCategories(): void {
     this.categoryService.getCategories().subscribe(_ => this.categories = _);
+  }
+
+  getImportance(): void {
+    this.todoService.getImportance().subscribe(_ => this.importanceSeq = _);
   }
 
   getColors(): void {
@@ -73,6 +81,7 @@ export class TodoRegisterComponent implements OnInit {
         title:       this.todoRegisterForm?.value.todoTitle,
         category_id: Number(this.todoRegisterForm?.value.todoCategory), //Formから返るのはstringのためNumberを指定してあげると解決
         body:        this.todoRegisterForm?.value.todoBody,
+        importance:  Number(this.todoRegisterForm?.value.todoImportance)
       } as Todo).subscribe(
         todo  => this.todos.push(todo),
         error => alert(error),

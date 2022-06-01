@@ -1,4 +1,4 @@
 export interface TodoImportance{
-  id:         number;
-  importance: string;
+  code: number;
+  name: string;
 }

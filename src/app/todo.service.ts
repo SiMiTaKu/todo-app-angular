@@ -47,6 +47,11 @@ export class TodoService {
     return state;
   }
 
+  getImportance(): Observable<TodoImportance[]>{
+    const importance = of(TODOIMPORTANCE);
+    return importance;
+  }
+
   updateTodo(todo: Todo): Observable<any> {
     const url = `${this.API.todosUrl}/${todo.id}`
     return this.http.put(url, todo, this.httpOptions).pipe(

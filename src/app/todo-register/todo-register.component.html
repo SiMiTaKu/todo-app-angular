@@ -54,10 +54,29 @@
           ><label for = "{{category.name}}">{{category.name}}</label>
         </div>
       </div>
-      <div class = "warn" *ngIf="category && category.errors?.['required']">
-        ※Category is Requirement.
+    </div>
+  </div>
+  <div class = "warn" *ngIf="category && category.errors?.['required']">
+    ※Category is Requirement.
+  </div>
+  <div class = "content">
+    <div class = "content__left">Importance</div>
+    <div class = "content__right">
+      <div class ="radio-form">
+        <div class = "radio-form__button" *ngFor="let importance of importanceSeq" >
+          <input
+            type            = "radio"
+            value           = "{{importance.code}}"
+            name            = "todoImportance"
+            formControlName = "todoImportance"
+            id              = "{{importance.name}}"
+          ><label for = "{{importance.name}}">{{importance.name}}</label>
+        </div>
       </div>
     </div>
+  </div>
+  <div class = "warn" *ngIf="importance && importance.errors?.['required']">
+    ※Importance is Requirement.
   </div>
   <div class = "content">
     <input [disabled]="todoRegisterForm.invalid" type = "submit" value = "register" class="submit_button">
