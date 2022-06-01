@@ -10,6 +10,7 @@ import {Location}        from "@angular/common";
 
 import {FormBuilder, FormGroup, Validators}          from "@angular/forms";
 import {Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
+import {TodoImportance}                              from "../todoImportance";
 
 @Component({
   selector: 'app-todo-detail', templateUrl: './todo-detail.component.html', styleUrls: ['./todo-detail.component.scss']
@@ -18,9 +19,10 @@ export class TodoDetailComponent implements OnInit {
   @Input() todo?: Todo;
   todoEditForm?: FormGroup;
 
-  categories: Category[] = [];
-  colors: Color[] = [];
-  states: TodoState[] = [];
+  categories:    Category[]       = [];
+  colors:        Color[]          = [];
+  states:        TodoState[]      = [];
+  importanceSeq: TodoImportance[] = []
 
   constructor(private route: ActivatedRoute, private todoService: TodoService, private categoryService: CategoryService, private location: Location, private router: Router, private fb: FormBuilder, private changeDetector: ChangeDetectorRef,) {
   }
@@ -30,6 +32,7 @@ export class TodoDetailComponent implements OnInit {
     this.getCategories()
     this.getColors()
     this.getStates()
+    this.getImportance()
   }
 
   get title() {
@@ -46,6 +49,10 @@ export class TodoDetailComponent implements OnInit {
 
   get state() {
     return this.todoEditForm?.get('todoState')
+  }
+
+  get importance() {
+    return this.todoEditForm?.get('todoImportance')
   }
 
   getCategories(): void {
@@ -65,6 +72,10 @@ export class TodoDetailComponent implements OnInit {
     this.todoService.getState().subscribe(_ => this.states = _)
   }
 
+  getImportance(): void {
+    this.todoService.getImportance().subscribe(_ => this.importanceSeq = _)
+  }
+
   getThisCategory(categoryId: number): string[] {
     return this.categories.filter(_ => _.id == categoryId).map(_ => _.name);
   }
@@ -81,7 +92,7 @@ export class TodoDetailComponent implements OnInit {
         body:        this.todoEditForm?.value.todoBody,
         category_id: Number(this.todoEditForm?.value.todoCategory),
         state:       Number(this.todoEditForm?.value.todoState),
-        importance:  Number(1), //仮
+        importance:  Number(this.todoEditForm?.value.todoImportance),
         updated_at:  this.todo?.updated_at,
         created_at:  this.todo?.created_at
       }).subscribe(() => this.goToTodoList());
@@ -90,10 +101,11 @@ export class TodoDetailComponent implements OnInit {
 
   setTodoData(): void {
     this.todoEditForm = this.fb.group({
-      todoTitle:    [this.todo?.title, Validators.required],
-      todoBody:     [this.todo?.body, Validators.required],
-      todoCategory: [this.todo?.category_id, Validators.required],
-      todoState:    [this.todo?.state, Validators.required]
+      todoTitle:      [this.todo?.title, Validators.required],
+      todoBody:       [this.todo?.body, Validators.required],
+      todoCategory:   [this.todo?.category_id, Validators.required],
+      todoState:      [this.todo?.state, Validators.required],
+      todoImportance: [this.todo?.importance, Validators.required]
     });
   }
 

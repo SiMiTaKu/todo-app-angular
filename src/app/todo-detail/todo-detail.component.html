@@ -103,6 +103,25 @@
         </div>
       </div>
       <div class = "content">
+        <div class="content__left">Importance</div>
+        <div class="content__right">
+          <div class = "radio-form">
+            <div class="radio-form__button" *ngFor="let importance of importanceSeq" >
+              <input
+                type            = "radio"
+                value           = "{{importance.code}}"
+                name            = "todoImportance"
+                id              = "{{importance.name}}"
+                formControlName = "todoImportance"
+              ><label for = "{{importance.name}}">{{importance.name}}</label>
+            </div>
+            <div class="warn" *ngIf="importance && importance.errors?.['required']">
+              ※importance is requirement.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class = "content">
         <input [disabled]="todoEditForm.invalid" type = "submit" value = "update" class = "submit_button">
       </div>
     </form>
