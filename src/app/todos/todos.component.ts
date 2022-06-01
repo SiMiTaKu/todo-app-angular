@@ -5,6 +5,7 @@ import {Todo}              from "../todo";
 import {Category}          from "../category";
 import {TodoState}         from "../todoState";
 import {Color}             from "../color";
+import {TodoImportance}    from "../todoImportance";
 
 @Component({
   selector: 'app-todos', templateUrl: './todos.component.html', styleUrls: ['./todos.component.scss']

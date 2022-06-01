@@ -5,10 +5,11 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { catchError }     from 'rxjs/operators';
 
-import { Todo }      from "./todo";
-import { TodoState } from "./todoState";
-import { TODOSTATE } from "./mock-todoState";
-
+import { Todo }           from "./todo";
+import { TodoState }      from "./todoState";
+import { TODOSTATE }      from "./mock-todoState";
+import { TodoImportance } from "./todoImportance";
+import { TODOIMPORTANCE } from "./mock-todoImportance";
 
 @Injectable({
   providedIn: 'root'

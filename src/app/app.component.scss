@@ -119,6 +119,14 @@ body {
       text-shadow: rgba(36, 41, 47);
     }
 
+    &--importance{
+      position:    absolute;
+      margin-top:  0px;
+      margin-left: 4px;
+      color:       #b43535;
+      text-shadow: none;
+    }
+
     &--title {
       padding:    8px 5px 2px 5px;
       font-size:  20px;

@@ -81,6 +81,7 @@ export class TodoDetailComponent implements OnInit {
         body:        this.todoEditForm?.value.todoBody,
         category_id: Number(this.todoEditForm?.value.todoCategory),
         state:       Number(this.todoEditForm?.value.todoState),
+        importance:  Number(1), //仮
         updated_at:  this.todo?.updated_at,
         created_at:  this.todo?.created_at
       }).subscribe(() => this.goToTodoList());
