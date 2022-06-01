@@ -42,10 +42,10 @@
   </div>
   <div class="date_time_message">
     <div class="date_time_message__created" *ngIf="todos">
-      作成日　{{setDateTime(todo.created_at)}}
+      作成日　{{convertDateTime(todo.created_at)}}
     </div>
     <div class="date_time_message__updated">
-      更新日　{{setDateTime(todo.updated_at)}}
+      更新日　{{convertDateTime(todo.updated_at)}}
     </div>
   </div>
 </div>

@@ -49,7 +49,7 @@ export class CategoriesComponent implements OnInit {
     matchIds.map(id => this.todoService.removeTodo(id).subscribe());
   }
 
-  setDateTime(dateTime: Date): string {
+  convertDateTime(dateTime: Date): string {
     return new Intl.DateTimeFormat('ja-Jp-u-ca-japanese', {
       month: "long", day: "numeric", hour: "numeric", minute: "numeric"
     }).format(new Date(dateTime));
