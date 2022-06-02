@@ -16,10 +16,11 @@
   </div>
 </div>
 <div class = "sort">
-  <input class = "sort__button" type="submit" (click) = "sortById()"       value = "Id">
-  <input class = "sort__button" type="submit" (click) = "sortByDate()"     value = "Date">
-  <input class = "sort__button" type="submit" (click) = "sortByState()"    value = "State">
-  <input class = "sort__button" type="submit" (click) = "sortByCategory()" value = "Category">
+  <input class = "sort__button" type="submit" (click) = "sortById()"         value = "Id">
+  <input class = "sort__button" type="submit" (click) = "sortByDate()"       value = "Date">
+  <input class = "sort__button" type="submit" (click) = "sortByState()"      value = "State">
+  <input class = "sort__button" type="submit" (click) = "sortByCategory()"   value = "Category">
+  <input class = "sort__button" type="submit" (click) = "sortByImportance()" value = "Importance">
 </div>
 <div class="card" *ngFor="let todo of todos">
   <div class="card__content" style="background-color: {{getThisCategoryColor(todo.category_id)}}">

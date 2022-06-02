@@ -293,9 +293,11 @@ h1 {
 .sort{
   &__button{
     display:          inline-block;
-    width:            82px;
-    margin:           2px;
-    border-radius:    4px;
+    width:            80px;
+    height:           25px;
+    transform:        rotate(-20deg);
+    margin:           10px -5px 10px -5px;
+    border-radius:    12px;
     border-color:     #797777;
     background-color: #b6e2ff;
     color:            #4f4f4f;

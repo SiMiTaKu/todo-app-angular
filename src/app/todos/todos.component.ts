@@ -92,4 +92,10 @@ export class TodosComponent implements OnInit {
       (todoA, todoB) => todoA.category_id - todoB.category_id
     )
   }
+  //重要度順にソート
+  sortByImportance():void{
+    this.todos.sort(
+      (todoA, todoB) => todoA.importance - todoB.importance
+    )
+  }
 }
