@@ -125,6 +125,7 @@ body {
       margin-left: 4px;
       color:       #b43535;
       text-shadow: none;
+      pointer-events: none;
     }
 
     &--title {
@@ -310,7 +311,7 @@ h1 {
     }
 
     //選択された時
-    &:focus {
+    &:active { //focusは選択された状態 activeはクリックされて離されるまで
       color:            #fff;
       background-color: #004370;
       border:           2px solid #fff;
