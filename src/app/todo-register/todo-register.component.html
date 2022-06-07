@@ -11,8 +11,7 @@
   </div>
 </div>
 <h2>New Todo</h2>
-<form class *ngIf = "todoRegisterForm"
-      [formGroup] = "todoRegisterForm" (submit)="add()">
+<form class *ngIf = "todoRegisterForm" [formGroup] = "todoRegisterForm" (submit)="add()">
   <div class = "content">
     <div class = "content__left" for = "new-title">Title</div>
     <div class = "content__right">

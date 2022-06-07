@@ -3,16 +3,16 @@ import { Location }                           from "@angular/common";
 import { Router }                             from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
-import { Category }               from "../category";
-import { CategoryService }        from "../category.service";
-import { Color }                  from "../color";
-import { Todo }                   from "../todo";
-import { TodoState }              from "../todoState";
-import { TodoService }            from "../todo.service";
-import { TodoActions }            from "../todo.actions";
-import { TodoImportance }         from "../todoImportance";
+import { Category }        from "../category";
+import { CategoryService } from "../category.service";
+import { Color }           from "../color";
+import { Todo }            from "../todo";
+import { TodoState }       from "../todoState";
+import { TodoService }     from "../todo.service";
+import { TodoActions }     from "../todo.actions";
+import { TodoImportance }  from "../todoImportance";
 
-import { Store }                              from "@ngxs/store";
+import { Store } from "@ngxs/store";
 
 @Component({
   selector:    'app-todo-register',

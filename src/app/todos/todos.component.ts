@@ -5,7 +5,6 @@ import {Todo}              from "../todo";
 import {Category}          from "../category";
 import {TodoState}         from "../todoState";
 import {Color}             from "../color";
-import {TodoImportance}    from "../todoImportance";
 import {Select, Store}     from "@ngxs/store";
 import {TodoNgxsState}     from "../todo.state";
 import {Observable}        from "rxjs";
@@ -37,7 +36,6 @@ export class TodosComponent implements OnInit {
     this.getColors();
     this.getTodos();
   }
-
 
   getTodos(): void {
     this.store.dispatch(new TodoActions.Load()).subscribe(
