@@ -54,9 +54,9 @@ export class CategoryRegisterComponent implements OnInit {
         slug:  this.categoryRegisterForm?.value.categorySlug,
         color: Number(this.categoryRegisterForm?.value.categoryColor),
       } as Category).subscribe(
-        category  => this.categories.push(category),
-        error     => alert(error),
-        ()        => this.goToCategoryList()
+        category => this.categories.push(category),
+        error    => alert(error),
+        ()       => this.goToCategoryList()
       );
     }
   }

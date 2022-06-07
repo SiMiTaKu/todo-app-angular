@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'categories'        , component : CategoriesComponent },
   { path: 'categories/:id'    , component : CategoryDetailComponent },
   { path: 'category/register' , component : CategoryRegisterComponent },
-  { path: 'error'             , component : ErrorComponent}
+  { path: 'error'             , component : ErrorComponent }
 ];
 
 @NgModule({

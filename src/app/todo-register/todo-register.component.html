@@ -11,11 +11,11 @@
   </div>
 </div>
 <h2>New Todo</h2>
-<form class *ngIf="todoRegisterForm"
+<form class *ngIf = "todoRegisterForm"
       [formGroup] = "todoRegisterForm" (submit)="add()">
   <div class = "content">
-    <div class="content__left" for = "new-title">Title</div>
-    <div class="content__right">
+    <div class = "content__left" for = "new-title">Title</div>
+    <div class = "content__right">
       <input
         type            = "text"
         id              = "new-title"
@@ -35,7 +35,7 @@
         id              = "new-body"
         formControlName = "todoBody"
         placeholder     = "Body"></textarea>
-      <div class = "warn" *ngIf="body && body.errors?.['required']">
+      <div class = "warn" *ngIf = "body && body.errors?.['required']">
         ※Body is Requirement.
       </div>
     </div>
@@ -43,7 +43,7 @@
   <div class = "content">
     <div class = "content__left">Category</div>
     <div class = "content__right">
-      <div class ="radio-form">
+      <div class = "radio-form">
         <div class = "radio-form__button" *ngFor="let category of categories" >
           <input
             type            = "radio"
@@ -53,7 +53,7 @@
             id              = "{{category.name}}"
           ><label for = "{{category.name}}">{{category.name}}</label>
         </div>
-        <div class = "warn" *ngIf="category && category.errors?.['required']">
+        <div class = "warn" *ngIf = "category && category.errors?.['required']">
           ※Category is Requirement.
         </div>
       </div>
@@ -62,7 +62,7 @@
   <div class = "content">
     <div class = "content__left">Importance</div>
     <div class = "content__right">
-      <div class ="radio-form">
+      <div class = "radio-form">
         <div class = "radio-form__button" *ngFor="let importance of importanceSeq" >
           <input
             type            = "radio"
@@ -72,13 +72,13 @@
             id              = "{{importance.name}}"
           ><label for = "{{importance.name}}">{{importance.name}}</label>
         </div>
-        <div class = "warn" *ngIf="importance && importance.errors?.['required']">
+        <div class = "warn" *ngIf = "importance && importance.errors?.['required']">
           ※Importance is Requirement.
         </div>
       </div>
     </div>
   </div>
   <div class = "content">
-    <input [disabled]="todoRegisterForm.invalid" type = "submit" value = "register" class="submit_button">
+    <input [disabled] = "todoRegisterForm.invalid" type = "submit" value = "register" class="submit_button">
   </div>
 </form>

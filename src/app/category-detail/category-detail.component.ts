@@ -19,7 +19,12 @@ export class CategoryDetailComponent implements OnInit {
   categoryEditForm?: FormGroup;
   colors: Color[] = [];
 
-  constructor(private route: ActivatedRoute, private categoryService: CategoryService, private fb: FormBuilder, private router: Router, private changeDetector: ChangeDetectorRef,) {
+  constructor(
+    private route:           ActivatedRoute,
+    private categoryService: CategoryService,
+    private fb:              FormBuilder,
+    private router:          Router,
+    private changeDetector:  ChangeDetectorRef,) {
   }
 
   ngOnInit(): void {

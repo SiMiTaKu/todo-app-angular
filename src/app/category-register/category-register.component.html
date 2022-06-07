@@ -11,10 +11,10 @@
   </div>
 </div>
 <h2>New Category</h2>
-<form *ngIf="categoryRegisterForm" [formGroup] = "categoryRegisterForm" (submit)="add()">
+<form *ngIf = "categoryRegisterForm" [formGroup] = "categoryRegisterForm" (submit) = "add()">
   <div class = "content">
-    <div class="content__left" for = "new-slug">Name</div>
-    <div class="content__right">
+    <div class = "content__left" for = "new-slug">Name</div>
+    <div class = "content__right">
       <input
         type            = "text"
         id              = "new-name"
@@ -63,6 +63,6 @@
     </div>
   </div>
   <div class = "content">
-    <input [disabled]="categoryRegisterForm.invalid" type = "submit" value = "register" class="submit_button">
+    <input [disabled]="categoryRegisterForm.invalid" type = "submit" value = "register" class = "submit_button">
   </div>
 </form>
