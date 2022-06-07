@@ -11,12 +11,18 @@ import {Location}        from "@angular/common";
 import {FormBuilder, FormGroup, Validators}          from "@angular/forms";
 import {Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
 import {TodoImportance}                              from "../todoImportance";
+import {Select, Store}                               from "@ngxs/store";
+import {TodoActions}                                 from "../todo.actions";
+import {TodoNgxsState}                               from "../todo.state";
+import {Observable}                                  from "rxjs";
 
 @Component({
   selector: 'app-todo-detail', templateUrl: './todo-detail.component.html', styleUrls: ['./todo-detail.component.scss']
 })
 export class TodoDetailComponent implements OnInit {
-  @Input() todo?: Todo;
+  @Select(TodoNgxsState.selectedTodo) todo$?: Observable<Todo>
+  todo?: Todo;
+
   todoEditForm?: FormGroup;
 
   categories:    Category[]       = [];
@@ -24,8 +30,16 @@ export class TodoDetailComponent implements OnInit {
   states:        TodoState[]      = [];
   importanceSeq: TodoImportance[] = []
 
-  constructor(private route: ActivatedRoute, private todoService: TodoService, private categoryService: CategoryService, private location: Location, private router: Router, private fb: FormBuilder, private changeDetector: ChangeDetectorRef,) {
-  }
+  constructor(
+    private route:           ActivatedRoute,
+    private todoService:     TodoService,
+    private categoryService: CategoryService,
+    private location:        Location,
+    private router:          Router,
+    private fb:              FormBuilder,
+    private changeDetector:  ChangeDetectorRef,
+    private store:           Store
+  ) {}
 
   ngOnInit(): void {
     this.getTodo()
@@ -61,7 +75,11 @@ export class TodoDetailComponent implements OnInit {
 
   getTodo(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.todoService.getTodo(id).subscribe(_ => this.todo = _);
+    this.store.dispatch(new TodoActions.Select(id)).subscribe(
+      _ => this.todo = _,
+      error => console.error(error),
+      () => console.log("これ" + this.todo)
+    )
   }
 
   getColors(): void {
@@ -88,28 +106,26 @@ export class TodoDetailComponent implements OnInit {
     return this.importanceSeq.filter(_ => _.code == code).map(_ => _.name);
   }
 
-  save(): void {
-    if (this.todo) {
-      this.todoService.updateTodo({
-        id:          this.todo?.id,
-        title:       this.todoEditForm?.value.todoTitle,
-        body:        this.todoEditForm?.value.todoBody,
-        category_id: Number(this.todoEditForm?.value.todoCategory),
-        state:       Number(this.todoEditForm?.value.todoState),
-        importance:  Number(this.todoEditForm?.value.todoImportance),
-        updated_at:  this.todo?.updated_at,
-        created_at:  this.todo?.created_at
-      }).subscribe(() => this.goToTodoList());
-    }
+  save(todo: Todo): void {
+    this.todoService.updateTodo({
+      id:          todo.id,
+      title:       this.todoEditForm?.value.todoTitle,
+      body:        this.todoEditForm?.value.todoBody,
+      category_id: Number(this.todoEditForm?.value.todoCategory),
+      state:       Number(this.todoEditForm?.value.todoState),
+      importance:  Number(this.todoEditForm?.value.todoImportance),
+      updated_at:  todo.updated_at,
+      created_at:  todo.created_at
+    }).subscribe(() => this.goToTodoList());
   }
 
-  setTodoData(): void {
+  setTodoData(todo: Todo): void {
     this.todoEditForm = this.fb.group({
-      todoTitle:      [this.todo?.title, Validators.required],
-      todoBody:       [this.todo?.body, Validators.required],
-      todoCategory:   [this.todo?.category_id, Validators.required],
-      todoState:      [this.todo?.state, Validators.required],
-      todoImportance: [this.todo?.importance, Validators.required]
+      todoTitle:      [todo.title, Validators.required],
+      todoBody:       [todo.body, Validators.required],
+      todoCategory:   [todo.category_id, Validators.required],
+      todoState:      [todo.state, Validators.required],
+      todoImportance: [todo.importance, Validators.required]
     });
   }
 

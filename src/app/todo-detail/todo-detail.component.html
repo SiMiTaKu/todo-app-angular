@@ -1,6 +1,3 @@
-<div *ngIf="todo && !title && !body && !category && !state">
-  {{setTodoData()}}
-</div>
 <div class = "menu">
   <div class = "menu__item">
     <div class = "menu__item--title">
@@ -14,7 +11,10 @@
   </div>
 </div>
 
-<div class = "detail" *ngIf="todo">
+<div class = "detail" *ngIf="todo$ | async as todo">
+  <div *ngIf="!todoEditForm">
+    {{setTodoData(todo)}}
+  </div>
   <div class = "detail__content">
     <h2>Detail  No.{{todo.id}}</h2>
     <div class = "detail__content--title">
@@ -39,7 +39,7 @@
     </div>
   </div>
   <div class="detail__content">
-    <form *ngIf="todoEditForm" [formGroup]="todoEditForm" (submit)="save()">
+    <form *ngIf="todoEditForm" [formGroup]="todoEditForm" (submit)="save(todo)">
       <h2>Edit Form</h2>
       <div class = "content">
         <div class="content__left">Title</div>

@@ -83,12 +83,12 @@ export class TodosComponent implements OnInit {
     }).format(new Date(dateTime))
   }
 
-  //id順にソート
-  sortById(): void{
-    this.todos.sort(
-      (todoA, todoB) => todoA.id - todoB.id
-    )
-  }
+  // //id順にソート
+  // sortById(): void{
+  //   this.todos.sort(
+  //     (todoA, todoB) => todoA.id - todoB.id
+  //   )
+  // }
   // //新しい順にソート
   // sortByDate(): void{
   //   this.todos.sort(

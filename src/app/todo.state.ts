@@ -7,12 +7,14 @@ import { tap }                                   from "rxjs";
 
 export class TodoStateModel{
   todos?: Todo[];
+  selectedTodo?: Todo;
 }
 
 @State<TodoStateModel>({
   name: 'todos',
   defaults: {
-    todos: []
+    todos: [],
+    selectedTodo: undefined
   }
 })
 
@@ -28,7 +30,13 @@ export class TodoNgxsState{
     return state.todos;
   }
 
+  //洗濯中のTodo
+  @Selector()
+  static selectedTodo(state: TodoStateModel){
+    return state.selectedTodo;
+  }
 
+  //todoリスト読み込み
   @Action(TodoActions.Load)
   load(ctx: StateContext<TodoStateModel>){
     return this.todoService.getTodos().pipe(
@@ -39,4 +47,20 @@ export class TodoNgxsState{
       })
     )
   }
+
+  //選択されたTodo
+  @Action(TodoActions.Select)
+  Select(ctx: StateContext<TodoStateModel>, action: TodoActions.Select){
+    const id = action.id;
+    return this.todoService.getTodo(id).pipe(
+      tap((data: Todo) => {
+        ctx.patchState({
+          selectedTodo: data
+        })
+      })
+    )
+  }
+
+
+
 }
