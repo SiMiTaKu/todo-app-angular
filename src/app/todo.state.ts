@@ -2,8 +2,8 @@ import { Todo }                                  from "./todo";
 import { TodoService }                           from "./todo.service";
 import { TodoActions }                           from "./todo.actions";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { Injectable }                            from "@angular/core";
-import { tap }                                   from "rxjs";
+import { Injectable }  from "@angular/core";
+import {finalize, tap} from "rxjs";
 
 export class TodoStateModel{
   todos?: Todo[];
@@ -61,6 +61,16 @@ export class TodoNgxsState{
     )
   }
 
+  @Action(TodoActions.Add)
+  Add(ctx: StateContext<TodoStateModel>, action: TodoActions.Add){
+    const todo = action.payload
+
+    return this.todoService.addTodo(todo).pipe(
+      finalize(() => {
+        ctx.dispatch(new TodoActions.Load())
+      })
+    )
+  }
 
 
 }

@@ -1,16 +1,18 @@
-import { Component, OnInit }      from '@angular/core';
-import { CategoryService }        from "../category.service";
-import { TodoService }            from "../todo.service";
-import { Category }               from "../category";
-import { Color }                  from "../color";
-import { TodoState }              from "../todoState";
-import { Todo }                   from "../todo";
-import { Location }               from "@angular/common";
-import { Router }                 from "@angular/router";
-
+import { Component, OnInit }                  from '@angular/core';
+import { Location }                           from "@angular/common";
+import { Router }                             from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import {TodoImportance}                       from "../todoImportance";
 
+import { Category }               from "../category";
+import { CategoryService }        from "../category.service";
+import { Color }                  from "../color";
+import { Todo }                   from "../todo";
+import { TodoState }              from "../todoState";
+import { TodoService }            from "../todo.service";
+import { TodoActions }            from "../todo.actions";
+import { TodoImportance }         from "../todoImportance";
+
+import { Store }                              from "@ngxs/store";
 
 @Component({
   selector:    'app-todo-register',
@@ -18,11 +20,11 @@ import {TodoImportance}                       from "../todoImportance";
   styleUrls:   ['./todo-register.component.scss']
 })
 export class TodoRegisterComponent implements OnInit {
-  todos:       Todo[]              = [];
-  categories:  Category[]          = [];
-  colors:      Color[]             = [];
-  states:      TodoState[]         = [];
-  importanceSeq: TodoImportance[]  = [];
+
+  categories:        Category[]       = [];
+  colors:            Color[]          = [];
+  states:            TodoState[]      = [];
+  importanceSeq:     TodoImportance[] = [];
   todoRegisterForm?: FormGroup;
 
   constructor(
@@ -30,11 +32,11 @@ export class TodoRegisterComponent implements OnInit {
     private categoryService: CategoryService,
     private location:        Location,
     private fb:              FormBuilder,
-    private router:          Router
+    private router:          Router,
+    private store:           Store
   ) { }
 
   ngOnInit(): void {
-    this.getTodos();
     this.getCategories();
     this.getColors();
     this.getStates();
@@ -52,10 +54,6 @@ export class TodoRegisterComponent implements OnInit {
   get body      () { return this.todoRegisterForm?.get('todoBody');}
   get category  () { return this.todoRegisterForm?.get('todoCategory');}
   get importance() { return this.todoRegisterForm?.get('todoImportance');}
-
-  getTodos(): void {
-    this.todoService.getTodos().subscribe(_ => this.todos = _);
-  }
 
   getCategories(): void {
     this.categoryService.getCategories().subscribe(_ => this.categories = _);
@@ -77,13 +75,13 @@ export class TodoRegisterComponent implements OnInit {
     if(this.todoRegisterForm?.invalid) {
       alert("Error!! Please check form area.")
     }else{
-      this.todoService.addTodo({
+      this.store.dispatch(new TodoActions.Add({
         title:       this.todoRegisterForm?.value.todoTitle,
         category_id: Number(this.todoRegisterForm?.value.todoCategory), //Formから返るのはstringのためNumberを指定してあげると解決
         body:        this.todoRegisterForm?.value.todoBody,
         importance:  Number(this.todoRegisterForm?.value.todoImportance)
-      } as Todo).subscribe(
-        todo  => this.todos.push(todo),
+      } as Todo)).subscribe(
+        _     => _,
         error => alert(error),
         ()    => this.goToTodoList()
       );
