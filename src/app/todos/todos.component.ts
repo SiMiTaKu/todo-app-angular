@@ -6,11 +6,18 @@ import {Category}          from "../category";
 import {TodoState}         from "../todoState";
 import {Color}             from "../color";
 import {TodoImportance}    from "../todoImportance";
+import {Select, Store}     from "@ngxs/store";
+import {TodoNgxsState}     from "../todo.state";
+import {Observable}        from "rxjs";
+import {TodoActions}       from "../todo.actions";
 
 @Component({
   selector: 'app-todos', templateUrl: './todos.component.html', styleUrls: ['./todos.component.scss']
 })
 export class TodosComponent implements OnInit {
+
+  @Select(TodoNgxsState.todos) todos$?: Observable<Todo[]>
+
   title = 'Todo List';
 
   todos:      Todo[]      = [];
@@ -18,8 +25,11 @@ export class TodosComponent implements OnInit {
   states:     TodoState[] = [];
   colors:     Color[]     = [];
 
-  constructor(private todoService: TodoService, private categoryService: CategoryService,) {
-  }
+  constructor(
+    private todoService:     TodoService,
+    private categoryService: CategoryService,
+    private store:           Store
+  ) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -28,8 +38,13 @@ export class TodosComponent implements OnInit {
     this.getTodos();
   }
 
+
   getTodos(): void {
-    this.todoService.getTodos().subscribe(_ => this.todos = _);
+    this.store.dispatch(new TodoActions.Load()).subscribe(
+      _ => _,
+      error => console.error("🚨" + error),
+      () => console.log(this.todos)
+    )
   }
 
   getCategories(): void {
@@ -74,28 +89,28 @@ export class TodosComponent implements OnInit {
       (todoA, todoB) => todoA.id - todoB.id
     )
   }
-  //新しい順にソート
-  sortByDate(): void{
-    this.todos.sort(
-      (todoA, todoB) => new Date(todoB.updated_at).getTime() - new Date(todoA.updated_at).getTime()
-    )
-  }
-  //終わってない順にソート
-  sortByState(): void{
-    this.todos.sort(
-      (todoA, todoB) => todoA.state - todoB.state
-    )
-  }
-  //カテゴリのid順にソート
-  sortByCategory(): void{
-    this.todos.sort(
-      (todoA, todoB) => todoA.category_id - todoB.category_id
-    )
-  }
-  //重要度順にソート
-  sortByImportance():void{
-    this.todos.sort(
-      (todoA, todoB) => todoA.importance - todoB.importance
-    )
-  }
+  // //新しい順にソート
+  // sortByDate(): void{
+  //   this.todos.sort(
+  //     (todoA, todoB) => new Date(todoB.updated_at).getTime() - new Date(todoA.updated_at).getTime()
+  //   )
+  // }
+  // //終わってない順にソート
+  // sortByState(): void{
+  //   this.todos.sort(
+  //     (todoA, todoB) => todoA.state - todoB.state
+  //   )
+  // }
+  // //カテゴリのid順にソート
+  // sortByCategory(): void{
+  //   this.todos.sort(
+  //     (todoA, todoB) => todoA.category_id - todoB.category_id
+  //   )
+  // }
+  // //重要度順にソート
+  // sortByImportance():void{
+  //   this.todos.sort(
+  //     (todoA, todoB) => todoA.importance - todoB.importance
+  //   )
+  // }
 }

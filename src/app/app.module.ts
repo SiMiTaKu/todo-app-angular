@@ -17,6 +17,9 @@ import { HttpClientModule }                from "@angular/common/http";
 import { CategoryDetailComponent }         from './category-detail/category-detail.component';
 import { CategoryRegisterComponent }       from './category-register/category-register.component';
 
+import { NgxsModule }             from "@ngxs/store";
+import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
+import { TodoNgxsState }          from "./todo.state";
 
 @NgModule({
   declarations: [
@@ -38,7 +41,11 @@ import { CategoryRegisterComponent }       from './category-register/category-re
     // HttpClientInMemoryWebApiModule.forRoot(
     //   InMemoryDataService, {dataEncapsulation: false}
     // ),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxsModule.forRoot([
+      TodoNgxsState
+    ]),
+    NgxsLoggerPluginModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
