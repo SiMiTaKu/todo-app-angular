@@ -84,4 +84,15 @@ export class TodoNgxsState{
       })
     )
   }
+
+  //Todo更新時
+  @Action(TodoActions.Update)
+  update(ctx: StateContext<TodoStateModel>, action: TodoActions.Update){
+    const todo = action.payload
+    return this.todoService.updateTodo(todo).pipe(
+      finalize(() => {
+        ctx.dispatch(new TodoActions.Load())
+      })
+    )
+  }
 }

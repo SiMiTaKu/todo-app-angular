@@ -107,7 +107,7 @@ export class TodoDetailComponent implements OnInit {
   }
 
   save(todo: Todo): void {
-    this.todoService.updateTodo({
+    this.store.dispatch(new TodoActions.Update({
       id:          todo.id,
       title:       this.todoEditForm?.value.todoTitle,
       body:        this.todoEditForm?.value.todoBody,
@@ -116,7 +116,11 @@ export class TodoDetailComponent implements OnInit {
       importance:  Number(this.todoEditForm?.value.todoImportance),
       updated_at:  todo.updated_at,
       created_at:  todo.created_at
-    }).subscribe(() => this.goToTodoList());
+    } as Todo)).subscribe(
+      _ => _,
+      error => error,
+      () => this.goToTodoList()
+    );
   }
 
   setTodoData(todo: Todo): void {
