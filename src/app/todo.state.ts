@@ -2,8 +2,9 @@ import { Todo }                                  from "./todo";
 import { TodoService }                           from "./todo.service";
 import { TodoActions }                           from "./todo.actions";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { Injectable }  from "@angular/core";
-import {finalize, tap} from "rxjs";
+
+import { Injectable }  from   "@angular/core";
+import { finalize, tap } from "rxjs";
 
 export class TodoStateModel{
   todos?: Todo[];
@@ -30,7 +31,7 @@ export class TodoNgxsState{
     return state.todos;
   }
 
-  //洗濯中のTodo
+  //選択中のTodo
   @Selector()
   static selectedTodo(state: TodoStateModel){
     return state.selectedTodo;
@@ -61,6 +62,7 @@ export class TodoNgxsState{
     )
   }
 
+  //Todo追加時
   @Action(TodoActions.Add)
   Add(ctx: StateContext<TodoStateModel>, action: TodoActions.Add){
     const todo = action.payload
@@ -72,5 +74,14 @@ export class TodoNgxsState{
     )
   }
 
-
+  //Todo削除時
+  @Action(TodoActions.Remove)
+  remove(ctx: StateContext<TodoStateModel>, action: TodoActions.Remove){
+    const todo = action.payload
+    return this.todoService.removeTodo(todo.id).pipe(
+      finalize(() => {
+        ctx.dispatch(new TodoActions.Load())
+      })
+    )
+  }
 }

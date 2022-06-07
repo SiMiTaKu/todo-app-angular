@@ -73,8 +73,7 @@ export class TodosComponent implements OnInit {
   }
 
   remove(todo: Todo): void {
-    this.todos = this.todos.filter(_ => _ !== todo);
-    this.todoService.removeTodo(todo.id).subscribe();
+    this.store.dispatch(new TodoActions.Remove(todo))
   }
 
   convertDateTime(dateTime: Date): string {
