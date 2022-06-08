@@ -76,4 +76,14 @@ export class CategoryNgxsState{
       })
     )
   }
+
+  @Action(CategoryActions.Update)
+  Update(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Update){
+    const category = action.payload
+    return this.categoryService.updateCategory(category).pipe(
+      tap(() => {
+        ctx.dispatch(new CategoryActions.Load())
+      })
+    )
+  }
 }

@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router }                      from "@angular/router";
-import { FormBuilder, FormGroup, Validators }          from "@angular/forms";
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router }               from "@angular/router";
+import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
 
 import { Category }          from "../category";
 import { CategoryService }   from "../category.service";
@@ -58,15 +58,20 @@ export class CategoryDetailComponent implements OnInit {
   }
 
   save(category: Category): void {
-    this.categoryService.updateCategory({
-      id:         category.id,
-      name:       this.categoryEditForm?.value.categoryName,
-      slug:       this.categoryEditForm?.value.categorySlug,
-      color:      Number(this.categoryEditForm?.value.categoryColor),
-      updated_at: category.updated_at,
-      created_at: category.created_at
-    }).subscribe(() => this.goToCategoryList())
-
+    this.store.dispatch(new CategoryActions.Update(
+      {
+        id:         category.id,
+        name:       this.categoryEditForm?.value.categoryName,
+        slug:       this.categoryEditForm?.value.categorySlug,
+        color:      Number(this.categoryEditForm?.value.categoryColor),
+        updated_at: category.updated_at,
+        created_at: category.created_at
+      }as Category)
+    ).subscribe(
+      _ => _,
+      error => console.error(error),
+      () => this.goToCategoryList()
+    )
   }
 
   goToCategoryList() {
