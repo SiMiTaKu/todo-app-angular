@@ -15,33 +15,34 @@
     </a>
   </div>
 </div>
-<div class = "sort">
-  <input class = "sort__button" type="submit" (click) = "sortById()"       value = "Id">
-  <input class = "sort__button" type="submit" (click) = "sortByDate()"     value = "Date">
-</div>
-<div class="card" *ngFor="let category of categories">
-  <div class="card__content" style="background-color: {{getThisCategoryColor(category.color)}}">
-    <div class="card__content--name">{{category.name}}</div>
-    <div class="card__content--slug">{{category.slug}}</div>
-    <div class="card__content--color">{{getThisCategoryColor(category.color)}}</div>
-    <div class="card__footer">
-      <div class="card__footer--item">
-        <a routerLink="/categories/{{category.id}}">
-          <input type="submit" value="Detail / Edit" class="select_button">
-        </a>
+<!--<div class = "sort">-->
+<!--  <input class = "sort__button" type="submit" (click) = "sortById()"       value = "Id">-->
+<!--  <input class = "sort__button" type="submit" (click) = "sortByDate()"     value = "Date">-->
+<!--</div>-->
+<div *ngIf="categories$ | async as categories">
+  <div class="card" *ngFor="let category of categories">
+    <div class="card__content" style="background-color: {{getThisCategoryColor(category.color)}}">
+      <div class="card__content--name">{{category.name}}</div>
+      <div class="card__content--slug">{{category.slug}}</div>
+      <div class="card__content--color">{{getThisCategoryColor(category.color)}}</div>
+      <div class="card__footer">
+        <div class="card__footer--item">
+          <a routerLink="/categories/{{category.id}}">
+            <input type="submit" value="Detail / Edit" class="select_button">
+          </a>
+        </div>
+        <div class="card__footer--item">
+          <input type="submit" value="Remove" (click)="remove(category)" class="select_button">
+        </div>
       </div>
-      <div class="card__footer--item">
-        <input type="submit" value="Remove" (click)="remove(category)" class="select_button">
+    </div>
+    <div class="date_time_message">
+      <div class="date_time_message__created">
+        作成日　{{convertDateTime(category.created_at)}}
+      </div>
+      <div class="date_time_message__updated">
+        更新日　{{convertDateTime(category.updated_at)}}
       </div>
     </div>
   </div>
-  <div class="date_time_message">
-    <div class="date_time_message__created">
-      作成日　{{convertDateTime(category.created_at)}}
-    </div>
-    <div class="date_time_message__updated">
-      更新日　{{convertDateTime(category.updated_at)}}
-    </div>
-  </div>
 </div>
-

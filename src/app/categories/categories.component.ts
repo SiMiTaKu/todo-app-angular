@@ -1,20 +1,29 @@
-import {Component, OnInit} from '@angular/core';
-import {Category}          from "../category";
-import {CategoryService}   from "../category.service";
-import {Color}             from "../color";
-import {TodoService}       from "../todo.service";
-import {Todo}              from "../todo";
+import { Component, OnInit }                   from '@angular/core';
+import { Category }                            from "../category";
+import { CategoryService }                     from "../category.service";
+import { Color }                               from "../color";
+import { TodoService }                         from "../todo.service";
+import { Todo }                                from "../todo";
+import {Select, Store}                         from "@ngxs/store";
+import {CategoryActions}                       from "../category.actions";
+import {CategoryNgxsState, CategoryStateModel} from "../category.state";
+import {Observable}                            from "rxjs";
+import {TodoActions}                           from "../todo.actions";
 
 @Component({
   selector: 'app-categories', templateUrl: './categories.component.html', styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
-  categories: Category[] = [];
+  @Select(CategoryNgxsState.categories) categories$?: Observable<Category[]>
+
   colors:     Color[]    = [];
   todos:      Todo[]     = [];
 
-  constructor(private categoryService: CategoryService, private todoService: TodoService) {
-  }
+  constructor(
+    private categoryService: CategoryService,
+    private todoService:     TodoService,
+    private store:           Store
+  ) {}
 
   ngOnInit(): void {
     this.getCategories();
@@ -23,7 +32,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.categoryService.getCategories().subscribe(_ => this.categories = _);
+    this.store.dispatch(CategoryActions.Load)
   }
 
   getColors(): void {
@@ -31,7 +40,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   getTodos(): void {
-    this.todoService.getTodos().subscribe(_ => this.todos = _);
+    this.store.dispatch(TodoActions.Load);
   }
 
   getThisCategoryColor(colorId: number): string[] {
@@ -39,7 +48,6 @@ export class CategoriesComponent implements OnInit {
   }
 
   remove(category: Category): void {
-    this.categories = this.categories.filter(_ => _ !== category);
     this.categoryService.removeCategory(category.id).subscribe();
     this.removeMatchCategory(category.id);
   }
@@ -55,16 +63,16 @@ export class CategoriesComponent implements OnInit {
     }).format(new Date(dateTime));
   }
 
-  //id順にソート
-  sortById(): void{
-    this.categories.sort(
-      (categoryA, categoryB) => categoryA.id - categoryB.id
-    )
-  }
-  //新しい順にソート
-  sortByDate(): void{
-    this.categories.sort(
-      (categoryA, categoryB) => new Date(categoryB.updated_at).getTime() - new Date(categoryA.updated_at).getTime()
-    )
-  }
+  // //id順にソート
+  // sortById(): void{
+  //   this.categories.sort(
+  //     (categoryA, categoryB) => categoryA.id - categoryB.id
+  //   )
+  // }
+  // //新しい順にソート
+  // sortByDate(): void{
+  //   this.categories.sort(
+  //     (categoryA, categoryB) => new Date(categoryB.updated_at).getTime() - new Date(categoryA.updated_at).getTime()
+  //   )
+  // }
 }

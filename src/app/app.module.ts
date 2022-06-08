@@ -20,6 +20,7 @@ import { CategoryRegisterComponent }       from './category-register/category-re
 import { NgxsModule }             from "@ngxs/store";
 import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { TodoNgxsState }          from "./todo.state";
+import {CategoryNgxsState}        from "./category.state";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { TodoNgxsState }          from "./todo.state";
     // ),
     ReactiveFormsModule,
     NgxsModule.forRoot([
-      TodoNgxsState
+      TodoNgxsState,
+      CategoryNgxsState //ここでDIしている
     ]),
     NgxsLoggerPluginModule.forRoot()
   ],
