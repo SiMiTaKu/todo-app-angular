@@ -6,7 +6,6 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Category }        from "../category";
 import { CategoryService } from "../category.service";
 import { Color }           from "../color";
-
 import { Todo }            from "../todo";
 import { TodoState }       from "../todoState";
 import { TodoService }     from "../todo.service";

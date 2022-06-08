@@ -2,9 +2,12 @@ import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import { Component, OnInit }                from '@angular/core';
 import { Router }                           from "@angular/router";
 
-import { Category }          from "../category";
-import { CategoryService }   from "../category.service";
-import { Color }             from "../color";
+import { Category }        from "../category";
+import { CategoryService } from "../category.service";
+import { CategoryActions } from "../category.actions";
+import { Color }           from "../color";
+
+import { Store }         from "@ngxs/store";
 
 @Component({
   selector:    'app-category-register',
@@ -12,8 +15,7 @@ import { Color }             from "../color";
   styleUrls:   ['./category-register.component.scss']
 })
 export class CategoryRegisterComponent implements OnInit {
-  categories: Category[] = [];
-  colors:     Color[]    = [];
+  colors: Color[] = [];
 
   categoryRegisterForm?: FormGroup;
 
@@ -21,6 +23,7 @@ export class CategoryRegisterComponent implements OnInit {
     private categoryService: CategoryService,
     private fb:              FormBuilder,
     private router:          Router,
+    private store:           Store
   ) { }
 
   ngOnInit(): void {
@@ -38,7 +41,7 @@ export class CategoryRegisterComponent implements OnInit {
   get color (){ return this.categoryRegisterForm?.get('categoryColor')}
 
   getCategories(): void {
-    this.categoryService.getCategories().subscribe(_ => this.categories = _);
+    this.store.dispatch(new CategoryActions.Load)
   }
 
   getColors(): void {
@@ -49,14 +52,14 @@ export class CategoryRegisterComponent implements OnInit {
     if(this.categoryRegisterForm?.invalid) {
       alert("Error!! Please check form area.")
     }else{
-      this.categoryService.addCategory({
+      this.store.dispatch(new CategoryActions.Add({
         name:  this.categoryRegisterForm?.value.categoryName,
         slug:  this.categoryRegisterForm?.value.categorySlug,
         color: Number(this.categoryRegisterForm?.value.categoryColor),
-      } as Category).subscribe(
-        category => this.categories.push(category),
-        error    => alert(error),
-        ()       => this.goToCategoryList()
+    } as Category)).subscribe(
+        _     => _,
+        error => alert(error),
+        ()    => this.goToCategoryList()
       );
     }
   }
