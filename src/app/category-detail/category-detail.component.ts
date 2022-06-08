@@ -1,11 +1,15 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router }                      from "@angular/router";
+import { FormBuilder, FormGroup, Validators }          from "@angular/forms";
 
-import { Category }                                    from "../category";
-import { CategoryService }                             from "../category.service";
-import { Color }                                       from "../color";
+import { Category }          from "../category";
+import { CategoryService }   from "../category.service";
+import { CategoryActions }   from "../category.actions";
+import { CategoryNgxsState } from "../category.state";
+import { Color }             from "../color";
 
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { Select, Store } from "@ngxs/store";
+import { Observable }    from "rxjs";
 
 @Component({
   selector:    'app-category-detail',
@@ -14,7 +18,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 
 export class CategoryDetailComponent implements OnInit {
-  @Input() category?: Category;
+
+  @Select(CategoryNgxsState.selectedCategory) category$?: Observable<Category>;
 
   categoryEditForm?: FormGroup;
   colors: Color[] = [];
@@ -24,29 +29,24 @@ export class CategoryDetailComponent implements OnInit {
     private categoryService: CategoryService,
     private fb:              FormBuilder,
     private router:          Router,
-    private changeDetector:  ChangeDetectorRef,) {
-  }
+    private changeDetector:  ChangeDetectorRef,
+    private store:           Store
+  ) {}
 
   ngOnInit(): void {
     this.getCategory();
     this.getColors();
   }
 
-  get name() {
-    return this.categoryEditForm?.get('categoryName')
-  }
-
-  get slug() {
-    return this.categoryEditForm?.get('categorySlug')
-  }
-
-  get color() {
-    return this.categoryEditForm?.get('categoryColor')
-  }
+  get name()  { return this.categoryEditForm?.get('categoryName')}
+  get slug()  { return this.categoryEditForm?.get('categorySlug')}
+  get color() { return this.categoryEditForm?.get('categoryColor')}
 
   getCategory(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.categoryService.getCategory(id).subscribe(_ => this.category = _);
+    this.store.dispatch(new CategoryActions.Select(id)).subscribe(
+      _ => this.setCategoryData(_.categories.selectedCategory)
+    )
   }
 
   getColors(): void {
@@ -57,28 +57,27 @@ export class CategoryDetailComponent implements OnInit {
     return this.colors.filter(_ => _.id == colorId).map(_ => _.name);
   }
 
-  save(): void {
-    if (this.category) {
-      this.categoryService.updateCategory({
-        id:         this.category.id,
-        name:       this.categoryEditForm?.value.categoryName,
-        slug:       this.categoryEditForm?.value.categorySlug,
-        color:      Number(this.categoryEditForm?.value.categoryColor),
-        updated_at: this.category.updated_at,
-        created_at: this.category.created_at
-      }).subscribe(() => this.goToCategoryList())
-    }
+  save(category: Category): void {
+    this.categoryService.updateCategory({
+      id:         category.id,
+      name:       this.categoryEditForm?.value.categoryName,
+      slug:       this.categoryEditForm?.value.categorySlug,
+      color:      Number(this.categoryEditForm?.value.categoryColor),
+      updated_at: category.updated_at,
+      created_at: category.created_at
+    }).subscribe(() => this.goToCategoryList())
+
   }
 
   goToCategoryList() {
     this.router.navigate(['/categories'])
   }
 
-  setCategoryData() {
+  setCategoryData(category: Category) {
     this.categoryEditForm = this.fb.group({
-      categoryName:  [this.category?.name, Validators.required],
-      categorySlug:  [this.category?.slug, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
-      categoryColor: [this.category?.color, Validators.required],
+      categoryName:  [category.name, Validators.required],
+      categorySlug:  [category.slug, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
+      categoryColor: [category.color, Validators.required],
     });
   }
 

@@ -29,6 +29,11 @@ export class CategoryNgxsState{
     return state.categories;
   }
 
+  @Selector()
+  static selectedCategory(state: CategoryStateModel){
+    return state.selectedCategory;
+  }
+
   @Action(CategoryActions.Load)
   load(ctx: StateContext<CategoryStateModel>){
     return this.categoryService.getCategories().pipe(
@@ -36,6 +41,18 @@ export class CategoryNgxsState{
         ctx.patchState({
           categories: data
         });
+      })
+    )
+  }
+
+  @Action(CategoryActions.Select)
+  Select(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Select){
+    const id = action.id
+    return this.categoryService.getCategory(id).pipe(
+      tap((data) => {
+        ctx.patchState({
+          selectedCategory: data
+        })
       })
     )
   }
