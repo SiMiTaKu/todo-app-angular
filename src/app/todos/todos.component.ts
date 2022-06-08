@@ -1,14 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {TodoService}       from "../todo.service";
-import {CategoryService}   from "../category.service";
-import {Todo}              from "../todo";
-import {Category}          from "../category";
-import {TodoState}         from "../todoState";
-import {Color}             from "../color";
-import {Select, Store}     from "@ngxs/store";
-import {TodoNgxsState}     from "../todo.state";
-import {Observable}        from "rxjs";
-import {TodoActions}       from "../todo.actions";
+import { Component, OnInit } from '@angular/core';
+
+import { CategoryService } from "../category.service";
+import { Category }        from "../category";
+import { Color }           from "../color";
+
+import { Todo }          from "../todo";
+import { TodoState }     from "../todoState";
+import { TodoNgxsState } from "../todo.state";
+import { TodoService }   from "../todo.service";
+import { TodoActions }   from "../todo.actions";
+
+import {Select, Store } from "@ngxs/store";
+import {Observable }    from "rxjs";
 
 @Component({
   selector: 'app-todos', templateUrl: './todos.component.html', styleUrls: ['./todos.component.scss']

@@ -1,14 +1,17 @@
-import { Component, OnInit }                   from '@angular/core';
-import { Category }                            from "../category";
-import { CategoryService }                     from "../category.service";
-import { Color }                               from "../color";
-import { TodoService }                         from "../todo.service";
-import { Todo }                                from "../todo";
-import {Select, Store}                         from "@ngxs/store";
-import {CategoryActions}                       from "../category.actions";
-import {CategoryNgxsState, CategoryStateModel} from "../category.state";
-import {Observable}                            from "rxjs";
-import {TodoActions}                           from "../todo.actions";
+import { Component, OnInit } from '@angular/core';
+
+import { Category }          from "../category";
+import { CategoryActions }   from "../category.actions";
+import { CategoryNgxsState}  from "../category.state";
+import { CategoryService }   from "../category.service";
+import { Color }             from "../color";
+
+import { Todo }              from "../todo";
+import { TodoService }       from "../todo.service";
+import { TodoActions }       from "../todo.actions";
+
+import { Select, Store }     from "@ngxs/store";
+import { Observable}         from "rxjs";
 
 @Component({
   selector: 'app-categories', templateUrl: './categories.component.html', styleUrls: ['./categories.component.scss']

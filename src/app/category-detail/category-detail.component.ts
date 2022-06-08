@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {Category}                                    from "../category";
-import {CategoryService}                             from "../category.service";
-import {ActivatedRoute}                              from "@angular/router";
-import {Color}                                       from "../color";
-import {Router}                                      from "@angular/router";
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router }                      from "@angular/router";
+
+import { Category }                                    from "../category";
+import { CategoryService }                             from "../category.service";
+import { Color }                                       from "../color";
 
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 

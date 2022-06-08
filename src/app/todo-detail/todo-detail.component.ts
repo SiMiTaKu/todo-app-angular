@@ -1,25 +1,28 @@
-import {Todo}            from "../todo";
-import {TodoService}     from "../todo.service";
-import {TodoState}       from "../todoState";
-import {Category}        from "../category";
-import {CategoryService} from "../category.service";
-import {Color}           from "../color";
-import {Router}          from "@angular/router";
-import {ActivatedRoute}  from "@angular/router";
-import {Location}        from "@angular/common";
+import { Todo }            from "../todo";
+import { TodoNgxsState }   from "../todo.state";
+import { TodoService }     from "../todo.service";
+import { TodoActions }     from "../todo.actions";
+import { TodoState }       from "../todoState";
+import { TodoImportance }  from "../todoImportance";
 
-import {FormBuilder, FormGroup, Validators}   from "@angular/forms";
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {TodoImportance}                       from "../todoImportance";
-import {Select, Store}                        from "@ngxs/store";
-import {TodoActions}                          from "../todo.actions";
-import {TodoNgxsState}                        from "../todo.state";
-import {Observable}                           from "rxjs";
+import { Category }        from "../category";
+import { CategoryService } from "../category.service";
+import { Color }           from "../color";
+
+import { Router }                               from "@angular/router";
+import { ActivatedRoute }                       from "@angular/router";
+import { Location }                             from "@angular/common";
+import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+
+import { Select, Store }                        from "@ngxs/store";
+import { Observable }                           from "rxjs";
 
 @Component({
   selector: 'app-todo-detail', templateUrl: './todo-detail.component.html', styleUrls: ['./todo-detail.component.scss']
 })
 export class TodoDetailComponent implements OnInit {
+
   @Select(TodoNgxsState.selectedTodo) todo$?: Observable<Todo>
 
   todoEditForm?: FormGroup;

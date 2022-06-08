@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Category }          from "../category";
-import { Color }             from "../color";
-import { CategoryService }   from "../category.service";
-import { Router }            from "@angular/router";
-
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import { Component, OnInit }                from '@angular/core';
+import { Router }                           from "@angular/router";
+
+import { Category }          from "../category";
+import { CategoryService }   from "../category.service";
+import { Color }             from "../color";
 
 @Component({
   selector:    'app-category-register',
