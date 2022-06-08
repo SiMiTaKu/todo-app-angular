@@ -32,10 +32,6 @@ export class TodoDetailComponent implements OnInit {
   states:        TodoState[]      = [];
   importanceSeq: TodoImportance[] = [];
 
-  loading?: boolean;
-
-  setForm? = false; //初めはデータがセットされてないのでfalse
-
   constructor(
     private route:           ActivatedRoute,
     private todoService:     TodoService,
@@ -65,9 +61,7 @@ export class TodoDetailComponent implements OnInit {
   getTodo(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.store.dispatch(new TodoActions.Select(id)).subscribe(
-      _ => _,
-      error => console.error(error),
-      () => this.loading = true
+      _ => this.setTodoData(_.todos.selectedTodo),
     )
   }
 
@@ -125,7 +119,6 @@ export class TodoDetailComponent implements OnInit {
       todoState:      [todo.state,       Validators.required],
       todoImportance: [todo.importance,  Validators.required]
     });
-    this.setForm = true; //フォームにセットしたらtrueにする。
   }
 
   ngAfterContentChecked(): void {

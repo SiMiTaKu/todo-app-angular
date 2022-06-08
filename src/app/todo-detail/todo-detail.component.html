@@ -12,9 +12,6 @@
 </div>
 
 <div class = "detail" *ngIf = "todo$ | async as todo">
-  <div *ngIf = "loading == true && setForm == false">
-    {{setTodoData(todo)}} <!-- loadingが終了し、formがセットされていなかったら -->
-  </div>
   <div class = "detail__content">
     <h2>Detail  No.{{todo.id}}</h2>
     <div class = "detail__content--title">
