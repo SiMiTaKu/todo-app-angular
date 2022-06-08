@@ -74,7 +74,7 @@ export class TodosComponent implements OnInit {
   }
 
   remove(todo: Todo): void {
-    this.store.dispatch(new TodoActions.Remove(todo))
+    this.store.dispatch(new TodoActions.Remove(todo.id))
   }
 
   convertDateTime(dateTime: Date): string {

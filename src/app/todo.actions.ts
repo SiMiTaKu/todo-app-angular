@@ -23,7 +23,7 @@ export module TodoActions {
 
   export class Remove {
     static readonly type = REMOVE_TODO;
-    constructor(public payload: Todo) {}
+    constructor(public id: number) {}
   }
 
   export class Update {

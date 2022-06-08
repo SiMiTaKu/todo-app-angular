@@ -51,13 +51,13 @@ export class CategoriesComponent implements OnInit {
   }
 
   remove(category: Category): void {
-    this.categoryService.removeCategory(category.id).subscribe();
+    this.store.dispatch(new CategoryActions.Remove(category.id))
     this.removeMatchCategory(category.id);
   }
 
   removeMatchCategory(categoryId: number): void {
     const matchIds = this.todos.filter(_ => _.category_id == categoryId).map(_ => _.id);
-    matchIds.map(id => this.todoService.removeTodo(id).subscribe());
+    matchIds.map(id => this.store.dispatch(new TodoActions.Remove(id)))
   }
 
   convertDateTime(dateTime: Date): string {

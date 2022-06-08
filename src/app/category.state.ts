@@ -61,8 +61,18 @@ export class CategoryNgxsState{
   Add(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Add){
     const category = action.payload
     return this.categoryService.addCategory(category).pipe(
-      tap((data) => {
+      tap(() => {
         ctx.dispatch(new CategoryActions.Load());
+      })
+    )
+  }
+
+  @Action(CategoryActions.Remove)
+  Remove(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Remove){
+    const id = action.id
+    return this.categoryService.removeCategory(id).pipe(
+      tap(() => {
+        ctx.dispatch(new CategoryActions.Load())
       })
     )
   }

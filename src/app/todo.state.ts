@@ -77,8 +77,8 @@ export class TodoNgxsState{
   //Todo削除時
   @Action(TodoActions.Remove)
   remove(ctx: StateContext<TodoStateModel>, action: TodoActions.Remove){
-    const todo = action.payload
-    return this.todoService.removeTodo(todo.id).pipe(
+    const id = action.id
+    return this.todoService.removeTodo(id).pipe(
       finalize(() => {
         ctx.dispatch(new TodoActions.Load())
       })
