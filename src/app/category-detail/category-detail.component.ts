@@ -24,6 +24,10 @@ export class CategoryDetailComponent implements OnInit {
   categoryEditForm?: FormGroup;
   colors: Color[] = [];
 
+  loading = {
+    "category" : true,
+    "colors" :   true
+  }
   constructor(
     private route:           ActivatedRoute,
     private categoryService: CategoryService,
@@ -44,13 +48,19 @@ export class CategoryDetailComponent implements OnInit {
   getCategory(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.store.dispatch(new CategoryActions.Select(id)).subscribe(
-      _ => this.setCategoryData(_.categories.selectedCategory)
-    )
-  }
+      _ => this.setCategoryData(_.categories.selectedCategory),
+        error => alert("🚨" + error),
+        ()    =>  this.loading.category = false
+      );
+    }
 
-  getColors(): void {
-    this.categoryService.getColors().subscribe(_ => this.colors = _);
-  }
+    getColors(): void {
+      this.categoryService.getColors().subscribe(
+        _     => this.colors = _,
+        error => alert("🚨" + error),
+        ()    =>  this.loading.colors = false
+      );
+    }
 
   getThisCategoryColor(colorId: number): string[] {
     return this.colors.filter(_ => _.id == colorId).map(_ => _.name);

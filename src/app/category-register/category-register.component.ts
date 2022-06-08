@@ -19,6 +19,11 @@ export class CategoryRegisterComponent implements OnInit {
 
   categoryRegisterForm?: FormGroup;
 
+  loading = {
+    "categories": true,
+    "colors":     true
+  }
+
   constructor(
     private categoryService: CategoryService,
     private fb:              FormBuilder,
@@ -41,11 +46,19 @@ export class CategoryRegisterComponent implements OnInit {
   get color (){ return this.categoryRegisterForm?.get('categoryColor')}
 
   getCategories(): void {
-    this.store.dispatch(new CategoryActions.Load)
+    this.store.dispatch(new CategoryActions.Load).subscribe(
+      _     => _,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.categories = false
+    );
   }
 
   getColors(): void {
-    this.categoryService.getColors().subscribe(_ => this.colors = _);
+    this.categoryService.getColors().subscribe(
+      _     => this.colors = _,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.colors = false
+    );
   }
 
   add(): void {

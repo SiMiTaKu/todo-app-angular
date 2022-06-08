@@ -28,6 +28,13 @@ export class TodoRegisterComponent implements OnInit {
   importanceSeq:     TodoImportance[] = [];
   todoRegisterForm?: FormGroup;
 
+  loading = {
+    "categories":  true,
+    "colors":      true,
+    "states":      true,
+    "importance":  true,
+  }
+
   constructor(
     private todoService:     TodoService,
     private categoryService: CategoryService,
@@ -58,20 +65,34 @@ export class TodoRegisterComponent implements OnInit {
 
   getCategories(): void {
     this.store.dispatch(new CategoryActions.Load()).subscribe(
-      _ => this.categories = _.categories.categories
+      _     => this.categories = _.categories.categories,
+      error => alert(error),
+      ()    => this.loading.categories = false
+    )
+  }
+
+  getColors(): void {
+    this.categoryService.getColors().subscribe(
+      _     => this.colors = _,
+      error => alert("🚨" + error),
+      ()    => this.loading.colors = false
+    );
+  }
+
+  getStates(): void {
+    this.todoService.getState().subscribe(
+      _     => this.states = _,
+      error => alert("🚨" + error),
+      ()    => this.loading.states = false
     )
   }
 
   getImportance(): void {
-    this.todoService.getImportance().subscribe(_ => this.importanceSeq = _);
-  }
-
-  getColors(): void {
-    this.categoryService.getColors().subscribe(_ => this.colors = _);
-  }
-
-  getStates(): void {
-    this.todoService.getState().subscribe(_ => this.states = _)
+    this.todoService.getImportance().subscribe(
+      _     => this.importanceSeq = _,
+      error => alert("🚨" + error),
+      ()    => this.loading.importance = false
+    )
   }
 
   add(): void{
@@ -85,7 +106,7 @@ export class TodoRegisterComponent implements OnInit {
         importance:  Number(this.todoRegisterForm?.value.todoImportance)
       } as Todo)).subscribe(
         _     => _,
-        error => alert(error),
+        error => alert("🚨" + error),
         ()    => this.goToTodoList()
       );
     }

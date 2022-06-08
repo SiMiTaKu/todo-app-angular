@@ -1,88 +1,96 @@
-<div class = "menu">
-  <div class = "menu__item">
-    <div class = "menu__item--title">
-      Detail / Edit
-    </div>
-  </div>
-  <div class = "menu__item--button">
-    <a routerLink = "/categories/">
-      <input type = "submit" value = "←" class = "menu_button">
-    </a>
-  </div>
+<div class = "loading"
+     *ngIf = "loading.category ||
+              loading.colors">
+  <p>Loading</p>
 </div>
-<div class = "detail" *ngIf="category$ | async as category">
-  <div class = "detail__content">
-    <h2>Category No.{{category.id}}</h2>
-    <div class = "detail__content--name">
-      <div class = "left">Name</div>
-      <div class = "right" *ngIf="name">{{name.value}}</div>
+<div *ngIf = "!loading.category &&
+              !loading.colors">
+  <div class = "menu">
+    <div class = "menu__item">
+      <div class = "menu__item--title">
+        Detail / Edit
+      </div>
     </div>
-    <div class = "detail__content--slug">
-      <div class = "left">Slug</div>
-      <div class = "right" *ngIf="slug">{{slug.value}}</div>
-    </div>
-    <div class = "detail__content--color">
-      <div class = "left">Color</div>
-      <div class = "right" *ngIf="color">{{getThisCategoryColor(this.color.value)}}</div>
+    <div class = "menu__item--button">
+      <a routerLink = "/categories/">
+        <input type = "submit" value = "←" class = "menu_button">
+      </a>
     </div>
   </div>
-  <div class = "detail__content">
-    <form *ngIf = "categoryEditForm" [formGroup] = "categoryEditForm" (submit) = "save(category)">
-      <h2>Edit Form</h2>
-      <div class = "content">
-        <div class = "content__left">Name</div>
-        <div class = "content__right">
-          <input
-            type            = "text"
-            name            = "name"
-            placeholder     = "Name"
-            formControlName = "categoryName"
-          >
-          <div class = "warn" *ngIf = "name && name.errors?.['required']">
-            ※Name is Requirement.
-          </div>
-        </div>
+  <div class = "detail" *ngIf="category$ | async as category">
+    <div class = "detail__content">
+      <h2>Category No.{{category.id}}</h2>
+      <div class = "detail__content--name">
+        <div class = "left">Name</div>
+        <div class = "right" *ngIf="name">{{name.value}}</div>
       </div>
-      <div class = "content">
-        <div class = "content__left">Slug</div>
-        <div class = "content__right">
-          <input
-            type            = "text"
-            name            = "slug"
-            placeholder     = "Slug"
-            formControlName = "categorySlug"
-          >
-          <div class="warn" *ngIf = "slug && slug.errors?.['required']">
-            ※Slug is Requirement.
-          </div>
-          <div class="warn" *ngIf = "slug && slug.errors?.['pattern']">
-            ※Please use alpha only.
-          </div>
-        </div>
+      <div class = "detail__content--slug">
+        <div class = "left">Slug</div>
+        <div class = "right" *ngIf="slug">{{slug.value}}</div>
       </div>
-      <div class = "content">
-        <div class = "content__left">Color</div>
-        <div class = "content__right">
-          <div class = "radio-form">
-            <div class = "radio-form__button" *ngFor="let color of colors" >
-              <input
-                type            = "radio"
-                value           = "{{color.id}}"
-                name            = "categoryColor"
-                id              = "{{color.name}}"
-                formControlName = "categoryColor" >
-              <!--　nameとformControlNameは同じでなければならない。-->
-              <label for = "{{color.name}}">{{color.name}}</label>
-            </div>
-            <div class = "warn" *ngIf = "color && color.errors?.['required']">
-              ※Color is Requirement.
+      <div class = "detail__content--color">
+        <div class = "left">Color</div>
+        <div class = "right" *ngIf="color">{{getThisCategoryColor(this.color.value)}}</div>
+      </div>
+    </div>
+    <div class = "detail__content">
+      <form *ngIf = "categoryEditForm" [formGroup] = "categoryEditForm" (submit) = "save(category)">
+        <h2>Edit Form</h2>
+        <div class = "content">
+          <div class = "content__left">Name</div>
+          <div class = "content__right">
+            <input
+              type            = "text"
+              name            = "name"
+              placeholder     = "Name"
+              formControlName = "categoryName"
+            >
+            <div class = "warn" *ngIf = "name && name.errors?.['required']">
+              ※Name is Requirement.
             </div>
           </div>
         </div>
-      </div>
-      <div class = "content">
-        <input [disabled] = "categoryEditForm.invalid" type = "submit" value = "update" class = "submit_button">
-      </div>
-    </form>
+        <div class = "content">
+          <div class = "content__left">Slug</div>
+          <div class = "content__right">
+            <input
+              type            = "text"
+              name            = "slug"
+              placeholder     = "Slug"
+              formControlName = "categorySlug"
+            >
+            <div class="warn" *ngIf = "slug && slug.errors?.['required']">
+              ※Slug is Requirement.
+            </div>
+            <div class="warn" *ngIf = "slug && slug.errors?.['pattern']">
+              ※Please use alpha only.
+            </div>
+          </div>
+        </div>
+        <div class = "content">
+          <div class = "content__left">Color</div>
+          <div class = "content__right">
+            <div class = "radio-form">
+              <div class = "radio-form__button" *ngFor="let color of colors" >
+                <input
+                  type            = "radio"
+                  value           = "{{color.id}}"
+                  name            = "categoryColor"
+                  id              = "{{color.name}}"
+                  formControlName = "categoryColor" >
+                <!--　nameとformControlNameは同じでなければならない。-->
+                <label for = "{{color.name}}">{{color.name}}</label>
+              </div>
+              <div class = "warn" *ngIf = "color && color.errors?.['required']">
+                ※Color is Requirement.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class = "content">
+          <input [disabled] = "categoryEditForm.invalid" type = "submit" value = "update" class = "submit_button">
+        </div>
+      </form>
+    </div>
   </div>
 </div>

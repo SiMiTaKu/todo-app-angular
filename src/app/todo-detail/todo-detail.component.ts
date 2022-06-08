@@ -16,9 +16,6 @@ import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
 import { Component, OnInit }                    from '@angular/core';
 
 import { Select, Store }   from "@ngxs/store";
-import { Observable }      from "rxjs";
-import { CategoryActions } from "../category.actions";
-
 @Component({
   selector: 'app-todo-detail', templateUrl: './todo-detail.component.html', styleUrls: ['./todo-detail.component.scss']
 })
@@ -32,6 +29,14 @@ export class TodoDetailComponent implements OnInit {
   colors:        Color[]          = [];
   states:        TodoState[]      = [];
   importanceSeq: TodoImportance[] = [];
+
+  loading = {
+    "setTodoData": true,
+    "categories":  true,
+    "colors":      true,
+    "states":      true,
+    "importance":  true,
+  }
 
   constructor(
     private route:           ActivatedRoute,
@@ -61,26 +66,42 @@ export class TodoDetailComponent implements OnInit {
   getTodo(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.store.dispatch(new TodoActions.Select(id)).subscribe(
-      _ => this.setTodoData(_.todos.selectedTodo),
+      _     => this.setTodoData(_.todos.selectedTodo),
+      error => alert("🚨" + error),
+      ()    =>  this.loading.setTodoData = false
     )
   }
 
   getCategories(): void {
     this.store.dispatch(new CategoryActions.Load()).subscribe(
-      _ => this.categories = _.categories.categories
+      _     => this.categories = _.categories.categories,
+      error => alert("🚨" + error),
+      ()    => this.loading.categories = false
     )
   }
 
   getColors(): void {
-    this.categoryService.getColors().subscribe(_ => this.colors = _);
+    this.categoryService.getColors().subscribe(
+      _     => this.colors = _,
+      error => alert("🚨" + error),
+      ()    => this.loading.colors = false
+    );
   }
 
   getStates(): void {
-    this.todoService.getState().subscribe(_ => this.states = _)
+    this.todoService.getState().subscribe(
+      _     => this.states = _,
+      error => alert("🚨" + error),
+      ()    => this.loading.states = false
+    )
   }
 
   getImportance(): void {
-    this.todoService.getImportance().subscribe(_ => this.importanceSeq = _)
+    this.todoService.getImportance().subscribe(
+      _     => this.importanceSeq = _,
+      error => alert("🚨" + error),
+      ()    => this.loading.importance = false
+    )
   }
 
   getThisCategory(categoryId: number): string[] {
@@ -127,4 +148,7 @@ export class TodoDetailComponent implements OnInit {
     this.router.navigate(['/todos']);
   }
 }
+import { Observable }      from "rxjs";
+
+import { CategoryActions } from "../category.actions";
 

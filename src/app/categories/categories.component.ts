@@ -23,6 +23,13 @@ export class CategoriesComponent implements OnInit {
   colors:     Color[]    = [];
   todos:      Todo[]     = [];
 
+  loading = {
+    "categories" : true,
+    "todos" :      true,
+    "colors" :     true,
+
+  }
+
   constructor(
     private categoryService: CategoryService,
     private todoService:     TodoService,
@@ -37,16 +44,26 @@ export class CategoriesComponent implements OnInit {
 
   getCategories(): void {
     this.store.dispatch(CategoryActions.Load).subscribe(
-      _ => this.categories = _.categories.categories
+      _     => this.categories = _.categories.categories,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.categories = false
+    );
+  }
+
+  getTodos(): void {
+    this.store.dispatch(TodoActions.Load).subscribe(
+      _     => _,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.todos = false
     );
   }
 
   getColors(): void {
-    this.categoryService.getColors().subscribe(_ => this.colors = _);
-  }
-
-  getTodos(): void {
-    this.store.dispatch(TodoActions.Load);
+    this.categoryService.getColors().subscribe(
+      _     => this.colors = _,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.colors = false
+    );
   }
 
   getThisCategoryColor(colorId: number): string[] {
