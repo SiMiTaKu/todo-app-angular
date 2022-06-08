@@ -15,42 +15,39 @@
     </a>
   </div>
 </div>
-<!--<div class = "sort">-->
-<!--  <input class = "sort__button" type="submit" (click) = "sortById()"         value = "Id">-->
-<!--  <input class = "sort__button" type="submit" (click) = "sortByDate()"       value = "Date">-->
-<!--  <input class = "sort__button" type="submit" (click) = "sortByState()"      value = "State">-->
-<!--  <input class = "sort__button" type="submit" (click) = "sortByCategory()"   value = "Category">-->
-<!--  <input class = "sort__button" type="submit" (click) = "sortByImportance()" value = "Importance">-->
-<!--</div>-->
-<div *ngIf = "todos$ | async as todos">
-  <div class = "card" *ngFor = "let todo of todos">
-    <div class = "card__content" style="background-color: {{getThisCategoryColor(todo.category_id)}}">
-      <div class = "card__content--importance" *ngIf = "todo.importance == 0">●</div>
-      <div class = "card__content--title">{{todo.title}}</div>
-      <div class = "card__content--body">{{todo.body}}</div>
-      <div class = "card__content--category">{{getThisCategoryName(todo.category_id)}}</div>
-      <div class = "card__content--state">{{getThisState(todo.state)}}</div>
-
-      <div class = "card__footer">
-        <div class = "card__footer--item">
-          <a routerLink = "/todos/{{todo.id}}">
-            <input type = "submit" value = "Detail / Edit" class = "select_button">
-          </a>
-        </div>
-
-        <div class = "card__footer--item">
-          <input type = "submit" value = "Remove" (click) = "remove(todo)" class = "select_button">
-        </div>
+<div class = "sort">
+  <input class = "sort__button" type="submit" (click) = "sortById()"         value = "Id">
+  <input class = "sort__button" type="submit" (click) = "sortByDate()"       value = "Date">
+  <input class = "sort__button" type="submit" (click) = "sortByState()"      value = "State">
+  <input class = "sort__button" type="submit" (click) = "sortByCategory()"   value = "Category">
+  <input class = "sort__button" type="submit" (click) = "sortByImportance()" value = "Importance">
+</div>
+<div class = "card" *ngFor = "let todo of todos">
+  <div class = "card__content" style="background-color: {{getThisCategoryColor(todo.category_id)}}">
+    <div class = "card__content--importance" *ngIf = "todo.importance == 0">●</div>
+    <div class = "card__content--title">{{todo.title}}</div>
+    <div class = "card__content--body">{{todo.body}}</div>
+    <div class = "card__content--category">{{getThisCategoryName(todo.category_id)}}</div>
+    <div class = "card__content--state">{{getThisState(todo.state)}}</div>
+    <div class = "card__footer">
+      <div class = "card__footer--item">
+        <a routerLink = "/todos/{{todo.id}}">
+          <input type = "submit" value = "Detail / Edit" class = "select_button">
+        </a>
       </div>
-    </div>
-    <div class = "date_time_message">
-      <div class = "date_time_message__created" *ngIf = "todos">
-        作成日　{{convertDateTime(todo.created_at)}}
-      </div>
-      <div class = "date_time_message__updated">
-        更新日　{{convertDateTime(todo.updated_at)}}
+      <div class = "card__footer--item">
+        <input type = "submit" value = "Remove" (click) = "remove(todo)" class = "select_button">
       </div>
     </div>
   </div>
+  <div class = "date_time_message">
+    <div class = "date_time_message__created" *ngIf = "todos">
+      作成日　{{convertDateTime(todo.created_at)}}
+    </div>
+    <div class = "date_time_message__updated">
+      更新日　{{convertDateTime(todo.updated_at)}}
+    </div>
+  </div>
 </div>
+
 

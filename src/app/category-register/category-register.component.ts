@@ -7,7 +7,7 @@ import { CategoryService } from "../category.service";
 import { CategoryActions } from "../category.actions";
 import { Color }           from "../color";
 
-import { Store }         from "@ngxs/store";
+import { Store } from "@ngxs/store";
 
 @Component({
   selector:    'app-category-register',

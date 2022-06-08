@@ -13,10 +13,11 @@ import { Router }                               from "@angular/router";
 import { ActivatedRoute }                       from "@angular/router";
 import { Location }                             from "@angular/common";
 import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit }                    from '@angular/core';
 
-import { Select, Store }                        from "@ngxs/store";
-import { Observable }                           from "rxjs";
+import { Select, Store }   from "@ngxs/store";
+import { Observable }      from "rxjs";
+import { CategoryActions } from "../category.actions";
 
 @Component({
   selector: 'app-todo-detail', templateUrl: './todo-detail.component.html', styleUrls: ['./todo-detail.component.scss']
@@ -39,7 +40,6 @@ export class TodoDetailComponent implements OnInit {
     private location:        Location,
     private router:          Router,
     private fb:              FormBuilder,
-    private changeDetector:  ChangeDetectorRef,
     private store:           Store
   ) {}
 
@@ -66,7 +66,9 @@ export class TodoDetailComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.categoryService.getCategories().subscribe(_ => this.categories = _);
+    this.store.dispatch(new CategoryActions.Load()).subscribe(
+      _ => this.categories = _.categories.categories
+    )
   }
 
   getColors(): void {
@@ -119,10 +121,6 @@ export class TodoDetailComponent implements OnInit {
       todoState:      [todo.state,       Validators.required],
       todoImportance: [todo.importance,  Validators.required]
     });
-  }
-
-  ngAfterContentChecked(): void {
-    this.changeDetector.detectChanges();
   }
 
   goToTodoList(): void {

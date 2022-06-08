@@ -12,7 +12,8 @@ import { TodoService }     from "../todo.service";
 import { TodoActions }     from "../todo.actions";
 import { TodoImportance }  from "../todoImportance";
 
-import { Store } from "@ngxs/store";
+import { Store }         from "@ngxs/store";
+import {CategoryActions} from "../category.actions";
 
 @Component({
   selector:    'app-todo-register',
@@ -56,7 +57,9 @@ export class TodoRegisterComponent implements OnInit {
   get importance() { return this.todoRegisterForm?.get('todoImportance');}
 
   getCategories(): void {
-    this.categoryService.getCategories().subscribe(_ => this.categories = _);
+    this.store.dispatch(new CategoryActions.Load()).subscribe(
+      _ => this.categories = _.categories.categories
+    )
   }
 
   getImportance(): void {

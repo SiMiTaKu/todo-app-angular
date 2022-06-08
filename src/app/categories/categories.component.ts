@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Category }          from "../category";
-import { CategoryActions }   from "../category.actions";
-import { CategoryNgxsState}  from "../category.state";
-import { CategoryService }   from "../category.service";
-import { Color }             from "../color";
+import { Category }         from "../category";
+import { CategoryActions }  from "../category.actions";
+import { CategoryNgxsState} from "../category.state";
+import { CategoryService }  from "../category.service";
+import { Color }            from "../color";
 
-import { Todo }              from "../todo";
-import { TodoService }       from "../todo.service";
-import { TodoActions }       from "../todo.actions";
+import { Todo }        from "../todo";
+import { TodoService } from "../todo.service";
+import { TodoActions } from "../todo.actions";
 
-import { Select, Store }     from "@ngxs/store";
-import { Observable}         from "rxjs";
+import { Select, Store } from "@ngxs/store";
+import { Observable }    from "rxjs";
 
 @Component({
   selector: 'app-categories', templateUrl: './categories.component.html', styleUrls: ['./categories.component.scss']
@@ -19,6 +19,7 @@ import { Observable}         from "rxjs";
 export class CategoriesComponent implements OnInit {
   @Select(CategoryNgxsState.categories) categories$?: Observable<Category[]>
 
+  categories: Category[] = [];
   colors:     Color[]    = [];
   todos:      Todo[]     = [];
 
@@ -35,7 +36,9 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.store.dispatch(CategoryActions.Load)
+    this.store.dispatch(CategoryActions.Load).subscribe(
+      _ => this.categories = _.categories.categories
+    );
   }
 
   getColors(): void {
@@ -66,16 +69,17 @@ export class CategoriesComponent implements OnInit {
     }).format(new Date(dateTime));
   }
 
-  // //id順にソート
-  // sortById(): void{
-  //   this.categories.sort(
-  //     (categoryA, categoryB) => categoryA.id - categoryB.id
-  //   )
-  // }
-  // //新しい順にソート
-  // sortByDate(): void{
-  //   this.categories.sort(
-  //     (categoryA, categoryB) => new Date(categoryB.updated_at).getTime() - new Date(categoryA.updated_at).getTime()
-  //   )
-  // }
+  //id順にソート
+  sortById(): void{
+    this.categories.sort(
+      (categoryA, categoryB) => categoryA.id - categoryB.id
+    )
+  }
+
+  //新しい順にソート
+  sortByDate(): void{
+    this.categories.sort(
+      (categoryA, categoryB) => new Date(categoryB.updated_at).getTime() - new Date(categoryA.updated_at).getTime()
+    )
+  }
 }

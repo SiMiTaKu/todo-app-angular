@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit }                    from '@angular/core';
 import { ActivatedRoute, Router }               from "@angular/router";
 import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
 
@@ -29,7 +29,6 @@ export class CategoryDetailComponent implements OnInit {
     private categoryService: CategoryService,
     private fb:              FormBuilder,
     private router:          Router,
-    private changeDetector:  ChangeDetectorRef,
     private store:           Store
   ) {}
 
@@ -74,10 +73,6 @@ export class CategoryDetailComponent implements OnInit {
     )
   }
 
-  goToCategoryList() {
-    this.router.navigate(['/categories'])
-  }
-
   setCategoryData(category: Category) {
     this.categoryEditForm = this.fb.group({
       categoryName:  [category.name, Validators.required],
@@ -86,7 +81,7 @@ export class CategoryDetailComponent implements OnInit {
     });
   }
 
-  ngAfterContentChecked(): void {
-    this.changeDetector.detectChanges();
+  goToCategoryList() {
+    this.router.navigate(['/categories'])
   }
 }

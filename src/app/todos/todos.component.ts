@@ -10,8 +10,10 @@ import { TodoNgxsState } from "../todo.state";
 import { TodoService }   from "../todo.service";
 import { TodoActions }   from "../todo.actions";
 
-import {Select, Store } from "@ngxs/store";
-import {Observable }    from "rxjs";
+import {Select, Store }    from "@ngxs/store";
+import {Observable }       from "rxjs";
+import {CategoryActions}   from "../category.actions";
+import {CategoryNgxsState} from "../category.state";
 
 @Component({
   selector: 'app-todos', templateUrl: './todos.component.html', styleUrls: ['./todos.component.scss']
@@ -19,6 +21,8 @@ import {Observable }    from "rxjs";
 export class TodosComponent implements OnInit {
 
   @Select(TodoNgxsState.todos) todos$?: Observable<Todo[]>
+
+  @Select(CategoryNgxsState.categories) categories$?: Observable<Category[]>
 
   title = 'Todo List';
 
@@ -42,14 +46,15 @@ export class TodosComponent implements OnInit {
 
   getTodos(): void {
     this.store.dispatch(new TodoActions.Load()).subscribe(
-      _ => _,
-      error => console.error("🚨" + error),
-      () => console.log(this.todos)
+      _     => this.todos = _.todos.todos,
+      error => console.error("🚨" + error)
     )
   }
 
   getCategories(): void {
-    this.categoryService.getCategories().subscribe(_ => this.categories = _);
+    this.store.dispatch(new CategoryActions.Load()).subscribe(
+      _ => this.categories = _.categories.categories
+    )
   }
 
   getTodoStates(): void {
@@ -83,34 +88,34 @@ export class TodosComponent implements OnInit {
     }).format(new Date(dateTime))
   }
 
-  // //id順にソート
-  // sortById(): void{
-  //   this.todos.sort(
-  //     (todoA, todoB) => todoA.id - todoB.id
-  //   )
-  // }
-  // //新しい順にソート
-  // sortByDate(): void{
-  //   this.todos.sort(
-  //     (todoA, todoB) => new Date(todoB.updated_at).getTime() - new Date(todoA.updated_at).getTime()
-  //   )
-  // }
-  // //終わってない順にソート
-  // sortByState(): void{
-  //   this.todos.sort(
-  //     (todoA, todoB) => todoA.state - todoB.state
-  //   )
-  // }
-  // //カテゴリのid順にソート
-  // sortByCategory(): void{
-  //   this.todos.sort(
-  //     (todoA, todoB) => todoA.category_id - todoB.category_id
-  //   )
-  // }
-  // //重要度順にソート
-  // sortByImportance():void{
-  //   this.todos.sort(
-  //     (todoA, todoB) => todoA.importance - todoB.importance
-  //   )
-  // }
+  //id順にソート
+  sortById(): void{
+    this.todos.sort(
+      (todoA, todoB) => todoA.id - todoB.id
+    )
+  }
+  //新しい順にソート
+  sortByDate(): void{
+    this.todos.sort(
+      (todoA, todoB) => new Date(todoB.updated_at).getTime() - new Date(todoA.updated_at).getTime()
+    )
+  }
+  //終わってない順にソート
+  sortByState(): void{
+    this.todos.sort(
+      (todoA, todoB) => todoA.state - todoB.state
+    )
+  }
+  //カテゴリのid順にソート
+  sortByCategory(): void{
+    this.todos.sort(
+      (todoA, todoB) => todoA.category_id - todoB.category_id
+    )
+  }
+  //重要度順にソート
+  sortByImportance():void{
+    this.todos.sort(
+      (todoA, todoB) => todoA.importance - todoB.importance
+    )
+  }
 }
