@@ -51,7 +51,7 @@ export class TodoNgxsState{
 
   //選択されたTodo
   @Action(TodoActions.Select)
-  Select(ctx: StateContext<TodoStateModel>, action: TodoActions.Select){
+  select(ctx: StateContext<TodoStateModel>, action: TodoActions.Select){
     const id = action.id;
     return this.todoService.getTodo(id).pipe(
       tap((data: Todo) => {
@@ -64,7 +64,7 @@ export class TodoNgxsState{
 
   //Todo追加時
   @Action(TodoActions.Add)
-  Add(ctx: StateContext<TodoStateModel>, action: TodoActions.Add){
+  add(ctx: StateContext<TodoStateModel>, action: TodoActions.Add){
     const todo = action.payload
 
     return this.todoService.addTodo(todo).pipe(

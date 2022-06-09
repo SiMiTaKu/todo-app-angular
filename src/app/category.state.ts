@@ -46,7 +46,7 @@ export class CategoryNgxsState{
   }
 
   @Action(CategoryActions.Select)
-  Select(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Select){
+  select(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Select){
     const id = action.id
     return this.categoryService.getCategory(id).pipe(
       tap((data) => {
@@ -58,7 +58,7 @@ export class CategoryNgxsState{
   }
 
   @Action(CategoryActions.Add)
-  Add(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Add){
+  add(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Add){
     const category = action.payload
     return this.categoryService.addCategory(category).pipe(
       tap(() => {
@@ -68,7 +68,7 @@ export class CategoryNgxsState{
   }
 
   @Action(CategoryActions.Remove)
-  Remove(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Remove){
+  remove(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Remove){
     const id = action.id
     return this.categoryService.removeCategory(id).pipe(
       tap(() => {
@@ -78,7 +78,7 @@ export class CategoryNgxsState{
   }
 
   @Action(CategoryActions.Update)
-  Update(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Update){
+  update(ctx: StateContext<CategoryStateModel>, action: CategoryActions.Update){
     const category = action.payload
     return this.categoryService.updateCategory(category).pipe(
       tap(() => {
