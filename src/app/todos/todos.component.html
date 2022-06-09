@@ -31,7 +31,7 @@
     <input class = "sort__button" type="submit" (click) = "sortByCategory()"   value = "Category">
     <input class = "sort__button" type="submit" (click) = "sortByImportance()" value = "Importance">
   </div>
-  <div class = "card" *ngFor = "let todo of todos">
+  <div class = "card" *ngFor = "let todo of todos$ | async">
     <div class = "card__content" style="background-color: {{getThisCategoryColor(todo.category_id)}}">
       <div class = "card__content--importance" *ngIf = "todo.importance == 0">●</div>
       <div class = "card__content--title">{{todo.title}}</div>
@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class = "date_time_message">
-      <div class = "date_time_message__created" *ngIf = "todos">
+      <div class = "date_time_message__created">
         作成日　{{convertDateTime(todo.created_at)}}
       </div>
       <div class = "date_time_message__updated">

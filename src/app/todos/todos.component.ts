@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Select, Store }     from "@ngxs/store";
 
-import { CategoryService } from "../category.service";
-import { Category }        from "../category";
-import { Color }           from "../color";
+import { Category }          from "../category";
+import { CategoryService }   from "../category.service";
+import { CategoryActions }   from "../category.actions";
+import { CategoryNgxsState } from "../category.state";
+import { Color }             from "../color";
 
 import { Todo }          from "../todo";
 import { TodoState }     from "../todoState";
@@ -10,10 +13,7 @@ import { TodoNgxsState } from "../todo.state";
 import { TodoService }   from "../todo.service";
 import { TodoActions }   from "../todo.actions";
 
-import {Select, Store }    from "@ngxs/store";
-import {Observable }       from "rxjs";
-import {CategoryActions}   from "../category.actions";
-import {CategoryNgxsState} from "../category.state";
+import { map, Observable } from "rxjs";
 
 @Component({
   selector: 'app-todos', templateUrl: './todos.component.html', styleUrls: ['./todos.component.scss']
@@ -26,7 +26,6 @@ export class TodosComponent implements OnInit {
 
   title = 'Todo List';
 
-  todos:      Todo[]      = [];
   categories: Category[]  = [];
   states:     TodoState[] = [];
   colors:     Color[]     = [];
@@ -52,8 +51,11 @@ export class TodosComponent implements OnInit {
   }
 
   getTodos(): void {
-    this.store.dispatch(new TodoActions.Load()).subscribe(
-      _     => this.todos = _.todos.todos,
+    const transformTodo = map((resTodos: any) => resTodos.todos.todos as Todo[])
+    this.store.dispatch(new TodoActions.Load()).pipe(
+      transformTodo
+    ).subscribe(
+      _     => _,
       error => alert("🚨" + error),
       ()    =>  this.loading.todos = false
     )
@@ -108,32 +110,57 @@ export class TodosComponent implements OnInit {
 
   //id順にソート
   sortById(): void{
-    this.todos.sort(
+    const sortId = map((todos: Todo[]) => todos.sort(
       (todoA, todoB) => todoA.id - todoB.id
+    ))
+    this.todos$?.pipe(
+      sortId
+    ).subscribe(
+      _ => _
     )
   }
   //新しい順にソート
   sortByDate(): void{
-    this.todos.sort(
+    const sortDate = map((todos: Todo[]) => todos.sort(
       (todoA, todoB) => new Date(todoB.updated_at).getTime() - new Date(todoA.updated_at).getTime()
+    ))
+    this.todos$?.pipe(
+      sortDate
+    ).subscribe(
+      _ => _
     )
   }
   //終わってない順にソート
   sortByState(): void{
-    this.todos.sort(
+    const sortState = map((todos: Todo[]) => todos.sort(
       (todoA, todoB) => todoA.state - todoB.state
+    ))
+    this.todos$?.pipe(
+      sortState
+    ).subscribe(
+      _ => _
     )
   }
   //カテゴリのid順にソート
   sortByCategory(): void{
-    this.todos.sort(
+    const sortCategory = map((todos: Todo[]) => todos.sort(
       (todoA, todoB) => todoA.category_id - todoB.category_id
+    ))
+    this.todos$?.pipe(
+      sortCategory
+    ).subscribe(
+      _ => _
     )
   }
   //重要度順にソート
   sortByImportance():void{
-    this.todos.sort(
+    const sortImportance = map((todos: Todo[]) => todos.sort(
       (todoA, todoB) => todoA.importance - todoB.importance
+    ))
+    this.todos$?.pipe(
+      sortImportance
+    ).subscribe(
+      _ => _
     )
   }
 }
