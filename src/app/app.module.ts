@@ -17,10 +17,11 @@ import { HttpClientModule }                from "@angular/common/http";
 import { CategoryDetailComponent }         from './category-detail/category-detail.component';
 import { CategoryRegisterComponent }       from './category-register/category-register.component';
 
-import { NgxsModule }             from "@ngxs/store";
-import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
-import { TodoNgxsState }          from "./todo.state";
-import {CategoryNgxsState}        from "./category.state";
+import { NgxsModule }                    from "@ngxs/store";
+import { NgxsLoggerPluginModule }        from "@ngxs/logger-plugin";
+import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
+import { TodoNgxsState }                 from "./todo.state";
+import { CategoryNgxsState }             from "./category.state";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {CategoryNgxsState}        from "./category.state";
       TodoNgxsState,
       CategoryNgxsState //ここでDIしている
     ]),
-    NgxsLoggerPluginModule.forRoot()
+    NgxsLoggerPluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
