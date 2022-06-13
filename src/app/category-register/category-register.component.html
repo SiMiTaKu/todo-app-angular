@@ -1,10 +1,8 @@
 <div class = "loading"
-     *ngIf = "loading.categories ||
-              loading.colors">
+     *ngIf = "loading">
   <p>Loading</p>
 </div>
-<div *ngIf = "!loading.categories &&
-              !loading.colors">
+<div *ngIf = "!loading">
   <div class = "menu">
     <div class = "menu__item">
       <div class = "menu__item--title">

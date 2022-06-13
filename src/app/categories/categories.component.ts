@@ -8,15 +8,13 @@ import { Color }                               from "../color";
 import { Todo }                          from "../todo";
 import { TodoNgxsState, TodoStateModel } from "../todo.state";
 
-import { Select, Store }                 from "@ngxs/store";
-import { Emittable, Emitter }            from "@ngxs-labs/emitter";
-import { Observable }                    from "rxjs";
+import { Store }              from "@ngxs/store";
+import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
 @Component({
   selector: 'app-categories', templateUrl: './categories.component.html', styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
-  //@Select(CategoryNgxsState.categories) categories$?: Observable<Category[]>
 
   categories: Category[] = [];
   colors:     Color[]    = [];

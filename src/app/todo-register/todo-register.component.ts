@@ -13,8 +13,9 @@ import { TodoImportance }  from "../todoImportance";
 import { TodoService }     from "../todo.service";
 import { TodoNgxsState }   from "../todo.state";
 
-import { Store }              from "@ngxs/store";
-import { Emittable, Emitter } from "@ngxs-labs/emitter";
+import { Store }                               from "@ngxs/store";
+import { Emittable, Emitter }                  from "@ngxs-labs/emitter";
+import {CategoryNgxsState, CategoryStateModel} from "../category.state";
 
 @Component({
   selector:    'app-todo-register',
@@ -64,12 +65,15 @@ export class TodoRegisterComponent implements OnInit {
   get category  () { return this.todoRegisterForm?.get('todoCategory');}
   get importance() { return this.todoRegisterForm?.get('todoImportance');}
 
+  @Emitter(CategoryNgxsState.getCategories)
+  private categories$!: Emittable<CategoryStateModel>
+
   getCategories(): void {
-    // this.store.dispatch(new CategoryActions.Load()).subscribe(
-    //   _     => this.categories = _.categories.categories,
-    //   error => alert(error),
-    //   ()    => this.loading.categories = false
-    // )
+    this.categories$.emit({ categories: [] }).subscribe(
+      _     => this.categories = _[0].categories.categories,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.categories = false
+    );
   }
 
   getColors(): void {

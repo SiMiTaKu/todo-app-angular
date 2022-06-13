@@ -14,8 +14,9 @@ import { Location }                             from "@angular/common";
 import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
 import { Component, OnInit }                    from '@angular/core';
 
-import { Store }              from "@ngxs/store";
-import { Emittable, Emitter } from "@ngxs-labs/emitter";
+import { Store }                               from "@ngxs/store";
+import { Emittable, Emitter }                  from "@ngxs-labs/emitter";
+import {CategoryNgxsState, CategoryStateModel} from "../category.state";
 
 @Component({
   selector: 'app-todo-detail', templateUrl: './todo-detail.component.html', styleUrls: ['./todo-detail.component.scss']
@@ -77,12 +78,15 @@ export class TodoDetailComponent implements OnInit {
     )
   }
 
+  @Emitter(CategoryNgxsState.getCategories)
+  private categories$!: Emittable<CategoryStateModel>
+
   getCategories(): void {
-    // this.store.dispatch(new CategoryActions.Load()).subscribe(
-    //   _     => this.categories = _.categories.categories,
-    //   error => alert("🚨" + error),
-    //   ()    => this.loading.categories = false
-    // )
+    this.categories$.emit({ categories: [] }).subscribe(
+      _     => this.categories = _[0].categories.categories,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.categories = false
+    );
   }
 
   getColors(): void {

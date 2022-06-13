@@ -18,10 +18,7 @@ export class CategoryRegisterComponent implements OnInit {
 
   categoryRegisterForm?: FormGroup;
 
-  loading = {
-    "categories": true,
-    "colors":     true
-  }
+  loading = true;
 
   constructor(
     private categoryService: CategoryService,
@@ -31,7 +28,6 @@ export class CategoryRegisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getCategories();
     this.getColors();
     this.categoryRegisterForm = this.fb.group({
       categoryName:  ['',  Validators.required],
@@ -44,19 +40,12 @@ export class CategoryRegisterComponent implements OnInit {
   get slug  (){ return this.categoryRegisterForm?.get('categorySlug')}
   get color (){ return this.categoryRegisterForm?.get('categoryColor')}
 
-  getCategories(): void {
-    // this.store.dispatch(new CategoryActions.Load).subscribe(
-    //   _     => _,
-    //   error => alert("🚨" + error),
-    //   ()    =>  this.loading.categories = false
-    // );
-  }
 
   getColors(): void {
     this.categoryService.getColors().subscribe(
       _     => this.colors = _,
       error => alert("🚨" + error),
-      ()    =>  this.loading.colors = false
+      ()    =>  this.loading = false
     );
   }
 
