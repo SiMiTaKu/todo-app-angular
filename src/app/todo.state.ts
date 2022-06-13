@@ -6,24 +6,30 @@ import { TodoService } from "./todo.service";
 import { State, StateContext } from "@ngxs/store";
 import { Receiver }            from "@ngxs-labs/emitter";
 import { finalize, tap }       from "rxjs";
+import {TodoState}             from "./todoState";
 
 export class GetTodos {
   static readonly type = 'Get_Todos';
 }
 
-export class GetTodo{
+export class GetTodo {
   static readonly type = 'Get_Todo';
   constructor( public payload: number) {}
 }
 
-export class AddTodo{
+export class AddTodo {
   static readonly type = 'Add_Todo';
   constructor( public payload: Todo) {}
 }
 
-export class RemoveTodo{
+export class RemoveTodo {
   static readonly type = 'Remove_Todo';
   constructor( public payload: number) {}
+}
+
+export class UpdateTodo {
+  static readonly type = 'Update_Todo';
+  constructor( public payload: Todo) {}
 }
 
 export interface TodoStateModel{
@@ -87,6 +93,17 @@ export class TodoNgxsState{
   ){
     const id = action.payload
     return this.todoService.removeTodo(id).pipe(
+      finalize(() => this.getTodos)
+    )
+  }
+
+  @Receiver({ action: UpdateTodo })
+  static updateTodo(
+    context: StateContext<TodoStateModel>,
+    action: UpdateTodo
+  ){
+    const todo = action.payload
+    return this.todoService.updateTodo(todo).pipe(
       finalize(() => this.getTodos)
     )
   }

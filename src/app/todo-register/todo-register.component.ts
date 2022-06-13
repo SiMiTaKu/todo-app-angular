@@ -14,8 +14,8 @@ import { TodoImportance }  from "../todoImportance";
 import { TodoService }     from "../todo.service";
 import { TodoNgxsState }   from "../todo.state";
 
-import { Store }            from "@ngxs/store";
-import {Emittable, Emitter} from "@ngxs-labs/emitter";
+import { Store }              from "@ngxs/store";
+import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
 @Component({
   selector:    'app-todo-register',

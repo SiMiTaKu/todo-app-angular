@@ -15,8 +15,8 @@ import { Location }                             from "@angular/common";
 import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
 import { Component, OnInit }                    from '@angular/core';
 
-import { Store }            from "@ngxs/store";
-import {Emittable, Emitter} from "@ngxs-labs/emitter";
+import { Store }              from "@ngxs/store";
+import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
 @Component({
   selector: 'app-todo-detail', templateUrl: './todo-detail.component.html', styleUrls: ['./todo-detail.component.scss']
@@ -122,21 +122,24 @@ export class TodoDetailComponent implements OnInit {
     return this.importanceSeq.filter(_ => _.code == code).map(_ => _.name);
   }
 
+  @Emitter(TodoNgxsState.updateTodo)
+  private updateTodo$!: Emittable<Todo>
+
   save(todo: Todo): void {
-    // this.store.dispatch(new TodoActions.Update({
-    //   id:          todo.id,
-    //   title:       this.todoEditForm?.value.todoTitle,
-    //   body:        this.todoEditForm?.value.todoBody,
-    //   category_id: Number(this.todoEditForm?.value.todoCategory),
-    //   state:       Number(this.todoEditForm?.value.todoState),
-    //   importance:  Number(this.todoEditForm?.value.todoImportance),
-    //   updated_at:  todo.updated_at,
-    //   created_at:  todo.created_at
-    // } as Todo)).subscribe(
-    //   _     => _,
-    //   error => error,
-    //   ()    => this.goToTodoList()
-    // );
+    this.updateTodo$.emit({
+      id:          todo.id,
+      title:       this.todoEditForm?.value.todoTitle,
+      body:        this.todoEditForm?.value.todoBody,
+      category_id: Number(this.todoEditForm?.value.todoCategory),
+      state:       Number(this.todoEditForm?.value.todoState),
+      importance:  Number(this.todoEditForm?.value.todoImportance),
+      updated_at:  todo.updated_at,
+      created_at:  todo.created_at
+    } as Todo).subscribe(
+      _     => _,
+      error => error,
+      ()    => this.goToTodoList()
+    );
   }
 
   //form初期値セット
