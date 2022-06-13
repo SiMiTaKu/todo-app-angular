@@ -1,13 +1,13 @@
 import { Todo }            from "../todo";
 import { TodoNgxsState }   from "../todo.state";
 import { TodoService }     from "../todo.service";
-import { TodoActions }     from "../todo.actions";
 import { TodoState }       from "../todoState";
 import { TodoImportance }  from "../todoImportance";
 
 import { Category }        from "../category";
 import { CategoryService } from "../category.service";
 import { Color }           from "../color";
+import { CategoryActions } from "../category.actions";
 
 import { Router }                               from "@angular/router";
 import { ActivatedRoute }                       from "@angular/router";
@@ -21,14 +21,14 @@ import { Select, Store }   from "@ngxs/store";
 })
 export class TodoDetailComponent implements OnInit {
 
-  @Select(TodoNgxsState.selectedTodo) todo$?: Observable<Todo>
-
   todoEditForm?: FormGroup;
 
   categories:    Category[]       = [];
   colors:        Color[]          = [];
   states:        TodoState[]      = [];
   importanceSeq: TodoImportance[] = [];
+
+  todo!: Todo;
 
   loading = {
     "setTodoData": true,
@@ -64,12 +64,12 @@ export class TodoDetailComponent implements OnInit {
   get importance() { return this.todoEditForm?.get('todoImportance')}
 
   getTodo(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.store.dispatch(new TodoActions.Select(id)).subscribe(
-      _     => this.setTodoData(_.todos.selectedTodo),
-      error => alert("🚨" + error),
-      ()    =>  this.loading.setTodoData = false
-    )
+    // const id = Number(this.route.snapshot.paramMap.get('id'));
+    // this.store.dispatch(new TodoActions.Select(id)).subscribe(
+    //   _     => this.setTodoData(_.todos.selectedTodo),
+    //   error => alert("🚨" + error),
+    //   ()    =>  this.loading.setTodoData = false
+    // )
   }
 
   getCategories(): void {
@@ -117,20 +117,20 @@ export class TodoDetailComponent implements OnInit {
   }
 
   save(todo: Todo): void {
-    this.store.dispatch(new TodoActions.Update({
-      id:          todo.id,
-      title:       this.todoEditForm?.value.todoTitle,
-      body:        this.todoEditForm?.value.todoBody,
-      category_id: Number(this.todoEditForm?.value.todoCategory),
-      state:       Number(this.todoEditForm?.value.todoState),
-      importance:  Number(this.todoEditForm?.value.todoImportance),
-      updated_at:  todo.updated_at,
-      created_at:  todo.created_at
-    } as Todo)).subscribe(
-      _     => _,
-      error => error,
-      ()    => this.goToTodoList()
-    );
+    // this.store.dispatch(new TodoActions.Update({
+    //   id:          todo.id,
+    //   title:       this.todoEditForm?.value.todoTitle,
+    //   body:        this.todoEditForm?.value.todoBody,
+    //   category_id: Number(this.todoEditForm?.value.todoCategory),
+    //   state:       Number(this.todoEditForm?.value.todoState),
+    //   importance:  Number(this.todoEditForm?.value.todoImportance),
+    //   updated_at:  todo.updated_at,
+    //   created_at:  todo.created_at
+    // } as Todo)).subscribe(
+    //   _     => _,
+    //   error => error,
+    //   ()    => this.goToTodoList()
+    // );
   }
 
   //form初期値セット
@@ -148,7 +148,4 @@ export class TodoDetailComponent implements OnInit {
     this.router.navigate(['/todos']);
   }
 }
-import { Observable }      from "rxjs";
-
-import { CategoryActions } from "../category.actions";
 

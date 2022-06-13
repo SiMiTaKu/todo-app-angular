@@ -9,7 +9,6 @@ import { Color }           from "../color";
 import { Todo }            from "../todo";
 import { TodoState }       from "../todoState";
 import { TodoService }     from "../todo.service";
-import { TodoActions }     from "../todo.actions";
 import { TodoImportance }  from "../todoImportance";
 
 import { Store }         from "@ngxs/store";
@@ -99,16 +98,16 @@ export class TodoRegisterComponent implements OnInit {
     if(this.todoRegisterForm?.invalid) {
       alert("Error!! Please check form area.")
     }else{
-      this.store.dispatch(new TodoActions.Add({
-        title:       this.todoRegisterForm?.value.todoTitle,
-        category_id: Number(this.todoRegisterForm?.value.todoCategory), //Formから返るのはstringのためNumberを指定してあげると解決
-        body:        this.todoRegisterForm?.value.todoBody,
-        importance:  Number(this.todoRegisterForm?.value.todoImportance)
-      } as Todo)).subscribe(
-        _     => _,
-        error => alert("🚨" + error),
-        ()    => this.goToTodoList()
-      );
+      // this.store.dispatch(new TodoActions.Add({
+      //   title:       this.todoRegisterForm?.value.todoTitle,
+      //   category_id: Number(this.todoRegisterForm?.value.todoCategory), //Formから返るのはstringのためNumberを指定してあげると解決
+      //   body:        this.todoRegisterForm?.value.todoBody,
+      //   importance:  Number(this.todoRegisterForm?.value.todoImportance)
+      // } as Todo)).subscribe(
+      //   _     => _,
+      //   error => alert("🚨" + error),
+      //   ()    => this.goToTodoList()
+      // );
     }
   }
 

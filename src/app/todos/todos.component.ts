@@ -8,19 +8,17 @@ import { CategoryNgxsState } from "../category.state";
 import { Color }             from "../color";
 
 import { Todo }          from "../todo";
-import { TodoState }     from "../todoState";
-import { TodoNgxsState } from "../todo.state";
-import { TodoService }   from "../todo.service";
-import { TodoActions }   from "../todo.actions";
+import { TodoState }                   from "../todoState";
+import {TodoNgxsState, TodoStateModel} from "../todo.state";
+import { TodoService }                 from "../todo.service";
 
-import { map, Observable } from "rxjs";
+import { map, Observable }  from "rxjs";
+import {Emittable, Emitter} from "@ngxs-labs/emitter";
 
 @Component({
   selector: 'app-todos', templateUrl: './todos.component.html', styleUrls: ['./todos.component.scss']
 })
 export class TodosComponent implements OnInit {
-
-  @Select(TodoNgxsState.todos) todos$?: Observable<Todo[]>
 
   @Select(CategoryNgxsState.categories) categories$?: Observable<Category[]>
 
@@ -51,12 +49,15 @@ export class TodosComponent implements OnInit {
     this.getTodos();
   }
 
+  @Emitter(TodoNgxsState.getTodos)
+  private todos$!: Emittable<TodoStateModel>
+
   getTodos(): void {
     this.loading.todos = true;
-    this.store.dispatch(new TodoActions.Load()).subscribe(
-      _     => this.todos = _.todos.todos,
-      error => alert("🚨" + error),
-      ()    =>  this.loading.todos = false
+    this.todos$.emit({ todos: [] }).subscribe(
+      _     => this.todos = _[0].todos.todos,
+      error => console.error(error),
+      ()    => this.loading.todos = false
     )
   }
 
@@ -102,11 +103,12 @@ export class TodosComponent implements OnInit {
 
   remove(todo: Todo): void {
     this.loading.todos = true;
-    this.store.dispatch(new TodoActions.Remove(todo.id)).subscribe(
-      _ => _,
-      error => console.error(error),
-      () => this.getTodos()
-    )
+    // this.store.dispatch(new TodoActions.Remove(todo.id)).subscribe(
+    //   _ => _,
+    //   error => console.error(error),
+    //   () => this.getTodos()
+    // )
+    this.getTodos()
   }
 
   convertDateTime(dateTime: Date): string {

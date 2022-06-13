@@ -8,7 +8,6 @@ import { Color }            from "../color";
 
 import { Todo }        from "../todo";
 import { TodoService } from "../todo.service";
-import { TodoActions } from "../todo.actions";
 
 import { Select, Store } from "@ngxs/store";
 import { Observable }    from "rxjs";
@@ -51,11 +50,11 @@ export class CategoriesComponent implements OnInit {
   }
 
   getTodos(): void {
-    this.store.dispatch(TodoActions.Load).subscribe(
-      _     => _,
-      error => alert("🚨" + error),
-      ()    =>  this.loading.todos = false
-    );
+    // this.store.dispatch(TodoActions.Load).subscribe(
+    //   _     => _,
+    //   error => alert("🚨" + error),
+    //   ()    =>  this.loading.todos = false
+    // );
   }
 
   getColors(): void {
@@ -76,8 +75,8 @@ export class CategoriesComponent implements OnInit {
   }
 
   removeMatchCategory(categoryId: number): void {
-    const matchIds = this.todos.filter(_ => _.category_id == categoryId).map(_ => _.id);
-    matchIds.map(id => this.store.dispatch(new TodoActions.Remove(id)))
+    // const matchIds = this.todos.filter(_ => _.category_id == categoryId).map(_ => _.id);
+    // matchIds.map(id => this.store.dispatch(new TodoActions.Remove(id)))
   }
 
   convertDateTime(dateTime: Date): string {

@@ -1,13 +1,17 @@
 import { Todo }                                  from "./todo";
 import { TodoService }                           from "./todo.service";
-import { TodoActions }                           from "./todo.actions";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 
-import { Injectable }  from   "@angular/core";
-import { finalize, tap } from "rxjs";
+import {Injectable, Injector} from "@angular/core";
+import { finalize, tap }      from "rxjs";
+import {Receiver}             from "@ngxs-labs/emitter";
 
-export class TodoStateModel{
-  todos?: Todo[];
+export class GetTodos {
+  static readonly type = 'Get_Todos';
+}
+
+export interface TodoStateModel{
+  todos: Todo[];
   selectedTodo?: Todo;
 }
 
@@ -18,81 +22,23 @@ export class TodoStateModel{
     selectedTodo: undefined
   }
 })
-
 @Injectable()
 export class TodoNgxsState{
+
+  private static todoService: TodoService;
+
   constructor(
-    private todoService: TodoService
-  ) {}
-
-  //Todoのリスト
-  @Selector()
-  static todos(state: TodoStateModel){
-    return state.todos;
+    private injector: Injector
+  ) {
+    TodoNgxsState.todoService = injector.get<TodoService>(TodoService)
   }
 
-  //選択中のTodo
-  @Selector()
-  static selectedTodo(state: TodoStateModel){
-    return state.selectedTodo;
-  }
-
-  //todoリスト読み込み
-  @Action(TodoActions.Load)
-  load(ctx: StateContext<TodoStateModel>){
+  @Receiver({ action: GetTodos })
+  static getTodos(
+    { patchState }: StateContext<TodoStateModel>
+  ){
     return this.todoService.getTodos().pipe(
-      tap((data) => {
-        ctx.patchState({
-          todos: data
-        });
-      })
-    )
-  }
-
-  //選択されたTodo
-  @Action(TodoActions.Select)
-  select(ctx: StateContext<TodoStateModel>, action: TodoActions.Select){
-    const id = action.id;
-    return this.todoService.getTodo(id).pipe(
-      tap((data: Todo) => {
-        ctx.patchState({
-          selectedTodo: data
-        })
-      })
-    )
-  }
-
-  //Todo追加時
-  @Action(TodoActions.Add)
-  add(ctx: StateContext<TodoStateModel>, action: TodoActions.Add){
-    const todo = action.payload
-
-    return this.todoService.addTodo(todo).pipe(
-      finalize(() => {
-        ctx.dispatch(new TodoActions.Load())
-      })
-    )
-  }
-
-  //Todo削除時
-  @Action(TodoActions.Remove)
-  remove(ctx: StateContext<TodoStateModel>, action: TodoActions.Remove){
-    const id = action.id
-    return this.todoService.removeTodo(id).pipe(
-      finalize(() => {
-        ctx.dispatch(new TodoActions.Load())
-      })
-    )
-  }
-
-  //Todo更新時
-  @Action(TodoActions.Update)
-  update(ctx: StateContext<TodoStateModel>, action: TodoActions.Update){
-    const todo = action.payload
-    return this.todoService.updateTodo(todo).pipe(
-      finalize(() => {
-        ctx.dispatch(new TodoActions.Load())
-      })
+      tap( todos => patchState({ todos: todos}))
     )
   }
 }

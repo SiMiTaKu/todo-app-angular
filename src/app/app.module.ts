@@ -22,6 +22,7 @@ import { NgxsLoggerPluginModule }        from "@ngxs/logger-plugin";
 import { NgxsReduxDevtoolsPluginModule } from "@ngxs/devtools-plugin";
 import { TodoNgxsState }                 from "./todo.state";
 import { CategoryNgxsState }             from "./category.state";
+import {NgxsEmitPluginModule}            from "@ngxs-labs/emitter";
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { CategoryNgxsState }             from "./category.state";
       TodoNgxsState,
       CategoryNgxsState //ここでDIしている
     ]),
+    NgxsEmitPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot()
   ],
