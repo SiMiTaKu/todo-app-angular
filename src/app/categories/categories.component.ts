@@ -9,8 +9,10 @@ import { Color }            from "../color";
 import { Todo }        from "../todo";
 import { TodoService } from "../todo.service";
 
-import { Select, Store } from "@ngxs/store";
-import { Observable }    from "rxjs";
+import { Select, Store }               from "@ngxs/store";
+import { Observable }                  from "rxjs";
+import {Emittable, Emitter}            from "@ngxs-labs/emitter";
+import {TodoNgxsState, TodoStateModel} from "../todo.state";
 
 @Component({
   selector: 'app-categories', templateUrl: './categories.component.html', styleUrls: ['./categories.component.scss']
@@ -49,12 +51,16 @@ export class CategoriesComponent implements OnInit {
     );
   }
 
+  @Emitter(TodoNgxsState.getTodos)
+  private todos$!: Emittable<TodoStateModel>
+
   getTodos(): void {
-    // this.store.dispatch(TodoActions.Load).subscribe(
-    //   _     => _,
-    //   error => alert("🚨" + error),
-    //   ()    =>  this.loading.todos = false
-    // );
+    this.loading.todos = true;
+    this.todos$.emit({ todos: [] }).subscribe(
+      _     => this.todos = _[0].todos.todos,
+      error => console.error(error),
+      ()    => this.loading.todos = false
+    )
   }
 
   getColors(): void {

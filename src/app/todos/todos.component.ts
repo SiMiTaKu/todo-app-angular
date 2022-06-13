@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Select, Store }     from "@ngxs/store";
 
 import { Category }          from "../category";
 import { CategoryService }   from "../category.service";
@@ -7,12 +6,13 @@ import { CategoryActions }   from "../category.actions";
 import { CategoryNgxsState } from "../category.state";
 import { Color }             from "../color";
 
-import { Todo }          from "../todo";
+import { Todo }                        from "../todo";
 import { TodoState }                   from "../todoState";
 import {TodoNgxsState, TodoStateModel} from "../todo.state";
 import { TodoService }                 from "../todo.service";
 
 import { map, Observable }  from "rxjs";
+import { Select, Store }    from "@ngxs/store";
 import {Emittable, Emitter} from "@ngxs-labs/emitter";
 
 @Component({
