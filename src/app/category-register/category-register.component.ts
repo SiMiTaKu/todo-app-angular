@@ -6,7 +6,9 @@ import { Category }        from "../category";
 import { CategoryService } from "../category.service";
 import { Color }           from "../color";
 
-import { Store } from "@ngxs/store";
+import { Store }            from "@ngxs/store";
+import {Emittable, Emitter} from "@ngxs-labs/emitter";
+import {CategoryNgxsState}  from "../category.state";
 
 @Component({
   selector:    'app-category-register',
@@ -49,20 +51,23 @@ export class CategoryRegisterComponent implements OnInit {
     );
   }
 
+  @Emitter(CategoryNgxsState.addCategory)
+  private addCategory$!: Emittable<Category>
+
   add(): void {
-    // if(this.categoryRegisterForm?.invalid) {
-    //   alert("Error!! Please check form area.")
-    // }else{
-    //   this.store.dispatch(new CategoryActions.Add({
-    //     name:  this.categoryRegisterForm?.value.categoryName,
-    //     slug:  this.categoryRegisterForm?.value.categorySlug,
-    //     color: Number(this.categoryRegisterForm?.value.categoryColor),
-    // } as Category)).subscribe(
-    //     _     => _,
-    //     error => alert(error),
-    //     ()    => this.goToCategoryList()
-    //   );
-    // }
+    if(this.categoryRegisterForm?.invalid) {
+      alert("Error!! Please check form area.")
+    }else{
+      this.addCategory$.emit(({
+        name:  this.categoryRegisterForm?.value.categoryName,
+        slug:  this.categoryRegisterForm?.value.categorySlug,
+        color: Number(this.categoryRegisterForm?.value.categoryColor),
+    } as Category)).subscribe(
+        _     => _,
+        error => alert("🚨" + error),
+        ()    => this.goToCategoryList()
+      );
+    }
   }
 
   goToCategoryList(){
