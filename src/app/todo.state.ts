@@ -1,10 +1,11 @@
-import { Todo }                                  from "./todo";
-import { TodoService }                           from "./todo.service";
-import { Action, Selector, State, StateContext } from "@ngxs/store";
+import { Injectable, Injector } from "@angular/core";
 
-import {Injectable, Injector} from "@angular/core";
-import { finalize, tap }      from "rxjs";
-import {Receiver}             from "@ngxs-labs/emitter";
+import { Todo }        from "./todo";
+import { TodoService } from "./todo.service";
+
+import { State, StateContext } from "@ngxs/store";
+import { Receiver }            from "@ngxs-labs/emitter";
+import { finalize, tap }       from "rxjs";
 
 export class GetTodos {
   static readonly type = 'Get_Todos';
@@ -13,6 +14,11 @@ export class GetTodos {
 export class GetTodo{
   static readonly type = 'Get_Todo';
   constructor( public payload: number) {}
+}
+
+export class AddTodo{
+  static readonly type = 'Add_Todo';
+  constructor( public payload: Todo) {}
 }
 
 export interface TodoStateModel{
@@ -55,6 +61,17 @@ export class TodoNgxsState{
     const id = action.payload
     return this.todoService.getTodo(id).pipe(
       tap((data) => patchState({ selectedTodo: data}))
+    )
+  }
+
+  @Receiver({ action: AddTodo })
+  static addTodo(
+    context: StateContext<TodoStateModel>,
+    action: AddTodo
+  ){
+    const todo = action.payload;
+    return this.todoService.addTodo(todo).pipe(
+      finalize(() => this.getTodos)
     )
   }
 }

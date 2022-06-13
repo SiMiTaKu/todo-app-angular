@@ -4,15 +4,18 @@ import { Router }                             from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 import { Category }        from "../category";
+import { CategoryActions } from "../category.actions";
 import { CategoryService } from "../category.service";
 import { Color }           from "../color";
+
 import { Todo }            from "../todo";
 import { TodoState }       from "../todoState";
-import { TodoService }     from "../todo.service";
 import { TodoImportance }  from "../todoImportance";
+import { TodoService }     from "../todo.service";
+import { TodoNgxsState }   from "../todo.state";
 
-import { Store }         from "@ngxs/store";
-import {CategoryActions} from "../category.actions";
+import { Store }            from "@ngxs/store";
+import {Emittable, Emitter} from "@ngxs-labs/emitter";
 
 @Component({
   selector:    'app-todo-register',
@@ -94,20 +97,23 @@ export class TodoRegisterComponent implements OnInit {
     )
   }
 
+  @Emitter(TodoNgxsState.addTodo)
+  private addTodo$!: Emittable<Todo>
+
   add(): void{
     if(this.todoRegisterForm?.invalid) {
       alert("Error!! Please check form area.")
     }else{
-      // this.store.dispatch(new TodoActions.Add({
-      //   title:       this.todoRegisterForm?.value.todoTitle,
-      //   category_id: Number(this.todoRegisterForm?.value.todoCategory), //Formから返るのはstringのためNumberを指定してあげると解決
-      //   body:        this.todoRegisterForm?.value.todoBody,
-      //   importance:  Number(this.todoRegisterForm?.value.todoImportance)
-      // } as Todo)).subscribe(
-      //   _     => _,
-      //   error => alert("🚨" + error),
-      //   ()    => this.goToTodoList()
-      // );
+      this.addTodo$.emit({
+        title:       this.todoRegisterForm?.value.todoTitle,
+        category_id: Number(this.todoRegisterForm?.value.todoCategory), //Formから返るのはstringのためNumberを指定してあげると解決
+        body:        this.todoRegisterForm?.value.todoBody,
+        importance:  Number(this.todoRegisterForm?.value.todoImportance)
+      } as Todo).subscribe(
+        _     => _,
+        error => alert("🚨" + error),
+        ()    => this.goToTodoList()
+      );
     }
   }
 
