@@ -4,7 +4,6 @@ import { Router }                           from "@angular/router";
 
 import { Category }        from "../category";
 import { CategoryService } from "../category.service";
-import { CategoryActions } from "../category.actions";
 import { Color }           from "../color";
 
 import { Store } from "@ngxs/store";
@@ -46,11 +45,11 @@ export class CategoryRegisterComponent implements OnInit {
   get color (){ return this.categoryRegisterForm?.get('categoryColor')}
 
   getCategories(): void {
-    this.store.dispatch(new CategoryActions.Load).subscribe(
-      _     => _,
-      error => alert("🚨" + error),
-      ()    =>  this.loading.categories = false
-    );
+    // this.store.dispatch(new CategoryActions.Load).subscribe(
+    //   _     => _,
+    //   error => alert("🚨" + error),
+    //   ()    =>  this.loading.categories = false
+    // );
   }
 
   getColors(): void {
@@ -62,19 +61,19 @@ export class CategoryRegisterComponent implements OnInit {
   }
 
   add(): void {
-    if(this.categoryRegisterForm?.invalid) {
-      alert("Error!! Please check form area.")
-    }else{
-      this.store.dispatch(new CategoryActions.Add({
-        name:  this.categoryRegisterForm?.value.categoryName,
-        slug:  this.categoryRegisterForm?.value.categorySlug,
-        color: Number(this.categoryRegisterForm?.value.categoryColor),
-    } as Category)).subscribe(
-        _     => _,
-        error => alert(error),
-        ()    => this.goToCategoryList()
-      );
-    }
+    // if(this.categoryRegisterForm?.invalid) {
+    //   alert("Error!! Please check form area.")
+    // }else{
+    //   this.store.dispatch(new CategoryActions.Add({
+    //     name:  this.categoryRegisterForm?.value.categoryName,
+    //     slug:  this.categoryRegisterForm?.value.categorySlug,
+    //     color: Number(this.categoryRegisterForm?.value.categoryColor),
+    // } as Category)).subscribe(
+    //     _     => _,
+    //     error => alert(error),
+    //     ()    => this.goToCategoryList()
+    //   );
+    // }
   }
 
   goToCategoryList(){

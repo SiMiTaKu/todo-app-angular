@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { Category }          from "../category";
 import { CategoryService }   from "../category.service";
-import { CategoryActions }   from "../category.actions";
 import { CategoryNgxsState } from "../category.state";
 import { Color }             from "../color";
 
@@ -20,7 +19,7 @@ import {Emittable, Emitter} from "@ngxs-labs/emitter";
 })
 export class TodosComponent implements OnInit {
 
-  @Select(CategoryNgxsState.categories) categories$?: Observable<Category[]>
+  //@Select(CategoryNgxsState.categories) categories$?: Observable<Category[]>
 
   title = 'Todo List';
 
@@ -62,12 +61,12 @@ export class TodosComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.loading.categories = true;
-    this.store.dispatch(new CategoryActions.Load()).subscribe(
-      _ => this.categories = _.categories.categories,
-      error => alert("🚨" + error),
-      ()    =>  this.loading.categories = false
-    )
+    // this.loading.categories = true;
+    // this.store.dispatch(new CategoryActions.Load()).subscribe(
+    //   _ => this.categories = _.categories.categories,
+    //   error => alert("🚨" + error),
+    //   ()    =>  this.loading.categories = false
+    // )
   }
 
   getTodoStates(): void {

@@ -1,24 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Category }         from "../category";
-import { CategoryActions }  from "../category.actions";
-import { CategoryNgxsState} from "../category.state";
-import { CategoryService }  from "../category.service";
-import { Color }            from "../color";
+import { Category }          from "../category";
+import { CategoryNgxsState } from "../category.state";
+import { CategoryService }   from "../category.service";
+import { Color }             from "../color";
 
-import { Todo }        from "../todo";
-import { TodoService } from "../todo.service";
+import { Todo }                          from "../todo";
+import { TodoNgxsState, TodoStateModel } from "../todo.state";
+import { TodoService }                   from "../todo.service";
 
-import { Select, Store }               from "@ngxs/store";
-import { Observable }                  from "rxjs";
-import {Emittable, Emitter}            from "@ngxs-labs/emitter";
-import {TodoNgxsState, TodoStateModel} from "../todo.state";
+import { Select, Store }                 from "@ngxs/store";
+import { Emittable, Emitter }            from "@ngxs-labs/emitter";
+import { Observable }                    from "rxjs";
 
 @Component({
   selector: 'app-categories', templateUrl: './categories.component.html', styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
-  @Select(CategoryNgxsState.categories) categories$?: Observable<Category[]>
+  //@Select(CategoryNgxsState.categories) categories$?: Observable<Category[]>
 
   categories: Category[] = [];
   colors:     Color[]    = [];
@@ -44,11 +43,11 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.store.dispatch(CategoryActions.Load).subscribe(
-      _     => this.categories = _.categories.categories,
-      error => alert("🚨" + error),
-      ()    =>  this.loading.categories = false
-    );
+    // this.store.dispatch(CategoryActions.Load).subscribe(
+    //   _     => this.categories = _.categories.categories,
+    //   error => alert("🚨" + error),
+    //   ()    =>  this.loading.categories = false
+    // );
   }
 
   @Emitter(TodoNgxsState.getTodos)
@@ -76,8 +75,8 @@ export class CategoriesComponent implements OnInit {
   }
 
   remove(category: Category): void {
-    this.store.dispatch(new CategoryActions.Remove(category.id))
-    this.removeMatchCategory(category.id);
+    // this.store.dispatch(new CategoryActions.Remove(category.id))
+    // this.removeMatchCategory(category.id);
   }
 
   removeMatchCategory(categoryId: number): void {

@@ -4,7 +4,6 @@ import { Router }                             from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 import { Category }        from "../category";
-import { CategoryActions } from "../category.actions";
 import { CategoryService } from "../category.service";
 import { Color }           from "../color";
 
@@ -66,11 +65,11 @@ export class TodoRegisterComponent implements OnInit {
   get importance() { return this.todoRegisterForm?.get('todoImportance');}
 
   getCategories(): void {
-    this.store.dispatch(new CategoryActions.Load()).subscribe(
-      _     => this.categories = _.categories.categories,
-      error => alert(error),
-      ()    => this.loading.categories = false
-    )
+    // this.store.dispatch(new CategoryActions.Load()).subscribe(
+    //   _     => this.categories = _.categories.categories,
+    //   error => alert(error),
+    //   ()    => this.loading.categories = false
+    // )
   }
 
   getColors(): void {

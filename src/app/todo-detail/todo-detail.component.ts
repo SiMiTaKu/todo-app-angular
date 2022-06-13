@@ -7,7 +7,6 @@ import { TodoImportance }  from "../todoImportance";
 import { Category }        from "../category";
 import { CategoryService } from "../category.service";
 import { Color }           from "../color";
-import { CategoryActions } from "../category.actions";
 
 import { Router }                               from "@angular/router";
 import { ActivatedRoute }                       from "@angular/router";
@@ -79,11 +78,11 @@ export class TodoDetailComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.store.dispatch(new CategoryActions.Load()).subscribe(
-      _     => this.categories = _.categories.categories,
-      error => alert("🚨" + error),
-      ()    => this.loading.categories = false
-    )
+    // this.store.dispatch(new CategoryActions.Load()).subscribe(
+    //   _     => this.categories = _.categories.categories,
+    //   error => alert("🚨" + error),
+    //   ()    => this.loading.categories = false
+    // )
   }
 
   getColors(): void {

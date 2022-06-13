@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
 
 import { Category }          from "../category";
 import { CategoryService }   from "../category.service";
-import { CategoryActions }   from "../category.actions";
 import { CategoryNgxsState } from "../category.state";
 import { Color }             from "../color";
 
@@ -19,10 +18,11 @@ import { Observable }    from "rxjs";
 
 export class CategoryDetailComponent implements OnInit {
 
-  @Select(CategoryNgxsState.selectedCategory) category$?: Observable<Category>;
+  //@Select(CategoryNgxsState.selectedCategory) category$?: Observable<Category>;
 
   categoryEditForm?: FormGroup;
-  colors: Color[] = [];
+  colors:    Color[] = [];
+  category!: Category;
 
   loading = {
     "category" : true,
@@ -46,41 +46,41 @@ export class CategoryDetailComponent implements OnInit {
   get color() { return this.categoryEditForm?.get('categoryColor')}
 
   getCategory(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.store.dispatch(new CategoryActions.Select(id)).subscribe(
-      _ => this.setCategoryData(_.categories.selectedCategory),
-        error => alert("🚨" + error),
-        ()    =>  this.loading.category = false
-      );
+    // const id = Number(this.route.snapshot.paramMap.get('id'));
+    // this.store.dispatch(new CategoryActions.Select(id)).subscribe(
+    //   _ => this.setCategoryData(_.categories.selectedCategory),
+    //     error => alert("🚨" + error),
+    //     ()    =>  this.loading.category = false
+    //   );
     }
 
-    getColors(): void {
-      this.categoryService.getColors().subscribe(
-        _     => this.colors = _,
-        error => alert("🚨" + error),
-        ()    =>  this.loading.colors = false
-      );
-    }
+  getColors(): void {
+    this.categoryService.getColors().subscribe(
+      _     => this.colors = _,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.colors = false
+    );
+  }
 
   getThisCategoryColor(colorId: number): string[] {
     return this.colors.filter(_ => _.id == colorId).map(_ => _.name);
   }
 
   save(category: Category): void {
-    this.store.dispatch(new CategoryActions.Update(
-      {
-        id:         category.id,
-        name:       this.categoryEditForm?.value.categoryName,
-        slug:       this.categoryEditForm?.value.categorySlug,
-        color:      Number(this.categoryEditForm?.value.categoryColor),
-        updated_at: category.updated_at,
-        created_at: category.created_at
-      }as Category)
-    ).subscribe(
-      _ => _,
-      error => console.error(error),
-      () => this.goToCategoryList()
-    )
+    // this.store.dispatch(new CategoryActions.Update(
+    //   {
+    //     id:         category.id,
+    //     name:       this.categoryEditForm?.value.categoryName,
+    //     slug:       this.categoryEditForm?.value.categorySlug,
+    //     color:      Number(this.categoryEditForm?.value.categoryColor),
+    //     updated_at: category.updated_at,
+    //     created_at: category.created_at
+    //   }as Category)
+    // ).subscribe(
+    //   _ => _,
+    //   error => console.error(error),
+    //   () => this.goToCategoryList()
+    // )
   }
 
   setCategoryData(category: Category) {
