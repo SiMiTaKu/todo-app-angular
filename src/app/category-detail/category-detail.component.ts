@@ -3,12 +3,13 @@ import { ActivatedRoute, Router }               from "@angular/router";
 import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
 
 import { Category }          from "../category";
-import { CategoryService }   from "../category.service";
-import { CategoryNgxsState } from "../category.state";
-import { Color }             from "../color";
+import { CategoryService }                     from "../category.service";
+import {CategoryNgxsState, CategoryStateModel} from "../category.state";
+import { Color }                               from "../color";
 
 import { Select, Store } from "@ngxs/store";
-import { Observable }    from "rxjs";
+import { Observable }       from "rxjs";
+import {Emittable, Emitter} from "@ngxs-labs/emitter";
 
 @Component({
   selector:    'app-category-detail',
@@ -45,14 +46,18 @@ export class CategoryDetailComponent implements OnInit {
   get slug()  { return this.categoryEditForm?.get('categorySlug')}
   get color() { return this.categoryEditForm?.get('categoryColor')}
 
+  @Emitter(CategoryNgxsState.getCategory)
+  private category$!: Emittable<number>
+
   getCategory(): void {
-    // const id = Number(this.route.snapshot.paramMap.get('id'));
-    // this.store.dispatch(new CategoryActions.Select(id)).subscribe(
-    //   _ => this.setCategoryData(_.categories.selectedCategory),
-    //     error => alert("🚨" + error),
-    //     ()    =>  this.loading.category = false
-    //   );
-    }
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.category$.emit(id).subscribe(
+      _ => { this.setCategoryData(_[0].categories.selectedCategory)
+                   this.category = _[0].categories.selectedCategory},
+        error => alert("🚨" + error),
+        ()    =>  this.loading.category = false
+      );
+  }
 
   getColors(): void {
     this.categoryService.getColors().subscribe(

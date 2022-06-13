@@ -9,6 +9,12 @@ export class GetCategories{
   static readonly type = 'Get_Categories';
 }
 
+export class GetCategory{
+  static readonly type = 'Get_Category';
+  constructor(public payload: number) {
+  }
+}
+
 export interface CategoryStateModel{
   selectedCategory?: Category;
   categories: Category[];
@@ -32,13 +38,24 @@ export class CategoryNgxsState{
     CategoryNgxsState.categoryService = injector.get<CategoryService>(CategoryService)
   }
 
-  @Receiver({action: GetCategories})
+  @Receiver({ action: GetCategories })
   static getCategories(
     { patchState }: StateContext<CategoryStateModel>,
     action: GetCategories
   ){
     return this.categoryService.getCategories().pipe(
       tap((data) => patchState({ categories: data }))
+    )
+  }
+
+  @Receiver({ action: GetCategory })
+  static getCategory(
+    { patchState }: StateContext<CategoryStateModel>,
+    action: GetCategory
+  ){
+    const id = action.payload
+    return this.categoryService.getCategory(id).pipe(
+      tap((data) => patchState({ selectedCategory: data }))
     )
   }
 }
