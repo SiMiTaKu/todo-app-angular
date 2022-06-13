@@ -10,6 +10,11 @@ export class GetTodos {
   static readonly type = 'Get_Todos';
 }
 
+export class GetTodo{
+  static readonly type = 'Get_Todo';
+  constructor( public payload: number) {}
+}
+
 export interface TodoStateModel{
   todos: Todo[];
   selectedTodo?: Todo;
@@ -39,6 +44,17 @@ export class TodoNgxsState{
   ){
     return this.todoService.getTodos().pipe(
       tap( todos => patchState({ todos: todos}))
+    )
+  }
+
+  @Receiver( { action: GetTodo })
+  static getTodo(
+    { patchState }: StateContext<TodoStateModel>,
+    action: GetTodo
+  ){
+    const id = action.payload
+    return this.todoService.getTodo(id).pipe(
+      tap((data) => patchState({ selectedTodo: data}))
     )
   }
 }

@@ -15,7 +15,9 @@ import { Location }                             from "@angular/common";
 import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
 import { Component, OnInit }                    from '@angular/core';
 
-import { Select, Store }   from "@ngxs/store";
+import { Store }            from "@ngxs/store";
+import {Emittable, Emitter} from "@ngxs-labs/emitter";
+
 @Component({
   selector: 'app-todo-detail', templateUrl: './todo-detail.component.html', styleUrls: ['./todo-detail.component.scss']
 })
@@ -28,7 +30,7 @@ export class TodoDetailComponent implements OnInit {
   states:        TodoState[]      = [];
   importanceSeq: TodoImportance[] = [];
 
-  todo!: Todo;
+  todo!: Todo
 
   loading = {
     "setTodoData": true,
@@ -63,13 +65,17 @@ export class TodoDetailComponent implements OnInit {
   get state() {      return this.todoEditForm?.get('todoState')}
   get importance() { return this.todoEditForm?.get('todoImportance')}
 
+  @Emitter(TodoNgxsState.getTodo)
+  private todo$!: Emittable<number>
+
   getTodo(): void {
-    // const id = Number(this.route.snapshot.paramMap.get('id'));
-    // this.store.dispatch(new TodoActions.Select(id)).subscribe(
-    //   _     => this.setTodoData(_.todos.selectedTodo),
-    //   error => alert("🚨" + error),
-    //   ()    =>  this.loading.setTodoData = false
-    // )
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.todo$.emit(id).subscribe(
+      _     => { this.setTodoData(_[0].todos.selectedTodo)
+                       this.todo = _[0].todos.selectedTodo},
+      error => alert("🚨" + error),
+      ()    =>  this.loading.setTodoData = false
+    )
   }
 
   getCategories(): void {
