@@ -73,14 +73,16 @@ export class CategoriesComponent implements OnInit {
     return this.colors.filter(_ => _.id == colorId).map(_ => _.name);
   }
 
-  remove(category: Category): void {
-    // this.store.dispatch(new CategoryActions.Remove(category.id))
-    // this.removeMatchCategory(category.id);
-  }
+  @Emitter(CategoryNgxsState.removeCategory)
+  private removeCategory$!: Emittable<number>
 
-  removeMatchCategory(categoryId: number): void {
-    // const matchIds = this.todos.filter(_ => _.category_id == categoryId).map(_ => _.id);
-    // matchIds.map(id => this.store.dispatch(new TodoActions.Remove(id)))
+  remove(category: Category): void {
+    this.loading.categories = true;
+    this.removeCategory$.emit(category.id).subscribe(
+      _ => _,//this.removeMatchCategory(category.id),
+      error => alert("🚨" + error),
+      () => this.getCategories()
+    )
   }
 
   convertDateTime(dateTime: Date): string {

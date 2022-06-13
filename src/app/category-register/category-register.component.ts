@@ -2,13 +2,13 @@ import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import { Component, OnInit }                from '@angular/core';
 import { Router }                           from "@angular/router";
 
-import { Category }        from "../category";
-import { CategoryService } from "../category.service";
-import { Color }           from "../color";
+import { Category }           from "../category";
+import { CategoryService }    from "../category.service";
+import { CategoryNgxsState }  from "../category.state";
+import { Color }              from "../color";
 
-import { Store }            from "@ngxs/store";
-import {Emittable, Emitter} from "@ngxs-labs/emitter";
-import {CategoryNgxsState}  from "../category.state";
+import { Store }              from "@ngxs/store";
+import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
 @Component({
   selector:    'app-category-register',
