@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Category }          from "../category";
-import { CategoryNgxsState } from "../category.state";
-import { CategoryService }   from "../category.service";
-import { Color }             from "../color";
+import { Category }                            from "../category";
+import {CategoryNgxsState, CategoryStateModel} from "../category.state";
+import { CategoryService }                     from "../category.service";
+import { Color }                               from "../color";
 
 import { Todo }                          from "../todo";
 import { TodoNgxsState, TodoStateModel } from "../todo.state";
-import { TodoService }                   from "../todo.service";
 
 import { Select, Store }                 from "@ngxs/store";
 import { Emittable, Emitter }            from "@ngxs-labs/emitter";
@@ -32,7 +31,6 @@ export class CategoriesComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private todoService:     TodoService,
     private store:           Store
   ) {}
 
@@ -42,12 +40,15 @@ export class CategoriesComponent implements OnInit {
     this.getTodos();
   }
 
+  @Emitter(CategoryNgxsState.getCategories)
+  private categories$!: Emittable<CategoryStateModel>
+
   getCategories(): void {
-    // this.store.dispatch(CategoryActions.Load).subscribe(
-    //   _     => this.categories = _.categories.categories,
-    //   error => alert("🚨" + error),
-    //   ()    =>  this.loading.categories = false
-    // );
+    this.categories$.emit({ categories: [] }).subscribe(
+      _     => this.categories = _[0].categories.categories,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.categories = false
+    );
   }
 
   @Emitter(TodoNgxsState.getTodos)
