@@ -1,15 +1,14 @@
-import { Component, OnInit }                    from '@angular/core';
-import { ActivatedRoute, Router }               from "@angular/router";
-import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
+import { Component, OnInit }                  from '@angular/core';
+import { ActivatedRoute, Router }             from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-import { Category }          from "../category";
-import { CategoryService }                     from "../category.service";
-import {CategoryNgxsState, CategoryStateModel} from "../category.state";
-import { Color }                               from "../color";
+import { Category }        from "../category";
+import { CategoryService } from "../category.service";
+import {CategoryNgxsState} from "../category.state";
+import { Color }           from "../color";
 
-import { Select, Store } from "@ngxs/store";
-import { Observable }       from "rxjs";
-import {Emittable, Emitter} from "@ngxs-labs/emitter";
+import { Store }              from "@ngxs/store";
+import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
 @Component({
   selector:    'app-category-detail',
@@ -71,21 +70,22 @@ export class CategoryDetailComponent implements OnInit {
     return this.colors.filter(_ => _.id == colorId).map(_ => _.name);
   }
 
+  @Emitter(CategoryNgxsState.updateCategory)
+  private updateCategory$!: Emittable<Category>
+
   save(category: Category): void {
-    // this.store.dispatch(new CategoryActions.Update(
-    //   {
-    //     id:         category.id,
-    //     name:       this.categoryEditForm?.value.categoryName,
-    //     slug:       this.categoryEditForm?.value.categorySlug,
-    //     color:      Number(this.categoryEditForm?.value.categoryColor),
-    //     updated_at: category.updated_at,
-    //     created_at: category.created_at
-    //   }as Category)
-    // ).subscribe(
-    //   _ => _,
-    //   error => console.error(error),
-    //   () => this.goToCategoryList()
-    // )
+    this.updateCategory$.emit({
+      id:         category.id,
+      name:       this.categoryEditForm?.value.categoryName,
+      slug:       this.categoryEditForm?.value.categorySlug,
+      color:      Number(this.categoryEditForm?.value.categoryColor),
+      updated_at: category.updated_at,
+      created_at: category.created_at
+    }as Category).subscribe(
+      _ => _,
+      error => console.error(error),
+      () => this.goToCategoryList()
+    )
   }
 
   setCategoryData(category: Category) {

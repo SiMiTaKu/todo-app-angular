@@ -24,6 +24,11 @@ export class RemoveCategory{
   constructor(public payload: number) {}
 }
 
+export class UpdateCategory{
+  static readonly type = 'Update_Category';
+  constructor(public payload: Category) {}
+}
+
 export interface CategoryStateModel{
   selectedCategory?: Category;
   categories: Category[];
@@ -87,6 +92,17 @@ export class CategoryNgxsState{
     const id = action.payload
     return this.categoryService.removeCategory(id).pipe(
       finalize (() => this.getCategories)
+    )
+  }
+
+  @Receiver({ action: UpdateCategory})
+  static updateCategory(
+    { patchState } :StateContext<CategoryStateModel>,
+    action: UpdateCategory
+  ){
+    const category = action.payload
+    return this.categoryService.updateCategory(category).pipe(
+      finalize(() => this.getCategories)
     )
   }
 }

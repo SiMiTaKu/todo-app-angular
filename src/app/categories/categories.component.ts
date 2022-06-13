@@ -24,7 +24,6 @@ export class CategoriesComponent implements OnInit {
     "categories" : true,
     "todos" :      true,
     "colors" :     true,
-
   }
 
   constructor(
