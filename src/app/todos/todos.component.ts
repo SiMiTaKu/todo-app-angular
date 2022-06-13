@@ -6,12 +6,12 @@ import { CategoryActions }   from "../category.actions";
 import { CategoryNgxsState } from "../category.state";
 import { Color }             from "../color";
 
-import { Todo }                        from "../todo";
-import { TodoState }                   from "../todoState";
-import {TodoNgxsState, TodoStateModel} from "../todo.state";
-import { TodoService }                 from "../todo.service";
+import { Todo }                          from "../todo";
+import { TodoState }                     from "../todoState";
+import { TodoNgxsState, TodoStateModel } from "../todo.state";
+import { TodoService }                   from "../todo.service";
 
-import { map, Observable }  from "rxjs";
+import { Observable }       from "rxjs";
 import { Select, Store }    from "@ngxs/store";
 import {Emittable, Emitter} from "@ngxs-labs/emitter";
 
@@ -101,14 +101,16 @@ export class TodosComponent implements OnInit {
     return this.states.filter(_ => _.id == stateCode).map(_ => _.status);
   }
 
+  @Emitter(TodoNgxsState.removeTodo)
+  private deleteTodo$!: Emittable<number>
+
   remove(todo: Todo): void {
     this.loading.todos = true;
-    // this.store.dispatch(new TodoActions.Remove(todo.id)).subscribe(
-    //   _ => _,
-    //   error => console.error(error),
-    //   () => this.getTodos()
-    // )
-    this.getTodos()
+    this.deleteTodo$.emit(todo.id).subscribe(
+      _ => _,
+      error => console.error(error),
+      () => this.getTodos()
+    )
   }
 
   convertDateTime(dateTime: Date): string {

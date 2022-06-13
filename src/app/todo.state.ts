@@ -21,6 +21,11 @@ export class AddTodo{
   constructor( public payload: Todo) {}
 }
 
+export class RemoveTodo{
+  static readonly type = 'Remove_Todo';
+  constructor( public payload: number) {}
+}
+
 export interface TodoStateModel{
   todos: Todo[];
   selectedTodo?: Todo;
@@ -71,6 +76,17 @@ export class TodoNgxsState{
   ){
     const todo = action.payload;
     return this.todoService.addTodo(todo).pipe(
+      finalize(() => this.getTodos)
+    )
+  }
+
+  @Receiver({ action: RemoveTodo })
+  static removeTodo(
+    context: StateContext<TodoStateModel>,
+    action: RemoveTodo
+  ){
+    const id = action.payload
+    return this.todoService.removeTodo(id).pipe(
       finalize(() => this.getTodos)
     )
   }
