@@ -26,6 +26,7 @@ export class TodosComponent implements OnInit {
 
   title = 'Todo List';
 
+  todos:      Todo[]      = [];
   categories: Category[]  = [];
   states:     TodoState[] = [];
   colors:     Color[]     = [];
@@ -51,17 +52,16 @@ export class TodosComponent implements OnInit {
   }
 
   getTodos(): void {
-    const transformTodo = map((resTodos: any) => resTodos.todos.todos as Todo[])
-    this.store.dispatch(new TodoActions.Load()).pipe(
-      transformTodo
-    ).subscribe(
-      _     => _,
+    this.loading.todos = true;
+    this.store.dispatch(new TodoActions.Load()).subscribe(
+      _     => this.todos = _.todos.todos,
       error => alert("🚨" + error),
       ()    =>  this.loading.todos = false
     )
   }
 
   getCategories(): void {
+    this.loading.categories = true;
     this.store.dispatch(new CategoryActions.Load()).subscribe(
       _ => this.categories = _.categories.categories,
       error => alert("🚨" + error),
@@ -70,14 +70,16 @@ export class TodosComponent implements OnInit {
   }
 
   getTodoStates(): void {
+    this.loading.states = true;
     this.todoService.getState().subscribe(
       _ => this.states = _,
       error => alert("🚨" + error),
-      ()    =>  this.loading.states = false
+      ()    => this.loading.states = false
     );
   }
 
   getColors(): void {
+    this.loading.colors = true;
     this.categoryService.getColors().subscribe(
       _ => this.colors = _,
       error => alert("🚨" + error),
@@ -99,7 +101,12 @@ export class TodosComponent implements OnInit {
   }
 
   remove(todo: Todo): void {
-    this.store.dispatch(new TodoActions.Remove(todo.id))
+    this.loading.todos = true;
+    this.store.dispatch(new TodoActions.Remove(todo.id)).subscribe(
+      _ => _,
+      error => console.error(error),
+      () => this.getTodos()
+    )
   }
 
   convertDateTime(dateTime: Date): string {
@@ -110,57 +117,32 @@ export class TodosComponent implements OnInit {
 
   //id順にソート
   sortById(): void{
-    const sortId = map((todos: Todo[]) => todos.sort(
+    this.todos.sort(
       (todoA, todoB) => todoA.id - todoB.id
-    ))
-    this.todos$?.pipe(
-      sortId
-    ).subscribe(
-      _ => _
     )
   }
   //新しい順にソート
   sortByDate(): void{
-    const sortDate = map((todos: Todo[]) => todos.sort(
+    this.todos.sort(
       (todoA, todoB) => new Date(todoB.updated_at).getTime() - new Date(todoA.updated_at).getTime()
-    ))
-    this.todos$?.pipe(
-      sortDate
-    ).subscribe(
-      _ => _
     )
   }
   //終わってない順にソート
   sortByState(): void{
-    const sortState = map((todos: Todo[]) => todos.sort(
+    this.todos.sort(
       (todoA, todoB) => todoA.state - todoB.state
-    ))
-    this.todos$?.pipe(
-      sortState
-    ).subscribe(
-      _ => _
     )
   }
   //カテゴリのid順にソート
   sortByCategory(): void{
-    const sortCategory = map((todos: Todo[]) => todos.sort(
+    this.todos.sort(
       (todoA, todoB) => todoA.category_id - todoB.category_id
-    ))
-    this.todos$?.pipe(
-      sortCategory
-    ).subscribe(
-      _ => _
     )
   }
   //重要度順にソート
   sortByImportance():void{
-    const sortImportance = map((todos: Todo[]) => todos.sort(
+    this.todos.sort(
       (todoA, todoB) => todoA.importance - todoB.importance
-    ))
-    this.todos$?.pipe(
-      sortImportance
-    ).subscribe(
-      _ => _
     )
   }
 }
