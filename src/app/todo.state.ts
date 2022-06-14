@@ -3,29 +3,9 @@ import { Injectable, Injector } from "@angular/core";
 import { Todo }        from "./todo";
 import { TodoService } from "./todo.service";
 
-import { State, StateContext } from "@ngxs/store";
-import { Receiver }            from "@ngxs-labs/emitter";
-import { finalize, tap }       from "rxjs";
-
-export class GetTodo {
-  static readonly type = '[Todo] Get Todo';
-  constructor( public payload: number) {}
-}
-
-export class AddTodo {
-  static readonly type = '[Todo] Add Todo';
-  constructor( public payload: Todo) {}
-}
-
-export class RemoveTodo {
-  static readonly type = '[Todo] Remove Todo';
-  constructor( public payload: number) {}
-}
-
-export class UpdateTodo {
-  static readonly type = '[Todo] Update Todo';
-  constructor( public payload: Todo) {}
-}
+import { State, StateContext }     from "@ngxs/store";
+import { EmitterAction, Receiver } from "@ngxs-labs/emitter";
+import { finalize, tap }           from "rxjs";
 
 export interface TodoStateModel{
   todos:         Todo[];
@@ -63,7 +43,7 @@ export class TodoNgxsState{
   @Receiver( { type: '[Todo] Get Todo' })
   static getTodo(
     { patchState }: StateContext<TodoStateModel>,
-    action: GetTodo
+    action: EmitterAction<number>
   ){
     const id = action.payload
     return this.todoService.getTodo(id).pipe(
@@ -71,10 +51,10 @@ export class TodoNgxsState{
     )
   }
 
-  @Receiver({ action: AddTodo })
+  @Receiver({ type: '[Todo] Add Todo' })
   static addTodo(
     context: StateContext<TodoStateModel>,
-    action: AddTodo
+    action: EmitterAction<Todo>
   ){
     const todo = action.payload;
     return this.todoService.addTodo(todo).pipe(
@@ -82,10 +62,10 @@ export class TodoNgxsState{
     )
   }
 
-  @Receiver({ action: RemoveTodo })
+  @Receiver({ type: '[Todo] Remove Todo'})
   static removeTodo(
     context: StateContext<TodoStateModel>,
-    action: RemoveTodo
+    action: EmitterAction<number>
   ){
     const id = action.payload
     return this.todoService.removeTodo(id).pipe(
@@ -93,10 +73,10 @@ export class TodoNgxsState{
     )
   }
 
-  @Receiver({ action: UpdateTodo })
+  @Receiver({ type: '[Todo] Update Todo' })
   static updateTodo(
     context: StateContext<TodoStateModel>,
-    action: UpdateTodo
+    action: EmitterAction<Todo>
   ){
     const todo = action.payload
     return this.todoService.updateTodo(todo).pipe(

@@ -3,29 +3,9 @@ import { Injectable, Injector } from "@angular/core";
 import { Category }        from "./category";
 import { CategoryService } from "./category.service";
 
-import { State, StateContext } from "@ngxs/store";
-import { Receiver }            from "@ngxs-labs/emitter";
-import { finalize, tap }       from "rxjs";
-
-export class GetCategory{
-  static readonly type = '[Category] Get Category';
-  constructor(public payload: number) {}
-}
-
-export class AddCategory{
-  static readonly type = '[Category] Add Category';
-  constructor(public payload: Category) {}
-}
-
-export class RemoveCategory{
-  static readonly type = '[Category] Remove Category';
-  constructor(public payload: number) {}
-}
-
-export class UpdateCategory{
-  static readonly type = '[Category] Update Category';
-  constructor(public payload: Category) {}
-}
+import { State, StateContext }   from "@ngxs/store";
+import {EmitterAction, Receiver} from "@ngxs-labs/emitter";
+import { finalize, tap }         from "rxjs";
 
 export interface CategoryStateModel{
   categories:        Category[];
@@ -62,7 +42,7 @@ export class CategoryNgxsState{
   @Receiver({ type : '[Category] Get Category'})
   static getCategory(
     { patchState }: StateContext<CategoryStateModel>,
-    action: GetCategory
+    action: EmitterAction<number>
   ){
     const id = action.payload
     return this.categoryService.getCategory(id).pipe(
@@ -70,10 +50,10 @@ export class CategoryNgxsState{
     )
   }
 
-  @Receiver({ action: AddCategory })
+  @Receiver({ type: '[Category] Add Category'})
   static addCategory(
     { patchState }: StateContext<CategoryStateModel>,
-    action: AddCategory
+    action: EmitterAction<Category>
   ){
     const category = action.payload
     return this.categoryService.addCategory(category).pipe(
@@ -81,10 +61,10 @@ export class CategoryNgxsState{
     )
   }
 
-  @Receiver({ action: RemoveCategory })
+  @Receiver({ type: '[Category] Remove Category' })
   static removeCategory(
     { patchState } : StateContext<CategoryStateModel>,
-    action: RemoveCategory
+    action: EmitterAction<number>
   ){
     const id = action.payload
     return this.categoryService.removeCategory(id).pipe(
@@ -92,10 +72,10 @@ export class CategoryNgxsState{
     )
   }
 
-  @Receiver({ action: UpdateCategory})
+  @Receiver({ type: '[Category] Update Category'})
   static updateCategory(
     { patchState } :StateContext<CategoryStateModel>,
-    action: UpdateCategory
+    action: EmitterAction<Category>
   ){
     const category = action.payload
     return this.categoryService.updateCategory(category).pipe(
