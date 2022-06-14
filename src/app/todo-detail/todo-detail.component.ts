@@ -69,8 +69,8 @@ export class TodoDetailComponent implements OnInit {
   getTodo(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.todo$.emit(id).subscribe(
-      _     => { this.setTodoData(_[0].todos.selectedTodo)
-                       this.todo = _[0].todos.selectedTodo},
+      _     => { this.setTodoData(_.todos.selectedTodo)
+                       this.todo = _.todos.selectedTodo},
       error => alert("🚨" + error),
       ()    =>  this.loading.setTodoData = false
     )
@@ -81,7 +81,7 @@ export class TodoDetailComponent implements OnInit {
 
   getCategories(): void {
     this.categories$.emit({ categories: [] }).subscribe(
-      _     => this.categories = _[0].categories.categories,
+      _     => this.categories = _.categories.categories,
       error => alert("🚨" + error),
       ()    =>  this.loading.categories = false
     );

@@ -40,7 +40,7 @@ export class CategoriesComponent implements OnInit {
 
   getCategories(): void {
     this.categories$.emit({ categories: [] }).subscribe(
-      _     => this.categories = _[0].categories.categories,
+      _     => this.categories = _.categories.categories,
       error => alert("🚨" + error),
       ()    =>  this.loading.categories = false
     );
@@ -52,7 +52,7 @@ export class CategoriesComponent implements OnInit {
   getTodos(): void {
     this.loading.todos = true;
     this.todos$.emit({ todos: [] }).subscribe(
-      _     => this.todos = _[0].todos.todos,
+      _     => this.todos = _.todos.todos,
       error => console.error(error),
       ()    => this.loading.todos = false
     )

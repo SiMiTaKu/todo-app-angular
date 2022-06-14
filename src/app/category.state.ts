@@ -7,27 +7,23 @@ import { State, StateContext } from "@ngxs/store";
 import { Receiver }            from "@ngxs-labs/emitter";
 import { finalize, tap }       from "rxjs";
 
-export class GetCategories{
-  static readonly type = 'Get_Categories';
-}
-
 export class GetCategory{
-  static readonly type = 'Get_Category';
+  static readonly type = '[Category] Get Category';
   constructor(public payload: number) {}
 }
 
 export class AddCategory{
-  static readonly type = 'Add_Category';
+  static readonly type = '[Category] Add Category';
   constructor(public payload: Category) {}
 }
 
 export class RemoveCategory{
-  static readonly type = 'Remove_Category';
+  static readonly type = '[Category] Remove Category';
   constructor(public payload: number) {}
 }
 
 export class UpdateCategory{
-  static readonly type = 'Update_Category';
+  static readonly type = '[Category] Update Category';
   constructor(public payload: Category) {}
 }
 
@@ -54,17 +50,16 @@ export class CategoryNgxsState{
     CategoryNgxsState.categoryService = injector.get<CategoryService>(CategoryService)
   }
 
-  @Receiver({ action: GetCategories })
+  @Receiver({ type: '[Category] Get Categories' })
   static getCategories(
     { patchState }: StateContext<CategoryStateModel>,
-    action: GetCategories
   ){
     return this.categoryService.getCategories().pipe(
       tap((data) => patchState({ categories: data }))
     )
   }
 
-  @Receiver({ action: GetCategory })
+  @Receiver({ type : '[Category] Get Category'})
   static getCategory(
     { patchState }: StateContext<CategoryStateModel>,
     action: GetCategory

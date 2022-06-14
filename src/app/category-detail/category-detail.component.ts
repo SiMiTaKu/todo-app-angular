@@ -47,8 +47,8 @@ export class CategoryDetailComponent implements OnInit {
   getCategory(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.category$.emit(id).subscribe(
-      _ => { this.setCategoryData(_[0].categories.selectedCategory)
-                   this.category = _[0].categories.selectedCategory},
+      _ => { this.setCategoryData(_.categories.selectedCategory)
+                   this.category = _.categories.selectedCategory},
         error => alert("🚨" + error),
         ()    =>  this.loading.category = false
       );

@@ -7,27 +7,23 @@ import { State, StateContext } from "@ngxs/store";
 import { Receiver }            from "@ngxs-labs/emitter";
 import { finalize, tap }       from "rxjs";
 
-export class GetTodos {
-  static readonly type = 'Get_Todos';
-}
-
 export class GetTodo {
-  static readonly type = 'Get_Todo';
+  static readonly type = '[Todo] Get Todo';
   constructor( public payload: number) {}
 }
 
 export class AddTodo {
-  static readonly type = 'Add_Todo';
+  static readonly type = '[Todo] Add Todo';
   constructor( public payload: Todo) {}
 }
 
 export class RemoveTodo {
-  static readonly type = 'Remove_Todo';
+  static readonly type = '[Todo] Remove Todo';
   constructor( public payload: number) {}
 }
 
 export class UpdateTodo {
-  static readonly type = 'Update_Todo';
+  static readonly type = '[Todo] Update Todo';
   constructor( public payload: Todo) {}
 }
 
@@ -54,7 +50,8 @@ export class TodoNgxsState{
     TodoNgxsState.todoService = injector.get<TodoService>(TodoService)
   }
 
-  @Receiver({ action: GetTodos })
+  //Receiverの関係でactionだと[]で包まれた値が返ってきてしまう。typeだとそれを防げる。まだなぜかはわかっていない。
+  @Receiver({ type: '[Todo] Get Todos' })
   static getTodos(
     { patchState }: StateContext<TodoStateModel>
   ){
@@ -63,7 +60,7 @@ export class TodoNgxsState{
     )
   }
 
-  @Receiver( { action: GetTodo })
+  @Receiver( { type: '[Todo] Get Todo' })
   static getTodo(
     { patchState }: StateContext<TodoStateModel>,
     action: GetTodo

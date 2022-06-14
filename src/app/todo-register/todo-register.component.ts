@@ -68,7 +68,7 @@ export class TodoRegisterComponent implements OnInit {
 
   getCategories(): void {
     this.categories$.emit({ categories: [] }).subscribe(
-      _     => this.categories = _[0].categories.categories,
+      _     => this.categories = _.categories.categories,
       error => alert("🚨" + error),
       ()    =>  this.loading.categories = false
     );
