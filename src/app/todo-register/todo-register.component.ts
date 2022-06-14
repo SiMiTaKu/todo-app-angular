@@ -3,9 +3,10 @@ import { Location }                           from "@angular/common";
 import { Router }                             from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
-import { Category }        from "../category";
-import { CategoryService } from "../category.service";
-import { Color }           from "../color";
+import { Category }                              from "../category";
+import { CategoryService }                       from "../category.service";
+import { CategoryNgxsState, CategoryStateModel } from "../category.state";
+import { Color }                                 from "../color";
 
 import { Todo }            from "../todo";
 import { TodoState }       from "../todoState";
@@ -13,9 +14,7 @@ import { TodoImportance }  from "../todoImportance";
 import { TodoService }     from "../todo.service";
 import { TodoNgxsState }   from "../todo.state";
 
-import { Store }                               from "@ngxs/store";
-import { Emittable, Emitter }                  from "@ngxs-labs/emitter";
-import {CategoryNgxsState, CategoryStateModel} from "../category.state";
+import { Emittable, Emitter }                    from "@ngxs-labs/emitter";
 
 @Component({
   selector:    'app-todo-register',
@@ -43,7 +42,6 @@ export class TodoRegisterComponent implements OnInit {
     private location:        Location,
     private fb:              FormBuilder,
     private router:          Router,
-    private store:           Store
   ) { }
 
   ngOnInit(): void {

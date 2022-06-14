@@ -1,9 +1,11 @@
-import { Category }                              from "./category";
-import { Action, Selector, State, StateContext } from "@ngxs/store";
-import {Injectable, Injector}                    from "@angular/core";
+import { Injectable, Injector } from "@angular/core";
+
+import { Category }        from "./category";
 import { CategoryService } from "./category.service";
-import {finalize, tap}     from "rxjs";
-import {Receiver}          from "@ngxs-labs/emitter";
+
+import { State, StateContext } from "@ngxs/store";
+import { Receiver }            from "@ngxs-labs/emitter";
+import { finalize, tap }       from "rxjs";
 
 export class GetCategories{
   static readonly type = 'Get_Categories';
@@ -30,14 +32,14 @@ export class UpdateCategory{
 }
 
 export interface CategoryStateModel{
+  categories:        Category[];
   selectedCategory?: Category;
-  categories: Category[];
 }
 
 @State<CategoryStateModel>({
   name: 'categories',
   defaults: {
-    categories: [],
+    categories:       [],
     selectedCategory: undefined
   }
 })

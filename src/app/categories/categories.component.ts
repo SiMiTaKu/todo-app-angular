@@ -8,7 +8,6 @@ import { Color }                               from "../color";
 import { Todo }                          from "../todo";
 import { TodoNgxsState, TodoStateModel } from "../todo.state";
 
-import { Store }              from "@ngxs/store";
 import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
 @Component({
@@ -28,7 +27,6 @@ export class CategoriesComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private store:           Store
   ) {}
 
   ngOnInit(): void {
@@ -78,7 +76,7 @@ export class CategoriesComponent implements OnInit {
   remove(category: Category): void {
     this.loading.categories = true;
     this.removeCategory$.emit(category.id).subscribe(
-      _ => _,//this.removeMatchCategory(category.id),
+      _     => _,
       error => alert("🚨" + error),
       () => this.getCategories()
     )

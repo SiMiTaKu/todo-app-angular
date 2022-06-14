@@ -7,7 +7,6 @@ import { CategoryService } from "../category.service";
 import {CategoryNgxsState} from "../category.state";
 import { Color }           from "../color";
 
-import { Store }              from "@ngxs/store";
 import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
 @Component({
@@ -17,8 +16,6 @@ import { Emittable, Emitter } from "@ngxs-labs/emitter";
 })
 
 export class CategoryDetailComponent implements OnInit {
-
-  //@Select(CategoryNgxsState.selectedCategory) category$?: Observable<Category>;
 
   categoryEditForm?: FormGroup;
   colors:    Color[] = [];
@@ -33,7 +30,6 @@ export class CategoryDetailComponent implements OnInit {
     private categoryService: CategoryService,
     private fb:              FormBuilder,
     private router:          Router,
-    private store:           Store
   ) {}
 
   ngOnInit(): void {

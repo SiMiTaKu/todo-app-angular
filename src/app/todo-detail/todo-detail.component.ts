@@ -4,9 +4,10 @@ import { TodoService }     from "../todo.service";
 import { TodoState }       from "../todoState";
 import { TodoImportance }  from "../todoImportance";
 
-import { Category }        from "../category";
-import { CategoryService } from "../category.service";
-import { Color }           from "../color";
+import { Category }                              from "../category";
+import { CategoryService }                       from "../category.service";
+import { CategoryNgxsState, CategoryStateModel } from "../category.state";
+import { Color }                                 from "../color";
 
 import { Router }                               from "@angular/router";
 import { ActivatedRoute }                       from "@angular/router";
@@ -14,9 +15,7 @@ import { Location }                             from "@angular/common";
 import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
 import { Component, OnInit }                    from '@angular/core';
 
-import { Store }                               from "@ngxs/store";
 import { Emittable, Emitter }                  from "@ngxs-labs/emitter";
-import {CategoryNgxsState, CategoryStateModel} from "../category.state";
 
 @Component({
   selector: 'app-todo-detail', templateUrl: './todo-detail.component.html', styleUrls: ['./todo-detail.component.scss']
@@ -47,7 +46,6 @@ export class TodoDetailComponent implements OnInit {
     private location:        Location,
     private router:          Router,
     private fb:              FormBuilder,
-    private store:           Store
   ) {}
 
   ngOnInit(): void {

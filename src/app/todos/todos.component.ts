@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Category }          from "../category";
-import { CategoryService }                     from "../category.service";
-import {CategoryNgxsState, CategoryStateModel} from "../category.state";
-import { Color }                               from "../color";
+import { Category }                              from "../category";
+import { CategoryService }                       from "../category.service";
+import { CategoryNgxsState, CategoryStateModel } from "../category.state";
+import { Color }                                 from "../color";
 
 import { Todo }                          from "../todo";
 import { TodoState }                     from "../todoState";
 import { TodoNgxsState, TodoStateModel } from "../todo.state";
 import { TodoService }                   from "../todo.service";
 
-import { Observable }       from "rxjs";
-import { Select, Store }    from "@ngxs/store";
-import {Emittable, Emitter} from "@ngxs-labs/emitter";
+import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
 @Component({
   selector: 'app-todos', templateUrl: './todos.component.html', styleUrls: ['./todos.component.scss']
@@ -36,7 +34,6 @@ export class TodosComponent implements OnInit {
   constructor(
     private todoService:     TodoService,
     private categoryService: CategoryService,
-    private store:           Store
   ) { }
 
   ngOnInit(): void {
@@ -72,7 +69,7 @@ export class TodosComponent implements OnInit {
   getTodoStates(): void {
     this.loading.states = true;
     this.todoService.getState().subscribe(
-      _ => this.states = _,
+      _     => this.states = _,
       error => alert("🚨" + error),
       ()    => this.loading.states = false
     );
@@ -81,7 +78,7 @@ export class TodosComponent implements OnInit {
   getColors(): void {
     this.loading.colors = true;
     this.categoryService.getColors().subscribe(
-      _ => this.colors = _,
+      _     => this.colors = _,
       error => alert("🚨" + error),
       ()    =>  this.loading.colors = false
     );
@@ -106,9 +103,9 @@ export class TodosComponent implements OnInit {
   remove(todo: Todo): void {
     this.loading.todos = true;
     this.deleteTodo$.emit(todo.id).subscribe(
-      _ => _,
+      _     => _,
       error => console.error(error),
-      () => this.getTodos()
+      ()    => this.getTodos()
     )
   }
 

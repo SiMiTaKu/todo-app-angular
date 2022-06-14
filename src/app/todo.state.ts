@@ -6,7 +6,6 @@ import { TodoService } from "./todo.service";
 import { State, StateContext } from "@ngxs/store";
 import { Receiver }            from "@ngxs-labs/emitter";
 import { finalize, tap }       from "rxjs";
-import {TodoState}             from "./todoState";
 
 export class GetTodos {
   static readonly type = 'Get_Todos';
@@ -33,14 +32,14 @@ export class UpdateTodo {
 }
 
 export interface TodoStateModel{
-  todos: Todo[];
+  todos:         Todo[];
   selectedTodo?: Todo;
 }
 
 @State<TodoStateModel>({
   name: 'todos',
   defaults: {
-    todos: [],
+    todos:        [],
     selectedTodo: undefined
   }
 })
