@@ -1,20 +1,33 @@
-import {Component, OnInit} from '@angular/core';
-import {Category}          from "../category";
-import {CategoryService}   from "../category.service";
-import {Color}             from "../color";
-import {TodoService}       from "../todo.service";
-import {Todo}              from "../todo";
+import { Component, OnInit } from '@angular/core';
+
+import { Category }                            from "../category";
+import {CategoryNgxsState, CategoryStateModel} from "../category.state";
+import { CategoryService }                     from "../category.service";
+import { Color }                               from "../color";
+
+import { Todo }                          from "../todo";
+import { TodoNgxsState, TodoStateModel } from "../todo.state";
+
+import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
 @Component({
   selector: 'app-categories', templateUrl: './categories.component.html', styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
+
   categories: Category[] = [];
   colors:     Color[]    = [];
   todos:      Todo[]     = [];
 
-  constructor(private categoryService: CategoryService, private todoService: TodoService) {
+  loading = {
+    "categories" : true,
+    "todos" :      true,
+    "colors" :     true,
   }
+
+  constructor(
+    private categoryService: CategoryService,
+  ) {}
 
   ngOnInit(): void {
     this.getCategories();
@@ -22,31 +35,51 @@ export class CategoriesComponent implements OnInit {
     this.getTodos();
   }
 
+  @Emitter(CategoryNgxsState.getCategories)
+  private categories$!: Emittable<CategoryStateModel>
+
   getCategories(): void {
-    this.categoryService.getCategories().subscribe(_ => this.categories = _);
+    this.categories$.emit({ categories: [] }).subscribe(
+      _     => this.categories = _.categories.categories,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.categories = false
+    );
+  }
+
+  @Emitter(TodoNgxsState.getTodos)
+  private todos$!: Emittable<TodoStateModel>
+
+  getTodos(): void {
+    this.loading.todos = true;
+    this.todos$.emit({ todos: [] }).subscribe(
+      _     => this.todos = _.todos.todos,
+      error => console.error(error),
+      ()    => this.loading.todos = false
+    )
   }
 
   getColors(): void {
-    this.categoryService.getColors().subscribe(_ => this.colors = _);
-  }
-
-  getTodos(): void {
-    this.todoService.getTodos().subscribe(_ => this.todos = _);
+    this.categoryService.getColors().subscribe(
+      _     => this.colors = _,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.colors = false
+    );
   }
 
   getThisCategoryColor(colorId: number): string[] {
     return this.colors.filter(_ => _.id == colorId).map(_ => _.name);
   }
 
-  remove(category: Category): void {
-    this.categories = this.categories.filter(_ => _ !== category);
-    this.categoryService.removeCategory(category.id).subscribe();
-    this.removeMatchCategory(category.id);
-  }
+  @Emitter(CategoryNgxsState.removeCategory)
+  private removeCategory$!: Emittable<number>
 
-  removeMatchCategory(categoryId: number): void {
-    const matchIds = this.todos.filter(_ => _.category_id == categoryId).map(_ => _.id);
-    matchIds.map(id => this.todoService.removeTodo(id).subscribe());
+  remove(category: Category): void {
+    this.loading.categories = true;
+    this.removeCategory$.emit(category.id).subscribe(
+      _     => _,
+      error => alert("🚨" + error),
+      () => this.getCategories()
+    )
   }
 
   convertDateTime(dateTime: Date): string {
@@ -61,6 +94,7 @@ export class CategoriesComponent implements OnInit {
       (categoryA, categoryB) => categoryA.id - categoryB.id
     )
   }
+
   //新しい順にソート
   sortByDate(): void{
     this.categories.sort(

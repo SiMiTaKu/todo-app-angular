@@ -1,133 +1,144 @@
-<div *ngIf="todo && !title && !body && !category && !state">
-  {{setTodoData()}}
+<div class = "loading"
+     *ngIf = "loading.setTodoData ||
+              loading.categories ||
+              loading.colors ||
+              loading.states ||
+              loading.importance">
+  <p>Loading</p>
 </div>
-<div class = "menu">
-  <div class = "menu__item">
-    <div class = "menu__item--title">
-      Detail / Edit
+<div *ngIf = "!loading.setTodoData &&
+              !loading.categories &&
+              !loading.colors &&
+              !loading.states &&
+              !loading.importance">
+  <div class = "menu">
+    <div class = "menu__item">
+      <div class = "menu__item--title">
+        Detail / Edit
+      </div>
+    </div>
+    <div class = "menu__item--button">
+      <a routerLink = "/todos/">
+        <input type = "submit" value = "←" class = "menu_button">
+      </a>
     </div>
   </div>
-  <div class="menu__item--button">
-    <a routerLink = "/todos/">
-      <input type = "submit" value = "←" class = "menu_button">
-    </a>
-  </div>
-</div>
 
-<div class = "detail" *ngIf="todo">
-  <div class = "detail__content">
-    <h2>Detail  No.{{todo.id}}</h2>
-    <div class = "detail__content--title">
-      <div class="left">Title</div>
-      <div class="right" *ngIf="title">{{title.value}}</div>
+  <div class = "detail" *ngIf = "todo">
+    <div class = "detail__content">
+      <h2>Detail  No.{{todo.id}}</h2>
+      <div class = "detail__content--title">
+        <div class = "left">Title</div>
+        <div class = "right" *ngIf = "title">{{title.value}}</div>
+      </div>
+      <div class = "detail__content--body">
+        <div class = "left">Body</div>
+        <div class = "right" *ngIf = "body">{{body.value}}</div>
+      </div>
+      <div class = "detail__content--category">
+        <div class = "left">Category</div>
+        <div class = "right" *ngIf = "category">{{getThisCategory(category.value)}}</div>
+      </div>
+      <div class = "detail__content--state">
+        <div class = "left">State</div>
+        <div class = "right" *ngIf = "state">{{getThisState(state.value)}}</div>
+      </div>
+      <div class = "detail__content--state">
+        <div class = "left">State</div>
+        <div class = "right" *ngIf = "importance">{{getThisImportance(importance.value)}}</div>
+      </div>
     </div>
-    <div class = "detail__content--body">
-      <div class="left">Body</div>
-      <div class="right" *ngIf="body">{{body.value}}</div>
-    </div>
-    <div class = "detail__content--category">
-      <div class="left">Category</div>
-      <div class="right" *ngIf="category">{{getThisCategory(category.value)}}</div>
-    </div>
-    <div class = "detail__content--state">
-      <div class="left">State</div>
-      <div class="right" *ngIf="state">{{getThisState(state.value)}}</div>
-    </div>
-    <div class = "detail__content--state">
-      <div class="left">State</div>
-      <div class="right" *ngIf="importance">{{getThisImportance(importance.value)}}</div>
-    </div>
-  </div>
-  <div class="detail__content">
-    <form *ngIf="todoEditForm" [formGroup]="todoEditForm" (submit)="save()">
-      <h2>Edit Form</h2>
-      <div class = "content">
-        <div class="content__left">Title</div>
-        <div class="content__right">
-          <input
-            type            = "text"
-            name            = "title"
-            placeholder     = "Title"
-            formControlName = "todoTitle">
-          <div class="warn" *ngIf="title && title.errors?.['required']">
-            ※Title is requirement.
+    <div class = "detail__content">
+      <form *ngIf = "todoEditForm" [formGroup] = "todoEditForm" (submit)="save(todo)">
+        <h2>Edit Form</h2>
+        <div class = "content">
+          <div class = "content__left">Title</div>
+          <div class = "content__right">
+            <input
+              type            = "text"
+              name            = "title"
+              placeholder     = "Title"
+              formControlName = "todoTitle">
+            <div class = "warn" *ngIf = "title && title.errors?.['required']">
+              ※Title is requirement.
+            </div>
           </div>
         </div>
-      </div>
-      <div class = "content">
-        <div class="content__left">Body</div>
-        <div class="content__right">
+        <div class = "content">
+          <div class = "content__left">Body</div>
+          <div class = "content__right">
           <textarea
             name = "body"
             placeholder = "Body"
             formControlName = "todoBody">
           </textarea>
-          <div class="warn" *ngIf="body && body.errors?.['required']">
-            ※Body is requirement.
-          </div>
-        </div>
-      </div>
-      <div class = "content">
-        <div class = "content__left">Category</div>
-        <div class = "content__right">
-          <div class = "radio-form">
-            <div class = "radio-form__button" *ngFor="let category of categories" >
-              <input
-                type  = "radio"
-                value = "{{category.id}}"
-                name  = "todoCategory"
-                id    = "{{category.name}}"
-                formControlName = "todoCategory"
-              ><label for="{{category.name}}">{{category.name}}</label>
-              <!-- id と for を同じにすることでラベルとラジオボタンを関連づけられる-->
-            </div>
-            <div class="warn" *ngIf="category && category.errors?.['required']">
-              ※Category is requirement.
+            <div class = "warn" *ngIf = "body && body.errors?.['required']">
+              ※Body is requirement.
             </div>
           </div>
         </div>
-      </div>
-      <div class = "content">
-        <div class="content__left">Status</div>
-        <div class="content__right">
-          <div class = "radio-form">
-            <div class="radio-form__button" *ngFor="let state of states" >
-              <input
-                type            = "radio"
-                value           = "{{state.id}}"
-                name            = "todoState"
-                id              = "{{state.status}}"
-                formControlName = "todoState"
-              ><label for = "{{state.status}}">{{state.status}}</label>
-            </div>
-            <div class="warn" *ngIf="state && state.errors?.['required']">
-              ※Status is requirement.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class = "content">
-        <div class="content__left">Importance</div>
-        <div class="content__right">
-          <div class = "radio-form">
-            <div class="radio-form__button" *ngFor="let importance of importanceSeq" >
-              <input
-                type            = "radio"
-                value           = "{{importance.code}}"
-                name            = "todoImportance"
-                id              = "{{importance.name}}"
-                formControlName = "todoImportance"
-              ><label for = "{{importance.name}}">{{importance.name}}</label>
-            </div>
-            <div class="warn" *ngIf="importance && importance.errors?.['required']">
-              ※importance is requirement.
+        <div class = "content">
+          <div class = "content__left">Category</div>
+          <div class = "content__right">
+            <div class = "radio-form">
+              <div class = "radio-form__button" *ngFor = "let category of categories" >
+                <input
+                  type  = "radio"
+                  value = "{{category.id}}"
+                  name  = "todoCategory"
+                  id    = "{{category.name}}"
+                  formControlName = "todoCategory"
+                ><label for = "{{category.name}}">{{category.name}}</label>
+                <!-- id と for を同じにすることでラベルとラジオボタンを関連づけられる-->
+              </div>
+              <div class = "warn" *ngIf="category && category.errors?.['required']">
+                ※Category is requirement.
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class = "content">
-        <input [disabled]="todoEditForm.invalid" type = "submit" value = "update" class = "submit_button">
-      </div>
-    </form>
+        <div class = "content">
+          <div class = "content__left">Status</div>
+          <div class = "content__right">
+            <div class = "radio-form">
+              <div class="radio-form__button" *ngFor="let state of states" >
+                <input
+                  type            = "radio"
+                  value           = "{{state.id}}"
+                  name            = "todoState"
+                  id              = "{{state.status}}"
+                  formControlName = "todoState"
+                ><label for = "{{state.status}}">{{state.status}}</label>
+              </div>
+              <div class = "warn" *ngIf="state && state.errors?.['required']">
+                ※Status is requirement.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class = "content">
+          <div class = "content__left">Importance</div>
+          <div class = "content__right">
+            <div class = "radio-form">
+              <div class = "radio-form__button" *ngFor = "let importance of importanceSeq" >
+                <input
+                  type            = "radio"
+                  value           = "{{importance.code}}"
+                  name            = "todoImportance"
+                  id              = "{{importance.name}}"
+                  formControlName = "todoImportance"
+                ><label for = "{{importance.name}}">{{importance.name}}</label>
+              </div>
+              <div class="warn" *ngIf="importance && importance.errors?.['required']">
+                ※importance is requirement.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class = "content">
+          <input [disabled] = "todoEditForm.invalid" type = "submit" value = "update" class = "submit_button">
+        </div>
+      </form>
+    </div>
   </div>
 </div>

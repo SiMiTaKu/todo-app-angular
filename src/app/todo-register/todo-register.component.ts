@@ -1,16 +1,20 @@
-import { Component, OnInit }      from '@angular/core';
-import { CategoryService }        from "../category.service";
-import { TodoService }            from "../todo.service";
-import { Category }               from "../category";
-import { Color }                  from "../color";
-import { TodoState }              from "../todoState";
-import { Todo }                   from "../todo";
-import { Location }               from "@angular/common";
-import { Router }                 from "@angular/router";
-
+import { Component, OnInit }                  from '@angular/core';
+import { Location }                           from "@angular/common";
+import { Router }                             from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import {TodoImportance}                       from "../todoImportance";
 
+import { Category }                              from "../category";
+import { CategoryService }                       from "../category.service";
+import { CategoryNgxsState, CategoryStateModel } from "../category.state";
+import { Color }                                 from "../color";
+
+import { Todo }            from "../todo";
+import { TodoState }       from "../todoState";
+import { TodoImportance }  from "../todoImportance";
+import { TodoService }     from "../todo.service";
+import { TodoNgxsState }   from "../todo.state";
+
+import { Emittable, Emitter }                    from "@ngxs-labs/emitter";
 
 @Component({
   selector:    'app-todo-register',
@@ -18,23 +22,29 @@ import {TodoImportance}                       from "../todoImportance";
   styleUrls:   ['./todo-register.component.scss']
 })
 export class TodoRegisterComponent implements OnInit {
-  todos:       Todo[]              = [];
-  categories:  Category[]          = [];
-  colors:      Color[]             = [];
-  states:      TodoState[]         = [];
-  importanceSeq: TodoImportance[]  = [];
+
+  categories:        Category[]       = [];
+  colors:            Color[]          = [];
+  states:            TodoState[]      = [];
+  importanceSeq:     TodoImportance[] = [];
   todoRegisterForm?: FormGroup;
+
+  loading = {
+    "categories":  true,
+    "colors":      true,
+    "states":      true,
+    "importance":  true,
+  }
 
   constructor(
     private todoService:     TodoService,
     private categoryService: CategoryService,
     private location:        Location,
     private fb:              FormBuilder,
-    private router:          Router
+    private router:          Router,
   ) { }
 
   ngOnInit(): void {
-    this.getTodos();
     this.getCategories();
     this.getColors();
     this.getStates();
@@ -53,38 +63,56 @@ export class TodoRegisterComponent implements OnInit {
   get category  () { return this.todoRegisterForm?.get('todoCategory');}
   get importance() { return this.todoRegisterForm?.get('todoImportance');}
 
-  getTodos(): void {
-    this.todoService.getTodos().subscribe(_ => this.todos = _);
-  }
+  @Emitter(CategoryNgxsState.getCategories)
+  private categories$!: Emittable<CategoryStateModel>
 
   getCategories(): void {
-    this.categoryService.getCategories().subscribe(_ => this.categories = _);
-  }
-
-  getImportance(): void {
-    this.todoService.getImportance().subscribe(_ => this.importanceSeq = _);
+    this.categories$.emit({ categories: [] }).subscribe(
+      _     => this.categories = _.categories.categories,
+      error => alert("🚨" + error),
+      ()    =>  this.loading.categories = false
+    );
   }
 
   getColors(): void {
-    this.categoryService.getColors().subscribe(_ => this.colors = _);
+    this.categoryService.getColors().subscribe(
+      _     => this.colors = _,
+      error => alert("🚨" + error),
+      ()    => this.loading.colors = false
+    );
   }
 
   getStates(): void {
-    this.todoService.getState().subscribe(_ => this.states = _)
+    this.todoService.getState().subscribe(
+      _     => this.states = _,
+      error => alert("🚨" + error),
+      ()    => this.loading.states = false
+    )
   }
+
+  getImportance(): void {
+    this.todoService.getImportance().subscribe(
+      _     => this.importanceSeq = _,
+      error => alert("🚨" + error),
+      ()    => this.loading.importance = false
+    )
+  }
+
+  @Emitter(TodoNgxsState.addTodo)
+  private addTodo$!: Emittable<Todo>
 
   add(): void{
     if(this.todoRegisterForm?.invalid) {
       alert("Error!! Please check form area.")
     }else{
-      this.todoService.addTodo({
+      this.addTodo$.emit({
         title:       this.todoRegisterForm?.value.todoTitle,
         category_id: Number(this.todoRegisterForm?.value.todoCategory), //Formから返るのはstringのためNumberを指定してあげると解決
         body:        this.todoRegisterForm?.value.todoBody,
         importance:  Number(this.todoRegisterForm?.value.todoImportance)
       } as Todo).subscribe(
-        todo  => this.todos.push(todo),
-        error => alert(error),
+        _     => _,
+        error => alert("🚨" + error),
         ()    => this.goToTodoList()
       );
     }

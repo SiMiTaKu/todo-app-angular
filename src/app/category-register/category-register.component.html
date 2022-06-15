@@ -1,68 +1,74 @@
-<div class = "menu">
-  <div class = "menu__item">
-    <div class = "menu__item--title">
-      Register Form
-    </div>
-  </div>
-  <div class="menu__item--button">
-    <a routerLink = "/categories/">
-      <input type = "submit" value = "←" class = "menu_button">
-    </a>
-  </div>
+<div class = "loading"
+     *ngIf = "loading">
+  <p>Loading</p>
 </div>
-<h2>New Category</h2>
-<form *ngIf="categoryRegisterForm" [formGroup] = "categoryRegisterForm" (submit)="add()">
-  <div class = "content">
-    <div class="content__left" for = "new-slug">Name</div>
-    <div class="content__right">
-      <input
-        type            = "text"
-        id              = "new-name"
-        name            = "name"
-        formControlName = "categoryName"
-        placeholder     = "Name">
-      <div class = "warn" *ngIf="name && name.errors?.['required']">
-        ※Name is Requirement.
+<div *ngIf = "!loading">
+  <div class = "menu">
+    <div class = "menu__item">
+      <div class = "menu__item--title">
+        Register Form
       </div>
     </div>
-  </div>
-  <div class = "content">
-    <div class = "content__left" for = "new-slug">Slug</div>
-    <div class = "content__right">
-      <input
-        type            = "text"
-        id              = "new-slug"
-        name            = "slug"
-        formControlName = "categorySlug"
-        placeholder     = "Slug">
-      <div class = "warn" *ngIf="slug && slug.errors?.['required']">
-        ※Slug is Requirement.
-      </div>
-      <div class = "warn" *ngIf="slug && slug.errors?.['pattern']">
-        ※Please use alpha only.
-      </div>
+    <div class="menu__item--button">
+      <a routerLink = "/categories/">
+        <input type = "submit" value = "←" class = "menu_button">
+      </a>
     </div>
   </div>
-  <div class = "content">
-    <div class = "content__left">Color</div>
-    <div class = "content__right">
-      <div class = "radio-form">
-        <div class = "radio-form__button" *ngFor="let color of colors" >
-          <input
-            type            = "radio"
-            value           = "{{color.id}}"
-            name            = "categoryColor"
-            formControlName = "categoryColor"
-            id              = "{{color.name}}"
-          ><label for = "{{color.name}}">{{color.name}}</label>
+  <h2>New Category</h2>
+  <form *ngIf = "categoryRegisterForm" [formGroup] = "categoryRegisterForm" (submit) = "add()">
+    <div class = "content">
+      <div class = "content__left" for = "new-slug">Name</div>
+      <div class = "content__right">
+        <input
+          type            = "text"
+          id              = "new-name"
+          name            = "name"
+          formControlName = "categoryName"
+          placeholder     = "Name">
+        <div class = "warn" *ngIf="name && name.errors?.['required']">
+          ※Name is Requirement.
         </div>
       </div>
-      <div class = "warn" *ngIf="color && color.errors?.['required']">
-        ※Color is Requirement.
+    </div>
+    <div class = "content">
+      <div class = "content__left" for = "new-slug">Slug</div>
+      <div class = "content__right">
+        <input
+          type            = "text"
+          id              = "new-slug"
+          name            = "slug"
+          formControlName = "categorySlug"
+          placeholder     = "Slug">
+        <div class = "warn" *ngIf="slug && slug.errors?.['required']">
+          ※Slug is Requirement.
+        </div>
+        <div class = "warn" *ngIf="slug && slug.errors?.['pattern']">
+          ※Please use alpha only.
+        </div>
       </div>
     </div>
-  </div>
-  <div class = "content">
-    <input [disabled]="categoryRegisterForm.invalid" type = "submit" value = "register" class="submit_button">
-  </div>
-</form>
+    <div class = "content">
+      <div class = "content__left">Color</div>
+      <div class = "content__right">
+        <div class = "radio-form">
+          <div class = "radio-form__button" *ngFor="let color of colors" >
+            <input
+              type            = "radio"
+              value           = "{{color.id}}"
+              name            = "categoryColor"
+              formControlName = "categoryColor"
+              id              = "{{color.name}}"
+            ><label for = "{{color.name}}">{{color.name}}</label>
+          </div>
+        </div>
+        <div class = "warn" *ngIf="color && color.errors?.['required']">
+          ※Color is Requirement.
+        </div>
+      </div>
+    </div>
+    <div class = "content">
+      <input [disabled]="categoryRegisterForm.invalid" type = "submit" value = "register" class = "submit_button">
+    </div>
+  </form>
+</div>

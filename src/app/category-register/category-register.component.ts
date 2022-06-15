@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Category }          from "../category";
-import { Color }             from "../color";
-import { CategoryService }   from "../category.service";
-import { Router }            from "@angular/router";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Component, OnInit }                  from '@angular/core';
+import { Router }                             from "@angular/router";
 
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import { Category }           from "../category";
+import { CategoryService }    from "../category.service";
+import { CategoryNgxsState }  from "../category.state";
+import { Color }              from "../color";
+
+import { Store }              from "@ngxs/store";
+import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
 @Component({
   selector:    'app-category-register',
@@ -12,19 +16,20 @@ import {FormGroup, FormBuilder, Validators} from "@angular/forms";
   styleUrls:   ['./category-register.component.scss']
 })
 export class CategoryRegisterComponent implements OnInit {
-  categories: Category[] = [];
-  colors:     Color[]    = [];
+  colors: Color[] = [];
 
   categoryRegisterForm?: FormGroup;
+
+  loading = true;
 
   constructor(
     private categoryService: CategoryService,
     private fb:              FormBuilder,
     private router:          Router,
+    private store:           Store
   ) { }
 
   ngOnInit(): void {
-    this.getCategories();
     this.getColors();
     this.categoryRegisterForm = this.fb.group({
       categoryName:  ['',  Validators.required],
@@ -37,26 +42,30 @@ export class CategoryRegisterComponent implements OnInit {
   get slug  (){ return this.categoryRegisterForm?.get('categorySlug')}
   get color (){ return this.categoryRegisterForm?.get('categoryColor')}
 
-  getCategories(): void {
-    this.categoryService.getCategories().subscribe(_ => this.categories = _);
-  }
 
   getColors(): void {
-    this.categoryService.getColors().subscribe(_ => this.colors = _);
+    this.categoryService.getColors().subscribe(
+      _     => this.colors = _,
+      error => alert("🚨" + error),
+      ()    =>  this.loading = false
+    );
   }
+
+  @Emitter(CategoryNgxsState.addCategory)
+  private addCategory$!: Emittable<Category>
 
   add(): void {
     if(this.categoryRegisterForm?.invalid) {
       alert("Error!! Please check form area.")
     }else{
-      this.categoryService.addCategory({
+      this.addCategory$.emit(({
         name:  this.categoryRegisterForm?.value.categoryName,
         slug:  this.categoryRegisterForm?.value.categorySlug,
         color: Number(this.categoryRegisterForm?.value.categoryColor),
-      } as Category).subscribe(
-        category  => this.categories.push(category),
-        error     => alert(error),
-        ()        => this.goToCategoryList()
+    } as Category)).subscribe(
+        _     => _,
+        error => alert("🚨" + error),
+        ()    => this.goToCategoryList()
       );
     }
   }
