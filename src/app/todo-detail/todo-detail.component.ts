@@ -15,7 +15,7 @@ import { Location }                             from "@angular/common";
 import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
 import { Component, OnInit }                    from '@angular/core';
 
-import { Emittable, Emitter }                  from "@ngxs-labs/emitter";
+import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
 @Component({
   selector: 'app-todo-detail', templateUrl: './todo-detail.component.html', styleUrls: ['./todo-detail.component.scss']

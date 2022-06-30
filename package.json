@@ -20,7 +20,7 @@
     "@angular/router": "~13.3.0",
     "@ngxs-labs/emitter": "^4.0.0",
     "@ngxs/logger-plugin": "^3.7.3",
-    "@ngxs/store": "^3.7.3",
+    "@ngxs/store": "^3.7.4",
     "angular-in-memory-web-api": "^0.13.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
