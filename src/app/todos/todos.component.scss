@@ -8,3 +8,25 @@
   }
 }
 
+ngx-slick-carousel{
+  button{
+    background-color: #004370;
+    color:            #004370;
+    &::before{
+      background-color: #004370;
+      color:            #004370;
+    }
+  }
+}
+
+.prev-arrow .slick-arrow {
+  width:            20px;
+  height:           20px;
+  background-color: black;
+}
+
+.next-arrow .slick-arrow {
+  width:            20px;
+  height:           20px;
+  background-color: black;
+}

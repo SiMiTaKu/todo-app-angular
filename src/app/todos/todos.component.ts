@@ -31,6 +31,70 @@ export class TodosComponent implements OnInit {
     "states":     true,
   }
 
+  slideConfig = {
+    accessibility:        true, // Default true
+    adaptiveHeight:       false, // Default false
+    autoplay:             true, // 自動スクロールの有無 Default false
+    autoplaySpeed:        3000, // 自動スクロールのスピード numberミリ秒
+    arrows:               true, //　矢印有無 Default true
+    // asNavFor?:         string;
+    // appendArrows:         string,
+    // appendDots?:       string;
+    prevArrow:            '<button class="prev-arrow">＜</button>', // 自分でHTMLElementを作成してカスタマイズできる
+    nextArrow:            '<button class="next-arrow">＞</button>', // 自分でHTMLElementを作成してカスタマイズできる
+    // centerMode?:       boolean;
+    // centerPadding?:    number | string;
+    // cssEase?:          string;
+    dots:                 true, // ドット有無 Default false
+    // dotsClass:            "slick-dots-class", // 任意のクラス名を命名
+    draggable:            true, // ドラッグ可否　Default true
+    // fade:                 true, // フェードの有無 トランプみたいになる Default false
+    focusOnSelect:        true, // フォーカスしたスライドが１番最初にくる Default false
+    // easing?:           string;
+    // edgeFriction?:     number;
+    infinite:             true, // 無限ループ可否 Default true
+    initialSlide:         4, // スライドの開始位置 
+    // lazyLoad?:         string;
+    // mobileFirst?:      boolean;
+    // pauseOnFocus?:     boolean;
+    // pauseOnDotsHover?: boolean;
+    // respondTo?:        string;
+    // responsive?:       ConfigResponsive[];
+    //rows:                 2, // 列の数
+    //slidesPerRow:         2, // 列にいくつスライドをつけるか
+    slidesToShow:         5, // いくつ表示させるか
+    slidesToScroll:       1, // いくつスクロールさせるか
+    // speed:            10,
+    swipe:                true, // スマホ版横スクロール可否 Default true
+    swipeToSlide:         false, // フォーカスはそのままでスワイプでスライドさせる
+                                 // swipeがtrueじゃないとだめ
+    //touchMove:            false,
+    mouseWheelMove:       true,
+    // touchThreshold?:   number;
+    // useCSS:               false,
+    // useTransform?:     boolean;
+    variableWidth:        true, // widthを任意の値にする Default false
+                                // 縦の時は使用できない
+    vertical:             false, // 縦スクロール Default false
+    verticalSwiping:      false, // スマホ版縦スクロール可否
+    //rti:                  true,
+    //waitForAnimate:       false,
+    //zIndex:               1,
+  };
+
+  slickInit(e: any) {
+    console.log('slick initialized');
+  }
+  breakpoint(e: any) {
+    console.log('breakpoint');
+  }
+  afterChange(e: any) {
+    console.log('afterChange');
+  }
+  beforeChange(e: any) {
+    console.log('beforeChange');
+  }
+
   constructor(
     private todoService:     TodoService,
     private categoryService: CategoryService,

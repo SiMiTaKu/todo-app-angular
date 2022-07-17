@@ -58,6 +58,45 @@
       </div>
     </div>
   </div>
+
+  <ngx-slick-carousel class          = "carousel"
+                      #slickModal    = "slick-carousel"
+                      [config]       = "slideConfig"
+                      (init)         = "slickInit($event)"
+                      (breakpoint)   = "breakpoint($event)"
+                      (afterChange)  = "afterChange($event)"
+                      (beforeChange) = "beforeChange($event)"
+  >
+    <div ngxSlickItem class = "card" *ngFor = "let todo of todos">
+      <div class = "card__content" style="background-color: {{getThisCategoryColor(todo.category_id)}}">
+        <div class = "card__content--importance" *ngIf = "todo.importance == 0">●</div>
+        <div class = "card__content--title">{{todo.title}}</div>
+        <div class = "card__content--body">{{todo.body}}</div>
+        <div class = "card__content--category">{{getThisCategoryName(todo.category_id)}}</div>
+        <div class = "card__content--state">{{getThisState(todo.state)}}</div>
+        <div class = "card__footer">
+          <div class = "card__footer--item">
+            <a routerLink = "/todos/{{todo.id}}">
+              <input type = "submit" value = "Detail / Edit" class = "select_button">
+            </a>
+          </div>
+          <div class = "card__footer--item">
+            <input type = "submit" value = "Remove" (click) = "remove(todo)" class = "select_button">
+          </div>
+        </div>
+      </div>
+      <div class = "date_time_message">
+        <div class = "date_time_message__created">
+          作成日　{{convertDateTime(todo.created_at)}}
+        </div>
+        <div class = "date_time_message__updated">
+          更新日　{{convertDateTime(todo.updated_at)}}
+        </div>
+      </div>
+    </div>
+  </ngx-slick-carousel>
+  <button (click)="slickModal.slickGoTo(2)">slickGoto 2</button>
+  <button (click)="slickModal.unslick()">unslick</button>
 </div>
 
 
