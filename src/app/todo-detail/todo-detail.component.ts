@@ -9,11 +9,10 @@ import { CategoryService }                       from "../category.service";
 import { CategoryNgxsState, CategoryStateModel } from "../category.state";
 import { Color }                                 from "../color";
 
-import { Router }                               from "@angular/router";
-import { ActivatedRoute }                       from "@angular/router";
-import { Location }                             from "@angular/common";
-import { FormBuilder, FormGroup, Validators }   from "@angular/forms";
-import { Component, OnInit }                    from '@angular/core';
+import { Router }                             from "@angular/router";
+import { ActivatedRoute }                     from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit }                  from '@angular/core';
 
 import { Emittable, Emitter } from "@ngxs-labs/emitter";
 
@@ -43,7 +42,6 @@ export class TodoDetailComponent implements OnInit {
     private route:           ActivatedRoute,
     private todoService:     TodoService,
     private categoryService: CategoryService,
-    private location:        Location,
     private router:          Router,
     private fb:              FormBuilder,
   ) {}
