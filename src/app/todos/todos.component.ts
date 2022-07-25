@@ -40,9 +40,9 @@ export class TodosComponent implements OnInit {
     // asNavFor?:         string;
     // appendArrows:         string,
     // appendDots?:       string;
-    prevArrow:            '<button class="prev-arrow">＜</button>', // 自分でHTMLElementを作成してカスタマイズできる
-    nextArrow:            '<button class="next-arrow">＞</button>', // 自分でHTMLElementを作成してカスタマイズできる
-    // centerMode?:       boolean;
+    prevArrow:            '<button class="slick-prev-arrow">＜</button>', // 自分でHTMLElementを作成してカスタマイズできる
+    nextArrow:            '<button class="slick-next-arrow">＞</button>', // 自分でHTMLElementを作成してカスタマイズできる
+    centerMode:           true,
     // centerPadding?:    number | string;
     // cssEase?:          string;
     dots:                 true, // ドット有無 Default false
@@ -53,7 +53,7 @@ export class TodosComponent implements OnInit {
     // easing?:           string;
     // edgeFriction?:     number;
     infinite:             true, // 無限ループ可否 Default true
-    initialSlide:         4, // スライドの開始位置 
+    initialSlide:         4, // スライドの開始位置
     // lazyLoad?:         string;
     // mobileFirst?:      boolean;
     // pauseOnFocus?:     boolean;
@@ -71,8 +71,8 @@ export class TodosComponent implements OnInit {
     //touchMove:            false,
     mouseWheelMove:       true,
     // touchThreshold?:   number;
-    // useCSS:               false,
-    // useTransform?:     boolean;
+    useCSS:               true,
+    useTransform:         true,
     variableWidth:        true, // widthを任意の値にする Default false
                                 // 縦の時は使用できない
     vertical:             false, // 縦スクロール Default false
